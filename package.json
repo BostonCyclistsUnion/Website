@@ -1,16 +1,16 @@
 {
+  "homepage": "https://bostoncyclistsunion.github.io/Website",
   "name": "website",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://BostonCyclistsUnion.github.io/Website",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "mapbox-gl": "^3.8.0",
