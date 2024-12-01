@@ -26,5 +26,8 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
 # How to deploy website
-Install [GH CLI](https://cli.github.com/) and run `gh auth login` to sign in.  
-`npm run deploy`
+Followed [this](https://medium.com/@arifiansaputra43/how-to-host-vite-react-in-github-pages-with-gh-pages-a8a0566c493f) to deploy to github pages.  
+You need to be signed into github in the terminal before deployment. Install [GH CLI](https://cli.github.com/) and run `gh auth login` to sign in.  
+
+Once everything is setup:
+To create a new deployment, run `npm run deploy`
