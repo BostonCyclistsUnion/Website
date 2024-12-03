@@ -60,3 +60,16 @@
   border-left: 1px solid #353535;
   padding: 10px;
 }
+
+.legend {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #b106f5;
+  padding: 6px 12px;
+  font-family: monospace;
+  z-index: 1;
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  margin: 12px;
+  border-radius: 4px;
+}

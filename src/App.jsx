@@ -4,6 +4,15 @@ import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css';
 import './App.css'
 
+import icon_lts1 from '/Icon_LTS1.svg'
+import icon_lts2 from '/Icon_LTS2.svg'
+import icon_lts3 from '/Icon_LTS3.svg'
+import icon_lts4 from '/Icon_LTS4.svg'
+import text_lts1 from '/Text_LTS1.svg'
+import text_lts2 from '/Text_LTS2.svg'
+import text_lts3 from '/Text_LTS3.svg'
+import text_lts4 from '/Text_LTS4.svg'
+
 // https://docs.mapbox.com/help/tutorials/use-mapbox-gl-js-with-react/
 
 const INITIAL_CENTER = [-71.05777, 42.3224]
@@ -16,6 +25,15 @@ function App() {
 
   const [center, setCenter] = useState(INITIAL_CENTER)
   const [zoom, setZoom] = useState(INITIAL_ZOOM)
+
+  // Enable hovertext
+  const [isHovering, setIsHovering] = useState(false);
+  const handleMouseOver = () => {
+    setIsHovering(true);
+  };
+  const handleMouseOut = () => {
+    setIsHovering(false);
+  };
 
   useEffect(() => {
     mapboxgl.accessToken = 'pk.eyJ1Ijoic2tpbGNveW5lIiwiYSI6ImNseTd2cXpwOTA5MnUya3E2ejBkN2ttOW8ifQ.TN39Bd_yu_SqMsu-IW4FKQ'
@@ -150,9 +168,67 @@ function App() {
       <div className="topbar">
         Longitude: {center[0].toFixed(4)} | Latitude: {center[1].toFixed(4)} | Zoom: {zoom.toFixed(2)}
       </div>
+
+      <div className="legend">
+        <h1>Stress Levels</h1><br />
+        
+        <div>
+          <div 
+            onMouseOver={handleMouseOver}
+            onMouseOut={handleMouseOut}
+          >
+            <img src={icon_lts1} alt='LTS 1'/>
+          
+          {isHovering && (
+            <img src={text_lts1} alt='Carefree riding'/>
+          )}
+          </div>
+        </div><br />
+        
+        <div>
+          <div 
+            onMouseOver={handleMouseOver}
+            onMouseOut={handleMouseOut}
+          >
+            <img src={icon_lts2} alt='LTS 2'/>
+          
+          {isHovering && (
+            <img src={text_lts2} alt='Easy going riding'/>
+          )}
+          </div>
+        </div><br />
+
+        <div>
+          <div 
+            onMouseOver={handleMouseOver}
+            onMouseOut={handleMouseOut}
+          >
+            <img src={icon_lts3} alt='LTS 3'/>
+          
+          {isHovering && (
+            <img src={text_lts3} alt='Stressful riding'/>
+          )}
+          </div>
+        </div><br />
+
+        <div>
+          <div 
+            onMouseOver={handleMouseOver}
+            onMouseOut={handleMouseOut}
+          >
+            <img src={icon_lts4} alt='LTS 4'/>
+          
+          {isHovering && (
+            <img src={text_lts4} alt='White knuckle riding'/>
+          )}
+          </div>
+        </div><br />
+      </div>
+
       <button className='reset-button' onClick={handleButtonClick}>
         Reset
       </button>
+
       <div id='map-container' ref={mapContainerRef} />
 
       {/* sidebar */}
