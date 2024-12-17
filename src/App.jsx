@@ -12,12 +12,16 @@ import text_lts1 from '/Text_LTS1.svg'
 import text_lts2 from '/Text_LTS2.svg'
 import text_lts3 from '/Text_LTS3.svg'
 import text_lts4 from '/Text_LTS4.svg'
+import logo_stressmap from '/BikeStressMap.svg'
 
 // https://docs.mapbox.com/help/tutorials/use-mapbox-gl-js-with-react/
 
 const INITIAL_CENTER = [-71.05777, 42.3224]
 const INITIAL_ZOOM = 11.4
 const LINE_WIDTH = 3;
+
+const LEGEND_HEIGHT_DEFAULT = 50
+const LEGEND_HEIGHT_HOVER = 100
 
 function App() {
   const mapRef = useRef()
@@ -169,60 +173,45 @@ function App() {
         Longitude: {center[0].toFixed(4)} | Latitude: {center[1].toFixed(4)} | Zoom: {zoom.toFixed(2)}
       </div>
 
-      <div className="legend">
-        <h1>Stress Levels</h1><br />
-        
-        <div>
-          <div 
-            onMouseOver={handleMouseOver}
-            onMouseOut={handleMouseOut}
-          >
-            <img src={icon_lts1} alt='LTS 1'/>
-          
-          {isHovering && (
-            <img src={text_lts1} alt='Carefree riding'/>
-          )}
+      <div className="legend grid-container">
+          {/* <div className="legend-header-default" style={{width:{LEGEND_HEIGHT_DEFAULT}}}>
+            <img src={logo_stressmap} height={LEGEND_HEIGHT_DEFAULT} alt='Legend' class='rotate-image default-image'/>
+          </div> */}
+          <div className="legend-header-hover">
+            <img src={logo_stressmap} alt='Legend' class='hover-image'/>
           </div>
-        </div><br />
-        
-        <div>
-          <div 
-            onMouseOver={handleMouseOver}
-            onMouseOut={handleMouseOut}
-          >
-            <img src={icon_lts2} alt='LTS 2'/>
           
-          {isHovering && (
-            <img src={text_lts2} alt='Easy going riding'/>
-          )}
+          <div className="legend-icon">
+            <img src={icon_lts1} height={LEGEND_HEIGHT_DEFAULT} alt='LTS 1' class='default-image'/>
+            <img src={icon_lts1} height={LEGEND_HEIGHT_HOVER} alt='LTS 1' class='hover-image'/>
           </div>
-        </div><br />
+          <div className="legend-text">
+            <img src={text_lts1} height={LEGEND_HEIGHT_HOVER} alt='Carefree riding' class='hover-image'/>
+          </div>
 
-        <div>
-          <div 
-            onMouseOver={handleMouseOver}
-            onMouseOut={handleMouseOut}
-          >
-            <img src={icon_lts3} alt='LTS 3'/>
-          
-          {isHovering && (
-            <img src={text_lts3} alt='Stressful riding'/>
-          )}
+          <div className="legend-icon">
+            <img src={icon_lts2} height={LEGEND_HEIGHT_DEFAULT} alt='LTS 2' class='default-image'/>
+            <img src={icon_lts2} height={LEGEND_HEIGHT_HOVER} alt='LTS 2' class='hover-image'/>
           </div>
-        </div><br />
+          <div className="legend-text">
+            <img src={text_lts2} height={LEGEND_HEIGHT_HOVER} alt='Easy going riding' class='hover-image'/>
+          </div>
 
-        <div>
-          <div 
-            onMouseOver={handleMouseOver}
-            onMouseOut={handleMouseOut}
-          >
-            <img src={icon_lts4} alt='LTS 4'/>
-          
-          {isHovering && (
-            <img src={text_lts4} alt='White knuckle riding'/>
-          )}
+          <div className="legend-icon">
+            <img src={icon_lts3} height={LEGEND_HEIGHT_DEFAULT} alt='LTS 3' class='default-image'/>
+            <img src={icon_lts3} height={LEGEND_HEIGHT_HOVER} alt='LTS 3' class='hover-image'/>
           </div>
-        </div><br />
+          <div className="legend-text">
+            <img src={text_lts3} height={LEGEND_HEIGHT_HOVER} alt='Stressful riding' class='hover-image'/>
+          </div>
+
+          <div className="legend-icon">
+            <img src={icon_lts4} height={LEGEND_HEIGHT_DEFAULT} alt='LTS 4' class='default-image'/>
+            <img src={icon_lts4} height={LEGEND_HEIGHT_HOVER} alt='LTS 4' class='hover-image'/>
+          </div>
+          <div className="legend-text">
+            <img src={text_lts4} height={LEGEND_HEIGHT_HOVER} alt='White knuckle riding' class='hover-image'/>
+          </div>
       </div>
 
       <button className='reset-button' onClick={handleButtonClick}>

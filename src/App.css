@@ -72,4 +72,47 @@
   left: 0;
   margin: 12px;
   border-radius: 4px;
+  /* display: grid; */
+}
+/* .legend:hover {
+  background-color: yellow;
+} */
+.grid-container{
+  display: grid;
+  align-items: center;
+  justify-content: center;
+}
+
+.legend-header-default {
+  grid-column: 1;
+  grid-row: 1 / span 4;
+}
+
+.legend-header-hover {
+  grid-column: 1 / span 3;
+  grid-row: 1;
+}
+
+.legend-icon {
+  grid-column: 2;
+}
+
+.legend-text {
+  grid-column: 3;
+}
+
+.legend .default-image,
+.legend:hover .hover-image{
+  display: block;
+  /* float: left; */
+}
+
+.legend .hover-image,
+.legend:hover .default-image{
+  display: none;
+  /* float: left; */
+}
+
+.rotate-image{
+  transform: rotate(-90deg);
 }
