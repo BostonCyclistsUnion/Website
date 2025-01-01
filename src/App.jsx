@@ -1,8 +1,10 @@
 import { useRef, useEffect, useState } from 'react'
+import { renderToStaticMarkup } from 'react-dom/server';
 import mapboxgl from 'mapbox-gl'
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 import './App.css'
+import SimpleCard from './SimpleCard'
 
 import icon_lts1 from '/Icon_LTS1.svg'
 import icon_lts2 from '/Icon_LTS2.svg'
@@ -98,36 +100,8 @@ function App() {
       mapRef.current.on('click', 'lts-layer', (e) => {
         // Copy coordinates array.
         const coordinates = e.features[0].geometry.coordinates.slice(); // I don't think this works with line strings
-        const description = `<h1>${e.features[0].properties.name}</h1>`
-        // const description = `
-        // <h1>${e.features[0].properties.name}</h1>`
-        // <p>Road Type: ${e.features[0].properties.highway}<br></p>
-        // <table>
-        //     <tr>
-        //         <th>Value</th>
-        //         <th>Left</th>
-        //         <th>Right</th>
-        //     </tr>
-        //     <tr>
-        //         <td><b>LTS</b></td>
-        //         <td><b>${e.features[0].properties.LTS_left}</b></td>
-        //         <td><b>${e.features[0].properties.LTS_right}</b></td>
-        //     </tr>
-        //     <tr>
-        //         <td colspan="3"><b>Bike Infrastructure</b></td>
-        //     </tr>
-        //     <tr>
-        //         <td>Bike Permitted</td>
-        //         <td>${e.features[0].properties.biking_permitted_left} <font color="gray">${e.features[0].properties.biking_permitted_rule_left}</font></td>
-        //         <td>${e.features[0].properties.biking_permitted_right} <font color="gray">${e.features[0].properties.biking_permitted_rule_right}</font></td>
-        //     </tr>
-        //     <tr>
-        //         <td>Bike Lane</td>
-        //         <td>${e.features[0].properties.bike_lane_exist_left} <font color="gray">${e.features[0].properties.bike_lane_exist_rule_left}</font></td>
-        //         <td>${e.features[0].properties.bike_lane_exist_right} <font color="gray">${e.features[0].properties.bike_lane_exist_rule_right}</font></td>
-        //     </tr>
-        // </table>`;
-
+        const description = renderToStaticMarkup(<SimpleCard e={e}/>)
+        
         // Ensure that if the map is zoomed out such that multiple
         // copies of the feature are visible, the popup appears
         // over the copy being pointed to.
@@ -140,6 +114,7 @@ function App() {
         new mapboxgl.Popup()
             .setLngLat(e.lngLat) // Changed to use click location instead of feature location (I think)
             .setHTML(description)
+            // .setHTML(<simpleCard e={e} />)
             .setMaxWidth("600px")
             .addTo(mapRef.current);
       });
