@@ -29,20 +29,26 @@ const LEGEND_HEIGHT_DEFAULT = 50
 const LEGEND_HEIGHT_HOVER = 100
 
 function App() {
+  // stores the feature that the user is currently viewing (triggers the modal)
+  const [activeFeature, setActiveFeature] = useState()
+
+  // for toggling between map view and card view on small screens
+  const [activeMobileView, setActiveMobileView] = useState('map')
+
   const mapRef = useRef()
   const mapContainerRef = useRef()
 
   const [center, setCenter] = useState(INITIAL_CENTER)
   const [zoom, setZoom] = useState(INITIAL_ZOOM)
 
-  // Enable hovertext
-  const [isHovering, setIsHovering] = useState(false);
-  const handleMouseOver = () => {
-    setIsHovering(true);
-  };
-  const handleMouseOut = () => {
-    setIsHovering(false);
-  };
+  // Enable hovertext // solved using CSS to make hover legend
+  // const [isHovering, setIsHovering] = useState(false);
+  // const handleMouseOver = () => {
+  //   setIsHovering(true);
+  // };
+  // const handleMouseOut = () => {
+  //   setIsHovering(false);
+  // };
 
   useEffect(() => {
     mapboxgl.accessToken = 'pk.eyJ1Ijoic2tpbGNveW5lIiwiYSI6ImNseTd2cXpwOTA5MnUya3E2ejBkN2ttOW8ifQ.TN39Bd_yu_SqMsu-IW4FKQ'

@@ -1,13 +1,11 @@
 // Layout for advanced data view of LTS info
+console.log('InfoDetail entered')
 
 import InfoSimple from './InfoSimple'
 
-console.log('InfoDetail entered')
-
-
 const InfoDetail = ({e}) => {
     return (
-        SimpleCard(e)
+        InfoSimple(e)
     )
 }
 

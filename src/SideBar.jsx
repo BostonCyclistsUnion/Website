@@ -2,6 +2,8 @@
 
 console.log('SideBar entered')
 
+import InfoDetail from './InfoDetail'
+
 const SideBar = ({e}) => {
     return (
     <>
