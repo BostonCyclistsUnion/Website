@@ -4,7 +4,10 @@ import mapboxgl from 'mapbox-gl'
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 import './App.css'
-import SimpleCard from './SimpleCard'
+
+import InfoSimple from './InfoSimple'
+import InfoDetail from './InfoDetail'
+import SideBar from './SideBar'
 
 import icon_lts1 from '/Icon_LTS1.svg'
 import icon_lts2 from '/Icon_LTS2.svg'
@@ -98,9 +101,12 @@ function App() {
       // When a click event occurs on a feature in the places layer, open a popup at the
       // location of the feature, with description HTML from its properties.
       mapRef.current.on('click', 'lts-layer', (e) => {
+        console.log(e.features[0])
+        console.log(e.features[0].geometry.coordinates)
+
         // Copy coordinates array.
         const coordinates = e.features[0].geometry.coordinates.slice(); // I don't think this works with line strings
-        const description = renderToStaticMarkup(<SimpleCard e={e}/>)
+        const description = renderToStaticMarkup(<InfoSimple e={e}/>)
         
         // Ensure that if the map is zoomed out such that multiple
         // copies of the feature are visible, the popup appears
@@ -114,7 +120,6 @@ function App() {
         new mapboxgl.Popup()
             .setLngLat(e.lngLat) // Changed to use click location instead of feature location (I think)
             .setHTML(description)
-            // .setHTML(<simpleCard e={e} />)
             .setMaxWidth("600px")
             .addTo(mapRef.current);
       });
@@ -135,7 +140,7 @@ function App() {
     }
   }, [])
 
-  const handleButtonClick = () => {
+  const handleResetZoom = () => {
     mapRef.current.flyTo({
       center: INITIAL_CENTER,
       zoom: INITIAL_ZOOM
@@ -149,9 +154,6 @@ function App() {
       </div>
 
       <div className="legend grid-container">
-          {/* <div className="legend-header-default" style={{width:{LEGEND_HEIGHT_DEFAULT}}}>
-            <img src={logo_stressmap} height={LEGEND_HEIGHT_DEFAULT} alt='Legend' class='rotate-image default-image'/>
-          </div> */}
           <div className="legend-header-hover">
             <img src={logo_stressmap} alt='Legend' class='hover-image'/>
           </div>
@@ -189,33 +191,11 @@ function App() {
           </div>
       </div>
 
-      <button className='reset-button' onClick={handleButtonClick}>
+      <button className='reset-button' onClick={handleResetZoom}>
         Reset
       </button>
 
       <div id='map-container' ref={mapContainerRef} />
-
-      {/* sidebar */}
-      <div id='sidebar' className='sidebar'>
-        <div className='text-2xl text-black font-semibold w-full mb-1.5'>
-          Test Sidebar
-        </div>
-        {/* <div className='mb-4'>
-          <div className='font-medium text-gray-500'>
-            {currentViewData.length} results
-          </div>
-        </div> */}
-        {/* <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4'>
-          {currentViewData.map((feature, i) => {
-            return (
-              <div key={i} className='mb-1.5'>
-                <Card feature={feature} onClick={handleFeatureClick} />
-              </div>
-            )
-          })}
-        </div> */}
-      </div>
-      {/* end sidebar */}
     </>
   )
 }
