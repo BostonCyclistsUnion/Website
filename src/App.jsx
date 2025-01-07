@@ -5,9 +5,9 @@ import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css';
 import './App.css'
 
-import InfoSimple from './InfoSimple'
-import InfoDetail from './InfoDetail'
-import SideBar from './SideBar'
+// import InfoSimple from './InfoSimple'
+// import InfoDetail from './InfoDetail'
+import SideBar, {ModeToggle} from './SideBar'
 
 import icon_lts1 from '/Icon_LTS1.svg'
 import icon_lts2 from '/Icon_LTS2.svg'
@@ -230,7 +230,7 @@ function App() {
         Reset
       </button>
       <button className='advanced-button' onClick={handleAdvancedMode}>
-        Show extra details
+        <ModeToggle advancedMode={advancedMode} />
       </button>
 
       

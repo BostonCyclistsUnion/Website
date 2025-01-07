@@ -5,6 +5,13 @@ console.log('SideBar loaded')
 import InfoSimple from './InfoSimple'
 import InfoDetail from './InfoDetail'
 
+export const ModeToggle = ({advancedMode}) => {
+    console.log('ModeToggle/advancedMode', advancedMode)
+    if (advancedMode) return ('Show Fewer Details')
+    return ('Show Advanced Details')
+}
+
+
 const ShowSidebar = ({selectedFeature, advancedMode}) => {
     console.log('ShowSidebar/advancedMode', advancedMode)
     if (advancedMode) {
