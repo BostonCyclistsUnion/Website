@@ -1,23 +1,28 @@
 // SideBar layout
 
-console.log('SideBar entered')
+console.log('SideBar loaded')
 
-import InfoDetail from './InfoDetail'
+// import InfoDetail from './InfoDetail'
 
-const SideBar = ({e}) => {
-    return (
-    <>
-        <div id='sidebar' className='sidebar'>
-            <button className='close-button'>
-                {/* onClick={handleCloseButton}> */}
-                x
-            </button>
-            <div className='text-2xl text-black font-semibold w-full mb-1.5'>
-                Test Sidebar
-            </div>
+const ShowSidebar = ({advancedMode}) => {
+    console.log('ShowSidebar/advancedMode', advancedMode)
+    if (advancedMode) {
+        console.log('return sidebar')
+        // return(<></>)
+        return (
+        <div className='sidebar advancedMode'>
+                Advanced mode
         </div>
-    </>
-    )
+        )
+    }
+    console.log('dont return sidebar')
+    // return (<div className='sidebar basicMode'>standard mode</div>)
+    return(<></>)
+}
+
+const SideBar = ({advancedMode=true}) => {
+    console.log('In sidebar')
+    return (<ShowSidebar advancedMode={advancedMode}/>)
 }
 
 export default SideBar

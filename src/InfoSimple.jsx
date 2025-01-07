@@ -1,6 +1,6 @@
 // Layout for basic LTS info
 
-console.log('InfoSimple entered')
+console.log('InfoSimple loaded')
 
 const CardinalDirection = ({start, end, inverse=false}) => {
     let lonnet = end[0] - start[0]

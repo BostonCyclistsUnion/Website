@@ -31,8 +31,12 @@ const LEGEND_HEIGHT_HOVER = 100
 function App() {
   // stores the feature that the user is currently viewing (triggers the modal)
   const [activeFeature, setActiveFeature] = useState()
+  const [advancedMode, setAdvancedMode] = useState(false);
+  console.log('advancedMode:', advancedMode);
 
   // for toggling between map view and card view on small screens
+  // From https://github.com/mapbox/public-tools-and-demos/blob/main/projects/demo-realestate/src/App.jsx
+  // still need to figure out how this works
   const [activeMobileView, setActiveMobileView] = useState('map')
 
   const mapRef = useRef()
@@ -41,15 +45,35 @@ function App() {
   const [center, setCenter] = useState(INITIAL_CENTER)
   const [zoom, setZoom] = useState(INITIAL_ZOOM)
 
-  // Enable hovertext // solved using CSS to make hover legend
-  // const [isHovering, setIsHovering] = useState(false);
-  // const handleMouseOver = () => {
-  //   setIsHovering(true);
-  // };
-  // const handleMouseOut = () => {
-  //   setIsHovering(false);
-  // };
+  // on click, set the active feature
+  const handleFeatureClick = (feature) => {
+    setActiveFeature(feature)
+  }
 
+  // when the modal is closed, clear the active feature
+  const handleModalClose = () => {
+    setActiveFeature(undefined)
+  }
+
+  const handleAdvancedMode = () => {
+    console.log('advancedMode switched from', advancedMode);
+    setAdvancedMode(advancedMode => !advancedMode);
+  }
+  
+
+  // toggle the map and card view on mobile devices
+  const handleActiveMobileClick = () => {
+    if (activeMobileView === 'map') {
+      setActiveMobileView('cards')
+    } else {
+      setActiveMobileView('map')
+    }
+  }
+
+  // Load Mapbox map with:
+  // - add LTS layer
+  // - get current center of map view
+  // - 
   useEffect(() => {
     mapboxgl.accessToken = 'pk.eyJ1Ijoic2tpbGNveW5lIiwiYSI6ImNseTd2cXpwOTA5MnUya3E2ejBkN2ttOW8ifQ.TN39Bd_yu_SqMsu-IW4FKQ'
     mapRef.current = new mapboxgl.Map({ // Can add more options here: https://docs.mapbox.com/mapbox-gl-js/api/map/#map-parameters
@@ -65,6 +89,7 @@ function App() {
           url: 'mapbox://skilcoyne.stressmap_tiles'
       })
 
+      // Add LTS data layer
       mapRef.current.addLayer({
           'id': 'lts-layer',
           "type": "line",
@@ -74,12 +99,6 @@ function App() {
               'line-color': [
                   'match',
                   ['get', 'LTS'],
-                  // 0, 'black',
-                  // // Colors based on 5 equally spaced from 'turbo' colormap
-                  // 1, '#28BCEB',
-                  // 2, '#A4FC3C',
-                  // 3, '#FB7E21',
-                  // 4, '#7A0403',
                   // Colors chosen by Adam L
                   1, '#63B281',
                   2, '#DDA34E',
@@ -88,14 +107,13 @@ function App() {
                   'white'
               ],
               'line-width': LINE_WIDTH
-              // 'line-opacity': 0.5,
           }
       },
       'road-label-simple' // Add layer below labels
       )
 
+      // get the current center coordinates and zoom level from the map
       mapRef.current.on('move', () => {
-        // get the current center coordinates and zoom level from the map
         const mapCenter = mapRef.current.getCenter()
         const mapZoom = mapRef.current.getZoom()
 
@@ -200,8 +218,17 @@ function App() {
       <button className='reset-button' onClick={handleResetZoom}>
         Reset
       </button>
+      <button className='advanced-button' onClick={handleAdvancedMode}>
+        Show extra details
+      </button>
+
+      
 
       <div id='map-container' ref={mapContainerRef} />
+
+      <div id='sidebar'>
+        <SideBar advancedMode={advancedMode}/>
+      </div>
     </>
   )
 }
