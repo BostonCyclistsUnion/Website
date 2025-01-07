@@ -53,7 +53,8 @@ const CardinalDirection = ({start, end, inverse=false}) => {
     }
 
 
-const InfoSimple = ({e}) => {
+const InfoSimple = ({selectedFeature}) => {
+    console.log('InfoSimple/selectedFeature:', selectedFeature)
     const {
       name,
       highway,
@@ -68,16 +69,17 @@ const InfoSimple = ({e}) => {
       bike_lane_exist_rule_left,
       bike_lane_exist_rule_right,
       osmid
-    } = e.features[0].properties
+    } = selectedFeature.properties
 
-    const start = e.features[0].geometry.coordinates[0]
-    const end = e.features[0].geometry.coordinates[1]
+    const start = selectedFeature.geometry.coordinates[0]
+    const end = selectedFeature.geometry.coordinates[1]
 
     const osmidurl = "https://www.openstreetmap.org/way/" + osmid.toString()
 
     return (
         <div>
             <h1>{name}</h1>
+            <h2>Simple data display</h2>
             <p>Road Type: {highway}</p>
             <table>
                 <tr>
@@ -96,7 +98,7 @@ const InfoSimple = ({e}) => {
                     <td><b>{LTS_right}</b></td>
                 </tr>
                 <tr>
-                    <td colspan="3"><b>Bike Infrastructure</b></td>
+                    <td colSpan="3"><b>Bike Infrastructure</b></td>
                 </tr>
                 <tr>
                     <td>Bike Permitted</td>

@@ -1,10 +1,11 @@
 // Layout for advanced data view of LTS info
 console.log('InfoDetail loaded')
 
-import CardinalDirection from './InfoSimple'
+// import CardinalDirection from './InfoSimple'
 
 
-const InfoDetail = ({e}) => {
+const InfoDetail = ({selectedFeature}) => {
+    console.log('InfoDetail/selectedFeature:', selectedFeature)
     const {
       name,
       highway,
@@ -19,10 +20,10 @@ const InfoDetail = ({e}) => {
       bike_lane_exist_rule_left,
       bike_lane_exist_rule_right,
       osmid
-    } = e.features[0].properties
+    } = selectedFeature.properties
 
-    const start = e.features[0].geometry.coordinates[0]
-    const end = e.features[0].geometry.coordinates[1]
+    const start = selectedFeature.geometry.coordinates[0]
+    const end = selectedFeature.geometry.coordinates[1]
 
     const osmidurl = "https://www.openstreetmap.org/way/" + osmid.toString()
 
@@ -32,23 +33,24 @@ const InfoDetail = ({e}) => {
             <h2>More Detailed Info Here!</h2>
             <p>Road Type: {highway}</p>
             <table>
+                <tbody>
                 <tr>
                     <th>OSM Side</th>
                     <th>Left</th>
                     <th>Right</th>
                 </tr>
-                <tr>
+                {/* <tr>
                     <th>Direction</th>
                     <th><CardinalDirection start={start} end={end}/></th>
                     <th><CardinalDirection start={start} end={end} inverse={true}/></th>
-                </tr>
+                </tr> */}
                 <tr>
                     <td><b>LTS</b></td>
                     <td><b>{LTS_left}</b></td>
                     <td><b>{LTS_right}</b></td>
                 </tr>
                 <tr>
-                    <td colspan="3"><b>Bike Infrastructure</b></td>
+                    <td colSpan="3"><b>Bike Infrastructure</b></td>
                 </tr>
                 <tr>
                     <td>Bike Permitted</td>
@@ -64,6 +66,7 @@ const InfoDetail = ({e}) => {
                     <td>OSMid</td>
                     <td><a href={osmidurl} target="_blank">{osmid}</a></td>
                 </tr>
+                </tbody>
             </table>
         </div>
     )

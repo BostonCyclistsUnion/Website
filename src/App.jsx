@@ -23,7 +23,13 @@ import logo_stressmap from '/BikeStressMap.svg'
 
 const INITIAL_CENTER = [-71.05777, 42.3224]
 const INITIAL_ZOOM = 11.4
-const LINE_WIDTH = 3;
+const MAX_ZOOM = 18
+const MIN_ZOOM = 10
+const BOUNDS = [
+  [-71.1130, 42.1929], // Southwest coordinates
+  [-70.9181, 42.4600] // Northeast coordinates
+];
+const LINE_WIDTH = 3
 
 const LEGEND_HEIGHT_DEFAULT = 50
 const LEGEND_HEIGHT_HOVER = 100
@@ -45,15 +51,15 @@ function App() {
   const [center, setCenter] = useState(INITIAL_CENTER)
   const [zoom, setZoom] = useState(INITIAL_ZOOM)
 
-  // on click, set the active feature
-  const handleFeatureClick = (feature) => {
-    setActiveFeature(feature)
-  }
+  // // on click, set the active feature
+  // const handleFeatureClick = (feature) => {
+  //   setActiveFeature(feature)
+  // }
 
-  // when the modal is closed, clear the active feature
-  const handleModalClose = () => {
-    setActiveFeature(undefined)
-  }
+  // // when the modal is closed, clear the active feature
+  // const handleModalClose = () => {
+  //   setActiveFeature(undefined)
+  // }
 
   const handleAdvancedMode = () => {
     console.log('advancedMode switched from', advancedMode);
@@ -72,14 +78,17 @@ function App() {
 
   // Load Mapbox map with:
   // - add LTS layer
-  // - get current center of map view
-  // - 
+  // - get current center and zoom of map view
+  // - allow user to click on street segments from LTS layer, data saved to state variable
   useEffect(() => {
     mapboxgl.accessToken = 'pk.eyJ1Ijoic2tpbGNveW5lIiwiYSI6ImNseTd2cXpwOTA5MnUya3E2ejBkN2ttOW8ifQ.TN39Bd_yu_SqMsu-IW4FKQ'
     mapRef.current = new mapboxgl.Map({ // Can add more options here: https://docs.mapbox.com/mapbox-gl-js/api/map/#map-parameters
       container: mapContainerRef.current,
       center: center,
       zoom: zoom,
+      minZoom: MIN_ZOOM,
+      maxZoom: MAX_ZOOM,
+      maxBounds: BOUNDS,
       style: 'mapbox://styles/mapbox/light-v11'
     });
 
@@ -125,12 +134,14 @@ function App() {
       // When a click event occurs on a feature in the places layer, open a popup at the
       // location of the feature, with description HTML from its properties.
       mapRef.current.on('click', 'lts-layer', (e) => {
-        console.log(e.features[0])
-        console.log(e.features[0].geometry.coordinates)
+        console.log('App/map/click/e.features[0]', e.features[0])
+        console.log('App/map/click/e.features[0].geometry.coordinates', e.features[0].geometry.coordinates)
+
+        setActiveFeature(e.features[0])
 
         // Copy coordinates array.
         const coordinates = e.features[0].geometry.coordinates.slice(); // I don't think this works with line strings
-        const description = renderToStaticMarkup(<InfoSimple e={e}/>)
+        // let description = renderToStaticMarkup(<InfoSimple selectedFeature={activeFeature}/>)
         
         // Ensure that if the map is zoomed out such that multiple
         // copies of the feature are visible, the popup appears
@@ -141,11 +152,11 @@ function App() {
             }
         }
 
-        new mapboxgl.Popup()
-            .setLngLat(e.lngLat) // Changed to use click location instead of feature location (I think)
-            .setHTML(description)
-            .setMaxWidth("600px")
-            .addTo(mapRef.current);
+        // new mapboxgl.Popup()
+        //     .setLngLat(e.lngLat) // Changed to use click location instead of feature location (I think)
+        //     .setHTML(description)
+        //     .setMaxWidth("600px")
+        //     .addTo(mapRef.current);
       });
 
       // Change the cursor to a pointer when the mouse is over the LTS layer.
@@ -179,39 +190,39 @@ function App() {
 
       <div className="legend grid-container">
           <div className="legend-header-hover">
-            <img src={logo_stressmap} alt='Legend' class='hover-image'/>
+            <img src={logo_stressmap} alt='Legend' className='hover-image'/>
           </div>
           
           <div className="legend-icon">
-            <img src={icon_lts1} height={LEGEND_HEIGHT_DEFAULT} alt='LTS 1' class='default-image'/>
-            <img src={icon_lts1} height={LEGEND_HEIGHT_HOVER} alt='LTS 1' class='hover-image'/>
+            <img src={icon_lts1} height={LEGEND_HEIGHT_DEFAULT} alt='LTS 1' className='default-image'/>
+            <img src={icon_lts1} height={LEGEND_HEIGHT_HOVER} alt='LTS 1' className='hover-image'/>
           </div>
           <div className="legend-text">
-            <img src={text_lts1} height={LEGEND_HEIGHT_HOVER} alt='Carefree riding' class='hover-image'/>
+            <img src={text_lts1} height={LEGEND_HEIGHT_HOVER} alt='Carefree riding' className='hover-image'/>
           </div>
 
           <div className="legend-icon">
-            <img src={icon_lts2} height={LEGEND_HEIGHT_DEFAULT} alt='LTS 2' class='default-image'/>
-            <img src={icon_lts2} height={LEGEND_HEIGHT_HOVER} alt='LTS 2' class='hover-image'/>
+            <img src={icon_lts2} height={LEGEND_HEIGHT_DEFAULT} alt='LTS 2' className='default-image'/>
+            <img src={icon_lts2} height={LEGEND_HEIGHT_HOVER} alt='LTS 2' className='hover-image'/>
           </div>
           <div className="legend-text">
-            <img src={text_lts2} height={LEGEND_HEIGHT_HOVER} alt='Easy going riding' class='hover-image'/>
+            <img src={text_lts2} height={LEGEND_HEIGHT_HOVER} alt='Easy going riding' className='hover-image'/>
           </div>
 
           <div className="legend-icon">
-            <img src={icon_lts3} height={LEGEND_HEIGHT_DEFAULT} alt='LTS 3' class='default-image'/>
-            <img src={icon_lts3} height={LEGEND_HEIGHT_HOVER} alt='LTS 3' class='hover-image'/>
+            <img src={icon_lts3} height={LEGEND_HEIGHT_DEFAULT} alt='LTS 3' className='default-image'/>
+            <img src={icon_lts3} height={LEGEND_HEIGHT_HOVER} alt='LTS 3' className='hover-image'/>
           </div>
           <div className="legend-text">
-            <img src={text_lts3} height={LEGEND_HEIGHT_HOVER} alt='Stressful riding' class='hover-image'/>
+            <img src={text_lts3} height={LEGEND_HEIGHT_HOVER} alt='Stressful riding' className='hover-image'/>
           </div>
 
           <div className="legend-icon">
-            <img src={icon_lts4} height={LEGEND_HEIGHT_DEFAULT} alt='LTS 4' class='default-image'/>
-            <img src={icon_lts4} height={LEGEND_HEIGHT_HOVER} alt='LTS 4' class='hover-image'/>
+            <img src={icon_lts4} height={LEGEND_HEIGHT_DEFAULT} alt='LTS 4' className='default-image'/>
+            <img src={icon_lts4} height={LEGEND_HEIGHT_HOVER} alt='LTS 4' className='hover-image'/>
           </div>
           <div className="legend-text">
-            <img src={text_lts4} height={LEGEND_HEIGHT_HOVER} alt='White knuckle riding' class='hover-image'/>
+            <img src={text_lts4} height={LEGEND_HEIGHT_HOVER} alt='White knuckle riding' className='hover-image'/>
           </div>
       </div>
 
@@ -227,7 +238,7 @@ function App() {
       <div id='map-container' ref={mapContainerRef} />
 
       <div id='sidebar'>
-        <SideBar advancedMode={advancedMode}/>
+        <SideBar selectedFeature={activeFeature} advancedMode={advancedMode}/>
       </div>
     </>
   )

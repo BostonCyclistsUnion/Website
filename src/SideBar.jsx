@@ -2,27 +2,35 @@
 
 console.log('SideBar loaded')
 
-// import InfoDetail from './InfoDetail'
+import InfoSimple from './InfoSimple'
+import InfoDetail from './InfoDetail'
 
-const ShowSidebar = ({advancedMode}) => {
+const ShowSidebar = ({selectedFeature, advancedMode}) => {
     console.log('ShowSidebar/advancedMode', advancedMode)
     if (advancedMode) {
-        console.log('return sidebar')
-        // return(<></>)
+        console.log('return advanced sidebar')
         return (
         <div className='sidebar advancedMode'>
-                Advanced mode
+                <InfoDetail selectedFeature={selectedFeature} />
         </div>
         )
     }
-    console.log('dont return sidebar')
-    // return (<div className='sidebar basicMode'>standard mode</div>)
-    return(<></>)
+    console.log('return simple sidebar')
+    return (
+        <div className='sidebar advancedMode'>
+                <InfoSimple selectedFeature={selectedFeature} />
+        </div>
+        )
 }
 
-const SideBar = ({advancedMode=true}) => {
-    console.log('In sidebar')
-    return (<ShowSidebar advancedMode={advancedMode}/>)
+const SideBar = ({selectedFeature, advancedMode=false}) => {
+    console.log('SideBar/selectedFeature', selectedFeature)
+    if(selectedFeature == undefined) {
+        return <></>
+    }
+    return (
+        <ShowSidebar selectedFeature={selectedFeature} advancedMode={advancedMode}/>
+    )
 }
 
 export default SideBar

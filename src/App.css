@@ -83,7 +83,7 @@
 }
 
 .sidebar .basicMode {
-  display: none;
+  display: block;
 }
 .sidebar .advancedMode {
   display: block;
