@@ -74,11 +74,11 @@
   position: fixed;
   top: 50px;
   right: 10px;
-  bottom: 30px;
-  width: 280px;
-  /* height: 90%; */
-  background-color: #ebcdcdc4;
-  border-left: 1px solid #353535;
+  /* bottom: 30px; */
+  /* width: 280px; */
+  /* max-height: 90%; */
+  background-color: #ffffffd3;
+  border: 1px solid #353535;
   padding: 10px;
 }
 
@@ -87,6 +87,34 @@
 }
 .sidebar .advancedMode {
   display: block;
+}
+
+td {
+  text-align: center;
+}
+
+.tableContainer {
+  /* https://thelinuxcode.com/make-html-table-vertically-scrollable/ */
+  overflow: hidden;  
+  max-width: 400px;
+  /* max-height: 80%; */
+  /* height: 600px; */
+  max-height: 600px;
+  overflow-y: scroll; 
+  overflow-x: scroll; 
+  /* bottom: 30px; */
+}
+
+.tableAdvancedMode {
+  position: sticky;
+  top: 0;
+  width: 100%;
+}
+
+/* .tableAdvancedMode tr:nth-child(even){background-color: #f2f2f2;} */
+
+.tableAdvancedMode .notes {
+  color: gray;
 }
 
 .legend {

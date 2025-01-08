@@ -2,7 +2,7 @@
 
 console.log('InfoSimple loaded')
 
-const CardinalDirection = ({start, end, inverse=false}) => {
+export const CardinalDirection = ({start, end, inverse=false}) => {
     let lonnet = end[0] - start[0]
     let latnet = end[1] - start[1]
 
@@ -52,6 +52,26 @@ const CardinalDirection = ({start, end, inverse=false}) => {
     return cd
     }
 
+const TextLTS = ({ltsValue}) => {
+    let textValue = 'Unknown LTS Value: ' + ltsValue
+
+    switch (ltsValue) {
+        case 1:
+            textValue = 'Carefree'
+            break
+        case 2:
+            textValue = 'Easygoing'
+            break
+        case 3:
+            textValue = 'Tense'
+            break
+        case 4:
+            textValue = 'White Knuckles'
+            break
+    }
+    return textValue
+}
+
 
 const InfoSimple = ({selectedFeature}) => {
     console.log('InfoSimple/selectedFeature:', selectedFeature)
@@ -68,6 +88,8 @@ const InfoSimple = ({selectedFeature}) => {
       bike_lane_exist_right,
       bike_lane_exist_rule_left,
       bike_lane_exist_rule_right,
+      bike_lane_separation_left,
+      bike_lane_separation_right,
       osmid
     } = selectedFeature.properties
 
@@ -79,42 +101,32 @@ const InfoSimple = ({selectedFeature}) => {
     return (
         <div>
             <h1>{name}</h1>
-            <h2>Simple data display</h2>
-            <p>Road Type: {highway}</p>
+            <div className='tableContainer'>
             <table>
-                <tr>
-                    <th>OSM Side</th>
-                    <th>Left</th>
-                    <th>Right</th>
-                </tr>
+                <tbody>
                 <tr>
                     <th>Direction</th>
                     <th><CardinalDirection start={start} end={end}/></th>
                     <th><CardinalDirection start={start} end={end} inverse={true}/></th>
                 </tr>
                 <tr>
-                    <td><b>LTS</b></td>
-                    <td><b>{LTS_left}</b></td>
-                    <td><b>{LTS_right}</b></td>
-                </tr>
-                <tr>
-                    <td colSpan="3"><b>Bike Infrastructure</b></td>
-                </tr>
-                <tr>
-                    <td>Bike Permitted</td>
-                    <td>{biking_permitted_left} <font color="gray">{biking_permitted_rule_left}</font></td>
-                    <td>{biking_permitted_right} <font color="gray">{biking_permitted_rule_right}</font></td>
+                    <td><b>Biking Stress Level</b></td>
+                    <td><TextLTS ltsValue={LTS_left} /></td>
+                    <td><TextLTS ltsValue={LTS_right} /></td>
                 </tr>
                 <tr>
                     <td>Bike Lane</td>
-                    <td>{bike_lane_exist_left} <font color="gray">{bike_lane_exist_rule_left}</font></td>
-                    <td>{bike_lane_exist_right} <font color="gray">{bike_lane_exist_rule_right}</font></td>
+                    <td>{bike_lane_exist_left}</td>
+                    <td>{bike_lane_exist_right}</td>
                 </tr>
                 <tr>
-                    <td>OSMid</td>
-                    <td><a href={osmidurl} target="_blank">{osmid}</a></td>
+                    <td>Bike Lane Separation</td>
+                    <td>{bike_lane_separation_left}</td>
+                    <td>{bike_lane_separation_right}</td>
                 </tr>
+                </tbody>
             </table>
+            </div>
         </div>
     )
 }
