@@ -26,6 +26,8 @@ const LINE_WIDTH = 3
 const LEGEND_HEIGHT_DEFAULT = 50
 const LEGEND_HEIGHT_HOVER = 100
 
+const COLOR_SCALE = ['#63B281', '#DDA34E', '#AA5939', '#522B2A', 'white'] // Colors chosen by Adam L
+
 function Map() {
   // stores the feature that the user is currently viewing (triggers the modal)
   const [activeFeature, setActiveFeature] = useState()
@@ -90,6 +92,8 @@ function Map() {
           url: 'mapbox://skilcoyne.stressmap_tiles'
       })
 
+      
+
       // Add LTS data layer
       mapRef.current.addLayer({
           'id': 'lts-layer',
@@ -100,18 +104,41 @@ function Map() {
               'line-color': [
                   'match',
                   ['get', 'LTS'],
-                  // Colors chosen by Adam L
-                  1, '#63B281',
-                  2, '#DDA34E',
-                  3, '#AA5939',
-                  4, '#522B2A',
-                  'white'
+                  1, COLOR_SCALE[0],
+                  2, COLOR_SCALE[1],
+                  3, COLOR_SCALE[2],
+                  4, COLOR_SCALE[3],
+                  COLOR_SCALE[4]
               ],
               'line-width': LINE_WIDTH
           }
       },
       'road-label-simple' // Add layer below labels
       )
+
+      // Add selected LTS segment layer
+      mapRef.current.addLayer(
+        {
+          'id': 'selected_lts',
+          "type": "line",
+          'source': 'LTS_source',
+          'source-layer': 'lts',
+          'paint': {
+              'line-color': [
+                  'match',
+                  ['get', 'LTS'],
+                  1, COLOR_SCALE[0],
+                  2, COLOR_SCALE[1],
+                  3, COLOR_SCALE[2],
+                  4, COLOR_SCALE[3],
+                  COLOR_SCALE[4]
+              ],
+              'line-width': LINE_WIDTH * 3
+            },
+          filter: ['in', 'osmid', '']
+        },
+        'road-label-simple'
+      );
 
       // get the current center coordinates and zoom level from the map
       mapRef.current.on('move', () => {
@@ -130,6 +157,7 @@ function Map() {
         console.log('App/map/click/e.features[0].geometry.coordinates', e.features[0].geometry.coordinates)
 
         setActiveFeature(e.features[0])
+        mapRef.current.setFilter('selected_lts', ['in', 'osmid', e.features[0].id]);
 
         // Copy coordinates array.
         const coordinates = e.features[0].geometry.coordinates.slice(); // I don't think this works with line strings
@@ -197,9 +225,9 @@ function Map() {
           <SideBar selectedFeature={activeFeature} advancedMode={advancedMode}/>
         </div>
 
-        <div id='selected-feature'>
+        {/* <div id='selected-feature'>
           <HighlightFeature selectedFeature={activeFeature}/>
-        </div>
+        </div> */}
       </div>
     </>
   )
