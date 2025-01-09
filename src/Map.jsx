@@ -9,7 +9,6 @@ import './App.css'
 // import InfoDetail from './InfoDetail'
 import Legend from './Legend';
 import SideBar, {ModeToggle} from './SideBar'
-import HighlightFeature from './HighlightFeature'
 
 // https://docs.mapbox.com/help/tutorials/use-mapbox-gl-js-with-react/
 
