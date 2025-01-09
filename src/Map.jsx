@@ -169,6 +169,9 @@ function Map() {
       mapRef.current.on('mouseleave', 'lts-layer', () => {
         mapRef.current.getCanvas().style.cursor = '';
       })
+
+      // Add fullscreen button
+      mapRef.current.addControl(new mapboxgl.FullscreenControl());
     })
 
     return () => {
@@ -186,66 +189,62 @@ function Map() {
   return (
     <>
       <div id='map-container' ref={mapContainerRef} >
-      <div className="topbar">
-        Longitude: {center[0].toFixed(4)} | Latitude: {center[1].toFixed(4)} | Zoom: {zoom.toFixed(2)}
-      </div>
+        <div className="topbar">
+          Longitude: {center[0].toFixed(4)} | Latitude: {center[1].toFixed(4)} | Zoom: {zoom.toFixed(2)}
+        </div>
 
-      <div className="legend grid-container">
-          <div className="legend-header-hover">
-            <img src={logo_stressmap} alt='Legend' className='hover-image'/>
-          </div>
-          
-          <div className="legend-icon">
-            <img src={icon_lts1} height={LEGEND_HEIGHT_DEFAULT} alt='LTS 1' className='default-image'/>
-            <img src={icon_lts1} height={LEGEND_HEIGHT_HOVER} alt='LTS 1' className='hover-image'/>
-          </div>
-          <div className="legend-text">
-            <img src={text_lts1} height={LEGEND_HEIGHT_HOVER} alt='Carefree riding' className='hover-image'/>
-          </div>
+        <div className="legend grid-container">
+            <div className="legend-header-hover">
+              <img src={logo_stressmap} alt='Legend' className='hover-image'/>
+            </div>
+            
+            <div className="legend-icon">
+              <img src={icon_lts1} height={LEGEND_HEIGHT_DEFAULT} alt='LTS 1' className='default-image'/>
+              <img src={icon_lts1} height={LEGEND_HEIGHT_HOVER} alt='LTS 1' className='hover-image'/>
+            </div>
+            <div className="legend-text">
+              <img src={text_lts1} height={LEGEND_HEIGHT_HOVER} alt='Carefree riding' className='hover-image'/>
+            </div>
 
-          <div className="legend-icon">
-            <img src={icon_lts2} height={LEGEND_HEIGHT_DEFAULT} alt='LTS 2' className='default-image'/>
-            <img src={icon_lts2} height={LEGEND_HEIGHT_HOVER} alt='LTS 2' className='hover-image'/>
-          </div>
-          <div className="legend-text">
-            <img src={text_lts2} height={LEGEND_HEIGHT_HOVER} alt='Easy going riding' className='hover-image'/>
-          </div>
+            <div className="legend-icon">
+              <img src={icon_lts2} height={LEGEND_HEIGHT_DEFAULT} alt='LTS 2' className='default-image'/>
+              <img src={icon_lts2} height={LEGEND_HEIGHT_HOVER} alt='LTS 2' className='hover-image'/>
+            </div>
+            <div className="legend-text">
+              <img src={text_lts2} height={LEGEND_HEIGHT_HOVER} alt='Easy going riding' className='hover-image'/>
+            </div>
 
-          <div className="legend-icon">
-            <img src={icon_lts3} height={LEGEND_HEIGHT_DEFAULT} alt='LTS 3' className='default-image'/>
-            <img src={icon_lts3} height={LEGEND_HEIGHT_HOVER} alt='LTS 3' className='hover-image'/>
-          </div>
-          <div className="legend-text">
-            <img src={text_lts3} height={LEGEND_HEIGHT_HOVER} alt='Stressful riding' className='hover-image'/>
-          </div>
+            <div className="legend-icon">
+              <img src={icon_lts3} height={LEGEND_HEIGHT_DEFAULT} alt='LTS 3' className='default-image'/>
+              <img src={icon_lts3} height={LEGEND_HEIGHT_HOVER} alt='LTS 3' className='hover-image'/>
+            </div>
+            <div className="legend-text">
+              <img src={text_lts3} height={LEGEND_HEIGHT_HOVER} alt='Stressful riding' className='hover-image'/>
+            </div>
 
-          <div className="legend-icon">
-            <img src={icon_lts4} height={LEGEND_HEIGHT_DEFAULT} alt='LTS 4' className='default-image'/>
-            <img src={icon_lts4} height={LEGEND_HEIGHT_HOVER} alt='LTS 4' className='hover-image'/>
-          </div>
-          <div className="legend-text">
-            <img src={text_lts4} height={LEGEND_HEIGHT_HOVER} alt='White knuckle riding' className='hover-image'/>
-          </div>
-      </div>
+            <div className="legend-icon">
+              <img src={icon_lts4} height={LEGEND_HEIGHT_DEFAULT} alt='LTS 4' className='default-image'/>
+              <img src={icon_lts4} height={LEGEND_HEIGHT_HOVER} alt='LTS 4' className='hover-image'/>
+            </div>
+            <div className="legend-text">
+              <img src={text_lts4} height={LEGEND_HEIGHT_HOVER} alt='White knuckle riding' className='hover-image'/>
+            </div>
+        </div>
 
-      <button className='reset-button' onClick={handleResetZoom}>
-        Reset
-      </button>
-      <button className='advanced-button' onClick={handleAdvancedMode}>
-        <ModeToggle advancedMode={advancedMode} />
-      </button>
+        <button className='reset-button' onClick={handleResetZoom}>
+          Reset
+        </button>
+        <button className='advanced-button' onClick={handleAdvancedMode}>
+          <ModeToggle advancedMode={advancedMode} />
+        </button>
 
-      
+        <div id='sidebar' className='sidebar'>
+          <SideBar selectedFeature={activeFeature} advancedMode={advancedMode}/>
+        </div>
 
-      
-
-      <div id='sidebar'>
-        <SideBar selectedFeature={activeFeature} advancedMode={advancedMode}/>
-      </div>
-
-      <div id='selected-feature'>
-        <HighlightFeature selectedFeature={activeFeature}/>
-      </div>
+        <div id='selected-feature'>
+          <HighlightFeature selectedFeature={activeFeature}/>
+        </div>
       </div>
     </>
   )

@@ -17,14 +17,14 @@ const ShowSidebar = ({selectedFeature, advancedMode}) => {
     if (advancedMode) {
         console.log('return advanced sidebar')
         return (
-        <div className='sidebar advancedMode'>
+        <div className='advancedMode'>
                 <InfoDetail selectedFeature={selectedFeature} />
         </div>
         )
     }
     console.log('return simple sidebar')
     return (
-        <div className='sidebar advancedMode'>
+        <div className='advancedMode'>
                 <InfoSimple selectedFeature={selectedFeature} />
         </div>
         )
@@ -34,9 +34,9 @@ const SideBar = ({selectedFeature, advancedMode=false}) => {
     console.log('SideBar/selectedFeature', selectedFeature)
     if(selectedFeature == undefined) {
         return (
-        <div className='sidebar'>
+        <>
             <p>Click a street segment to learn more about it</p>
-        </div>
+        </>
         )
     }
     return (

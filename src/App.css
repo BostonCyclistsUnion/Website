@@ -9,7 +9,7 @@
 #map-container {
   /* max-height: 80%; */
   height: 800px;
-  width: 100%;
+  width: 80%;
   /* temporarily set the background color so we can tell where the map container is positioned */
   background-color: lightgrey;
   z-index: 0;
@@ -39,10 +39,10 @@
 }
 
 .advanced-button {
+  z-index: 1;
   position: absolute;
   top: 10px;
-  z-index: 1;
-  right: 12px;
+  right: 50px;
   padding: 4px 10px;
   border-radius: 10px;
   cursor: pointer;
@@ -59,7 +59,7 @@
 }
 
 .sidebar {
-  position: fixed;
+  position: absolute;
   top: 50px;
   right: 10px;
   /* bottom: 30px; */
