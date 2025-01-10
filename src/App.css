@@ -6,13 +6,25 @@
   left: 0;
 }
 
+#primary-column {
+  max-width: 1500px;
+  margin: auto;
+  /* display: flex;
+  justify-content: center; */
+}
+
 #map-container {
   /* max-height: 80%; */
   height: 800px;
-  width: 80%;
+  /* width: 80%; */
+  margin: auto;
   /* temporarily set the background color so we can tell where the map container is positioned */
   background-color: lightgrey;
   z-index: 0;
+}
+
+.content {
+  margin: auto;
 }
 
 .topbar {
@@ -30,9 +42,9 @@
 
 .reset-button {
   position: absolute;
-  top: 50px;
+  top: 10px;
   z-index: 1;
-  left: 12px;
+  right: 220px;
   padding: 4px 10px;
   border-radius: 10px;
   cursor: pointer;

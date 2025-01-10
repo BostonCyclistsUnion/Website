@@ -5,10 +5,10 @@ import Labs from './Explainers/Labs'
 
 function App() {
     
-    return (<>
+    return (<div id='primary-column'>
         <Labs />
         <Map />
         <LTS />
-    </>)}
+    </div>)}
 
 export default App

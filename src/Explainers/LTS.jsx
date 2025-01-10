@@ -3,7 +3,7 @@
 console.log('Explainer/LTS loaded')
 
 const LTS = ({}) => {
-    return(<div>
+    return(<div className="content">
     <h1>[Under Construction] What is this map?</h1>
         <p>What exactly we want to say and how to format it needs to be figured out. Below isn't a well thought out outline yet.</p>
         <h2>Biking Stress</h2>

@@ -17,10 +17,10 @@ const INITIAL_ZOOM = 11.4
 const MAX_ZOOM = 18
 const MIN_ZOOM = 10
 const BOUNDS = [
-  [-71.1130, 42.1929], // Southwest coordinates
-  [-70.9181, 42.4600] // Northeast coordinates
+  [-71.2000, 42.1800], // Southwest coordinates
+  [-70.9000, 42.4600] // Northeast coordinates
 ];
-const LINE_WIDTH = 3
+const LINE_WIDTH = 4
 
 const LEGEND_HEIGHT_DEFAULT = 50
 const LEGEND_HEIGHT_HOVER = 100
@@ -197,11 +197,15 @@ function Map() {
     }
   }, [])
 
-  const handleResetZoom = () => {
+  const handleReset = () => {
+    // Reset zoom
     mapRef.current.flyTo({
       center: INITIAL_CENTER,
       zoom: INITIAL_ZOOM
     })
+    // Deactivate selected features
+    setActiveFeature()
+    mapRef.current.setFilter('selected_lts', ['in', 'osmid', '']);
   }
 
   return (
@@ -213,20 +217,15 @@ function Map() {
 
         <Legend LEGEND_HEIGHT_DEFAULT={LEGEND_HEIGHT_DEFAULT} LEGEND_HEIGHT_HOVER={LEGEND_HEIGHT_HOVER}/>
 
-        <button className='reset-button' onClick={handleResetZoom}>
+        <button className='reset-button' onClick={handleReset}>
           Reset
         </button>
         <button className='advanced-button' onClick={handleAdvancedMode}>
           <ModeToggle advancedMode={advancedMode} />
         </button>
 
-        <div id='sidebar' className='sidebar'>
-          <SideBar selectedFeature={activeFeature} advancedMode={advancedMode}/>
-        </div>
+        <SideBar selectedFeature={activeFeature} advancedMode={advancedMode}/>
 
-        {/* <div id='selected-feature'>
-          <HighlightFeature selectedFeature={activeFeature}/>
-        </div> */}
       </div>
     </>
   )
