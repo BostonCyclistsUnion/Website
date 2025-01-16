@@ -68,6 +68,9 @@ const TextLTS = ({ltsValue}) => {
         case 4:
             textValue = 'White Knuckles'
             break
+        case 0:
+            textValue = 'Biking not permitted'
+            break
     }
     return textValue
 }

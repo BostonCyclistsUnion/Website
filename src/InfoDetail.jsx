@@ -20,20 +20,6 @@ const InfoDetail = ({selectedFeature}) => {
       bike_lane_exist_rule_left,
       bike_lane_exist_rule_right,
       osmid,
-      bike_lane_separation_left,
-      bike_lane_separation_rule_left,
-      bike_lane_separation_right,
-      bike_lane_separation_rule_right,
-      width_bikelane_left,
-      width_bikelane_rule_left,
-      width_bikelane_right,
-      width_bikelane_rule_right,
-      width_bikelanebuffer_left,
-      width_bikelanebuffer_rule_left,
-      width_bikelanebuffer_right,
-      width_bikelanebuffer_rule_right,
-      bikelane_reach_left,
-      bikelane_reach_right,
       oneway,
       street_narrow_wide,
       width_street,
@@ -71,34 +57,46 @@ const InfoDetail = ({selectedFeature}) => {
 
     const osmidurl = "https://www.openstreetmap.org/way/" + osmid.toString()
 
-    const BikeLaneInfo = ({
-        bike_lane_exist_left, bike_lane_exist_right, 
-        bike_lane_separation_left, bike_lane_separation_right,
-        bike_lane_separation_rule_left, bike_lane_separation_rule_right,
-        width_bikelane_left, width_bikelane_right,
-        width_bikelane_rule_left, width_bikelane_rule_right,
-        width_bikelanebuffer_left, width_bikelanebuffer_right,
-        width_bikelanebuffer_rule_left, width_bikelanebuffer_rule_right,
-        bikelane_reach_left, bikelane_reach_right
-    }) => {
+    const BikeLaneInfo = ({data}) => {
+        const {highway, bike_lane_exist_left, bike_lane_exist_right, 
+            bike_lane_exist_rule_left, bike_lane_exist_rule_right,
+            bike_lane_separation_left, bike_lane_separation_right,
+            bike_lane_separation_rule_left, bike_lane_separation_rule_right,
+            width_bikelane_left, width_bikelane_right,
+            width_bikelane_rule_left, width_bikelane_rule_right,
+            width_bikelanebuffer_left, width_bikelanebuffer_right,
+            width_bikelanebuffer_rule_left, width_bikelanebuffer_rule_right,
+            bikelane_reach_left, bikelane_reach_right} = data
         console.log('bike_lane_exist_left:', bike_lane_exist_left, 'bike_lane_exist_right:', bike_lane_exist_right)
-        console.log(bike_lane_exist_left  == 'no', bike_lane_exist_right == 'no', bike_lane_exist_left  == 'no' && bike_lane_exist_right == 'no')
-        if (bike_lane_exist_left  == 'no' && bike_lane_exist_right == 'no') return (<></>)
+        // console.log(bike_lane_exist_left == 'no', bike_lane_exist_right == 'no', bike_lane_exist_left == 'no' && bike_lane_exist_right == 'no')
+
+        let bikelane = ''
+
+        if (!(bike_lane_exist_left != 'no' || bike_lane_exist_right != 'no') && (highway == 'footway' || highway == 'cycleway' || highway == 'service')) {
+            return (<></>)
+        } else {
+            bikelane = <>
+            <tr>
+                <td>Bike Lane</td>
+                <td>{bike_lane_exist_left}<br /><font color="gray">{bike_lane_exist_rule_left}</font></td>
+                <td>{bike_lane_exist_right}<br /><font color="gray">{bike_lane_exist_rule_right}</font></td>
+            </tr>
+            </>
+        }
+
+        if (bike_lane_exist_left == 'no' && bike_lane_exist_right == 'no' && highway != 'footway') return (bikelane)
+        
         return (
             <>
-            <tr>
-                <td rowSpan="2">Separation</td>
-                <td>{bike_lane_separation_left}</td>
-                <td>{bike_lane_separation_right}</td>
-            </tr>
+            {bikelane}
             <tr>
                 <td><font color="gray">{bike_lane_separation_rule_left}</font></td>
                 <td><font color="gray">{bike_lane_separation_rule_right}</font></td>
             </tr>
             <tr>
                 <td rowSpan="2">Bike Lane Width</td>
-                <td>{width_bikelane_left}</td>
-                <td>{width_bikelane_right}</td>
+                <td>{Number(width_bikelane_left).toFixed(1)}</td>
+                <td>{Number(width_bikelane_right).toFixed(1)}</td>
             </tr>
             <tr>
                 <td><font color="gray">{width_bikelane_rule_left}</font></td>
@@ -106,8 +104,8 @@ const InfoDetail = ({selectedFeature}) => {
             </tr>
             <tr>
                 <td rowSpan="2">Bike Lane Buffer</td>
-                <td>{width_bikelanebuffer_left}</td>
-                <td>{width_bikelanebuffer_right}</td>
+                <td>{Number(width_bikelanebuffer_left).toFixed(1)}</td>
+                <td>{Number(width_bikelanebuffer_right).toFixed(1)}</td>
             </tr>
             <tr>
                 <td><font color="gray">{width_bikelanebuffer_rule_left}</font></td>
@@ -115,8 +113,8 @@ const InfoDetail = ({selectedFeature}) => {
             </tr>
             <tr>
                 <td>Bike Lane Reach</td>
-                <td>{bikelane_reach_left}</td>
-                <td>{bikelane_reach_right}</td>
+                <td>{Number(bikelane_reach_left).toFixed(1)}</td>
+                <td>{Number(bikelane_reach_right).toFixed(1)}</td>
             </tr>
             </>
         )
@@ -158,24 +156,7 @@ const InfoDetail = ({selectedFeature}) => {
                         <td><font color="gray">{biking_permitted_rule_left}</font></td>
                         <td><font color="gray">{biking_permitted_rule_right}</font></td>
                     </tr>
-                    <tr>
-                        <td rowSpan="2">Bike Lane</td>
-                        <td>{bike_lane_exist_left}</td>
-                        <td>{bike_lane_exist_right}</td>
-                    </tr>
-                    <tr>
-                        <td><font color="gray">{bike_lane_exist_rule_left}</font></td>
-                        <td><font color="gray">{bike_lane_exist_rule_right}</font></td>
-                    </tr>
-                    <BikeLaneInfo   bike_lane_exist_left={bike_lane_exist_left} bike_lane_exist_right={bike_lane_exist_right}
-                                    bike_lane_separation_left={bike_lane_separation_left} bike_lane_separation_right={bike_lane_separation_right}
-                                    bike_lane_separation_rule_left={bike_lane_separation_rule_left} bike_lane_separation_rule_right={bike_lane_separation_rule_right}
-                                    width_bikelane_left={width_bikelane_left} width_bikelane_right={width_bikelane_right}
-                                    width_bikelane_rule_left={width_bikelane_rule_left} width_bikelane_rule_right={width_bikelane_rule_right}
-                                    width_bikelanebuffer_left={width_bikelanebuffer_left} width_bikelanebuffer_right={width_bikelanebuffer_right}
-                                    width_bikelanebuffer_rule_left={width_bikelanebuffer_rule_left} width_bikelanebuffer_rule_right={width_bikelanebuffer_rule_right}
-                                    bikelane_reach_left={bikelane_reach_left} bikelane_reach_right={bikelane_reach_right}/>
-
+                    <BikeLaneInfo data = {selectedFeature.properties}/>
                     <tr>
                         <td colSpan="3"><b>Street Design for Cars</b></td>
                     </tr>
@@ -185,33 +166,33 @@ const InfoDetail = ({selectedFeature}) => {
                     </tr>
                     <tr>
                         <td>Street Width</td>
-                        <td colSpan="2">{width_street} <font color="gray">{width_street_rule}</font></td>
+                        <td colSpan="2">{Number(width_street).toFixed(1)} <font color="gray">{width_street_rule}</font></td>
                     </tr>
                     <tr>
                         <td>Parking Width</td>
-                        <td>{width_parking_left} <font color="gray">{width_parking_rule_left}</font></td>
-                        <td>{width_parking_right} <font color="gray">{width_parking_rule_right}</font></td>
+                        <td>{Number(width_parking_left).toFixed(1)} <font color="gray">{width_parking_rule_left}</font></td>
+                        <td>{Number(width_parking_right).toFixed(1)} <font color="gray">{width_parking_rule_right}</font></td>
                     </tr>
                     <tr>
                         <td>Lane Count</td>
-                        <td colSpan="2">{lane_count} <font color="gray">{lane_count_rule}</font></td>
+                        <td colSpan="2">{lane_count}<br /><font color="gray">{lane_count_rule}</font></td>
                     </tr>
                     <tr>
                         <td>Parking</td>
-                        <td>{parking_left} <font color="gray">{parking_rule_left}</font></td>
-                        <td>{parking_right} <font color="gray">{parking_rule_right}</font></td>
+                        <td>{parking_left}<br /><font color="gray">{parking_rule_left}</font></td>
+                        <td>{parking_right}<br /><font color="gray">{parking_rule_right}</font></td>
                     </tr>
                     <tr>
                         <td>Prevailing Speed</td>
-                        <td colSpan="2">{speed} <font color="gray">{speed_rule}</font></td>
+                        <td colSpan="2">{speed}<br /><font color="gray">{speed_rule}</font></td>
                     </tr>
                     <tr>
                         <td>Centerline</td>
-                        <td colSpan="2">{centerline} <font color="gray">{centerline_rule}</font></td>
+                        <td colSpan="2">{centerline}<br /><font color="gray">{centerline_rule}</font></td>
                     </tr>
                     <tr>
                         <td>Average Daily Traffic (ADT)</td>
-                        <td colSpan="2">{ADT} <font color="gray">{ADT_rule}</font></td>
+                        <td colSpan="2">{ADT}<br /><font color="gray">{ADT_rule}</font></td>
                     </tr>
                     <tr>
                         <td colSpan="3"><b>Technical Info</b></td>
