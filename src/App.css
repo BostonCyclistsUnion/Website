@@ -78,13 +78,17 @@
   /* width: 280px; */
   /* max-height: 90%; */
   background-color: #ffffffd3;
-  border: 1px solid #353535;
+  /* border: 1px solid #353535; */
   padding: 10px;
   z-index: 1;
 }
 
 .sidebar .basicMode {
   display: block;
+  width: 411px;
+  background-color: #F8F8F8;
+  border-radius: 4px;
+  filter: drop-shadow(0px 1px 6px #2927211A);
 }
 .sidebar .advancedMode {
   display: block;
@@ -119,7 +123,7 @@ td {
 }
 
 .legend {
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: #F8F8F8;
   color: #b106f5;
   padding: 6px 12px;
   font-family: monospace;
@@ -148,24 +152,31 @@ td {
   grid-row: 1;
 }
 
+.legend-row {  
+  border: 5px solid;
+  border-radius: 16px;
+  grid-column: 1 / span 3;
+  display: grid;
+}
+
 .legend-icon {
-  grid-column: 2;
+  grid-column: 1;
 }
 
 .legend-text {
-  grid-column: 3;
+  grid-column: 2;
 }
 
 .legend .default-image,
 .legend:hover .hover-image{
-  display: block;
-  /* float: left; */
+  display: block;  
+  height: 50px;
 }
 
 .legend .hover-image,
 .legend:hover .default-image{
   display: none;
-  /* float: left; */
+  height: 110px;
 }
 
 .rotate-image{

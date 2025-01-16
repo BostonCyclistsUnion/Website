@@ -22,9 +22,6 @@ const BOUNDS = [
 ];
 const LINE_WIDTH = 4
 
-const LEGEND_HEIGHT_DEFAULT = 50
-const LEGEND_HEIGHT_HOVER = 100
-
 const COLOR_SCALE = ['#63B281', '#DDA34E', '#AA5939', '#522B2A', 'white'] // Colors chosen by Adam L
 
 function Map() {
@@ -215,7 +212,7 @@ function Map() {
           Longitude: {center[0].toFixed(4)} | Latitude: {center[1].toFixed(4)} | Zoom: {zoom.toFixed(2)}
         </div>
 
-        <Legend LEGEND_HEIGHT_DEFAULT={LEGEND_HEIGHT_DEFAULT} LEGEND_HEIGHT_HOVER={LEGEND_HEIGHT_HOVER}/>
+        <Legend colorScale={COLOR_SCALE}/>
 
         <button className='reset-button' onClick={handleReset}>
           Reset
