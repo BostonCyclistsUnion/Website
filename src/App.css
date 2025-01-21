@@ -23,6 +23,54 @@
   z-index: 0;
 }
 
+h1 {
+  color:#36342C;
+  font-family: rubik, sans-serif;
+  font-size: 3.0em;
+  text-align: center;
+}
+.head1 {
+  color:#36342C;
+  font-family: rubik, sans-serif;
+  font-size: 3.0em;
+  text-align: center;
+}
+
+.head2 {
+  color:#36342C;
+  font-family: rubik, sans-serif;
+  font-size: 2.0em;
+  text-align: center;
+}
+
+h3 {
+  color:#36342C;
+  font-family: rubik, sans-serif;
+  font-size: 1.7em;
+  text-align: center;
+}
+
+.head3 {
+  color:#36342C;
+  font-family: rubik, sans-serif;
+  font-size: 1.7em;
+  text-align: center;
+}
+
+.head4 {
+  color:#36342C;
+  font-family: rubik, sans-serif;
+  font-size: 1.3em;
+  text-align: center;
+}
+
+p {
+  color:#524F41;
+  font-family: rubik, sans-serif;
+  font-size: 1.0em;
+  max-width: 640px;
+  margin: auto;
+}
 .content {
   margin: auto;
 }
@@ -181,4 +229,62 @@ td {
 
 .rotate-image{
   transform: rotate(-90deg);
+}
+
+/* https://medium.com/edonec/build-a-react-collapsible-component-from-scratch-using-react-hooks-typescript-73dfd02c9208 */
+.collapsible-content-edonec {
+  overflow: hidden;
+  transition: height 0.2s ease-in-out;
+  border-bottom: 1px solid #dee2e6 !important;
+}
+.title-text-edonec {
+  display: block;
+  font-size: 1em;
+  margin-block-start: 0.83em;
+  margin-block-end: 0.83em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+}
+.collapsible-header-edonec {
+  display: flex;
+  justify-content: space-between;
+  padding: 2px 20px 2px 20px;
+  border-bottom: 1px solid #dee2e6 !important;
+}
+.collapsible-content-padding-edonec {
+  padding: 20px 20px 20px 20px;
+}
+.rotate-center-edonec {
+  -moz-transition: all 0.2s linear;
+  -webkit-transition: all 0.2s linear;
+  transition: all 0.2s linear;
+}
+.rotate-center-edonec.down {
+  -moz-transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+.rotate-center-edonec.up {
+  -moz-transform: rotate(360deg);
+  -webkit-transform: rotate(360deg);
+  transform: rotate(360deg);
+}
+.collapsible-icon-button-edonec {
+  cursor: pointer;
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+}
+
+.collapsible-card-edonec {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
+
+.collapsible-card-edonec:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
