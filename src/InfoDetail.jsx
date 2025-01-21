@@ -120,6 +120,35 @@ const InfoDetail = ({selectedFeature}) => {
         )
     }
 
+    const LTSInfo = ({data}) => {
+        const {
+            LTS_biking_permitted_left, LTS_biking_permitted_right,
+            LTS_bike_lane_separation_left, LTS_bike_lane_separation_right,
+            LTS_mixed_left, LTS_mixed_right,
+            LTS_bikelane_noparking_left, LTS_bikelane_noparking_right, 
+            LTS_bikelane_yesparking_left, LTS_bikelane_yesparking_right
+        } = data
+
+        const biking_permitted = ['Biking Permitted', LTS_biking_permitted_left, LTS_biking_permitted_right]
+        const bike_lane_separation = ['Bike Lane Separation', LTS_bike_lane_separation_left, LTS_bike_lane_separation_right]
+        const mixed = ['Mixed Traffic', LTS_mixed_left, LTS_mixed_right]
+        const bikelane_noparking = ['Bike lane without street parking', LTS_bikelane_noparking_left, LTS_bikelane_noparking_right]
+        const bikelane_yesparking = ['Bike lane with street parking', LTS_bikelane_yesparking_left, LTS_bikelane_yesparking_right]
+
+        let ltsRow = []
+        for (const ltsType of [mixed, biking_permitted, bike_lane_separation, bikelane_noparking, bikelane_yesparking]) {
+            console.log(ltsType[0], (typeof ltsType[1] !== 'undefined'), (typeof ltsType[2] !== 'undefined'))
+            if ((typeof ltsType[1] !== 'undefined') || (typeof ltsType[2] !== 'undefined')) {
+                ltsRow.push([<tr>
+                                <td>{ltsType[0]}</td>
+                                <td>{ltsType[1]}</td>
+                                <td>{ltsType[2]}</td>
+                            </tr>])
+            }
+        }
+        console.log('lts row', ltsRow)
+        return ltsRow
+    }
     return (
         <div>
             <h1>{name}</h1>
@@ -195,12 +224,10 @@ const InfoDetail = ({selectedFeature}) => {
                         <td colSpan="2">{ADT}<br /><font color="gray">{ADT_rule}</font></td>
                     </tr>
                     <tr>
-                        <td colSpan="3"><b>Technical Info</b></td>
+                        <td colSpan="3"><b>LTS Calculations</b></td>
                     </tr>
-                    <tr>
-                        <td>OSMid</td>
-                        <td colSpan="2"><a href={osmidurl} target="_blank">{osmid}</a></td>
-                    </tr><tr>
+                    <LTSInfo data = {selectedFeature.properties}/>
+                    {/* <tr>
                         <td>LTS_biking_permitted</td>
                         <td>{LTS_biking_permitted_left}</td>
                         <td>{LTS_biking_permitted_right}</td>
@@ -224,6 +251,13 @@ const InfoDetail = ({selectedFeature}) => {
                         <td>LTS_bikelane_yesparking</td>
                         <td>{LTS_bikelane_yesparking_left}</td>
                         <td>{LTS_bikelane_yesparking_right}</td>
+                    </tr> */}
+                    <tr>
+                        <td colSpan="3"><b>Technical Info</b></td>
+                    </tr>
+                    <tr>
+                        <td>OSMid</td>
+                        <td colSpan="2"><a href={osmidurl} target="_blank">{osmid}</a></td>
                     </tr>
                     </tbody>
                 </table>
