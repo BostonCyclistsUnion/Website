@@ -158,6 +158,54 @@ td {
   /* bottom: 30px; */
 }
 
+.tableStreetName {
+  font-family: rubik, sans-serif;
+  font-size: 1.5em;
+  font-weight: 600;
+  text-align: left;
+  color: #1B1A16;
+}
+
+.tableDirection {
+  border: 5px solid;
+  border-color: #36342C;
+  background-color: #524F41;
+  border-radius: 8px 8px 0px 0px;
+  border-spacing: 0px;
+  padding: 9.67px 12.09px 9.67px 12.09px;
+  font-family: rubik, sans-serif;
+  font-size: 1.25em;
+  color: #FFFFFF;
+  font-weight: 400;
+  width: 100px;
+}
+
+.tableBox{
+  border: 5px solid;
+  border-color: #DBDAD3;
+}
+
+.tableSection{
+  font-weight: 500;
+  font-family: rubik, sans-serif;
+  font-size: 1.5em;
+  padding-top: 15px;
+}
+
+.tableDescription {
+  font-family: rubik, sans-serif;
+  font-size: 1.0em;
+  font-weight: 400;
+  background-color: #F3F3F0;
+  padding: 5px;
+}
+
+.tableValue {
+  font-size: 1.25em;
+  font-weight: 400;
+  font-family: rubik, sans-serif;
+}
+
 .tableAdvancedMode {
   position: sticky;
   top: 0;
@@ -168,6 +216,9 @@ td {
 
 .tableAdvancedMode .notes {
   color: gray;
+  font-size: 0.8em;
+  font-weight: 300;
+  font-family: rubik, sans-serif;
 }
 
 .legend {

@@ -103,30 +103,34 @@ const InfoSimple = ({selectedFeature}) => {
 
     return (
         <div>
-            <h1>{name}</h1>
+            <h1 className='tableStreetName'>{name}</h1>
             <div className='tableContainer'>
             <table>
-                <tbody>
-                <tr>
-                    <th>Direction</th>
-                    <th><CardinalDirection start={start} end={end}/></th>
-                    <th><CardinalDirection start={start} end={end} inverse={true}/></th>
-                </tr>
-                <tr>
-                    <td><b>Biking Stress Level</b></td>
-                    <td><TextLTS ltsValue={LTS_left} /></td>
-                    <td><TextLTS ltsValue={LTS_right} /></td>
-                </tr>
-                <tr>
-                    <td>Bike Lane</td>
-                    <td>{bike_lane_exist_left}</td>
-                    <td>{bike_lane_exist_right}</td>
-                </tr>
-                <tr>
-                    <td>Bike Lane Separation</td>
-                    <td>{bike_lane_separation_left}</td>
-                    <td>{bike_lane_separation_right}</td>
-                </tr>
+                <thead>
+                    <tr>
+                        <th className='tableDirection'><CardinalDirection start={start} end={end}/></th>
+                        <th className='tableDirection'><CardinalDirection start={start} end={end} inverse={true}/></th>
+                    </tr>
+                </thead>
+
+                <tbody className='tableBox'>
+                    <tr><td className='tableDescription' colSpan="2">Biking Stress Level</td></tr>
+                    <tr>
+                        <td className='tableValue'><TextLTS ltsValue={LTS_left} /></td>
+                        <td className='tableValue'><TextLTS ltsValue={LTS_right} /></td>
+                    </tr>
+
+                    <tr><td className='tableDescription' colSpan="2">Bike Lane</td></tr>
+                    <tr>
+                        <td className='tableValue'>{bike_lane_exist_left}</td>
+                        <td className='tableValue'>{bike_lane_exist_right}</td>
+                    </tr>
+
+                    <tr><td className='tableDescription' colSpan="2">Bike Lane Separation</td></tr>
+                    <tr>
+                        <td className='tableValue'>{bike_lane_separation_left}</td>
+                        <td className='tableValue'>{bike_lane_separation_right}</td>
+                    </tr>
                 </tbody>
             </table>
             </div>
