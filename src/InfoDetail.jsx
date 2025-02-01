@@ -64,8 +64,12 @@ const InfoDetail = ({selectedFeature}) => {
             bikelane = <>
             <tr><td className='tableDescription' colSpan="2">Bike Lane</td></tr>
             <tr>
-                <td className='tableValue'>{bike_lane_exist_left}<br /><font color="gray">{bike_lane_exist_rule_left}</font></td>
-                <td className='tableValue'>{bike_lane_exist_right}<br /><font color="gray">{bike_lane_exist_rule_right}</font></td>
+                <td className='tableValue'>{bike_lane_exist_left}</td>
+                <td className='tableValue'>{bike_lane_exist_right}</td>
+            </tr>
+            <tr>
+                <td className='notes'>{bike_lane_exist_rule_left}</td>
+                <td className='notes'>{bike_lane_exist_rule_right}</td>
             </tr>
             </>
         }
@@ -76,7 +80,7 @@ const InfoDetail = ({selectedFeature}) => {
             <>
             {bikelane}
             <tr>
-            <td className='notes'>{bike_lane_separation_rule_left}</td>
+                <td className='notes'>{bike_lane_separation_rule_left}</td>
                 <td className='notes'>{bike_lane_separation_rule_right}</td>
             </tr>
             <tr><td className='tableDescription' colSpan="2">Bike Lane Width</td></tr>
@@ -85,7 +89,7 @@ const InfoDetail = ({selectedFeature}) => {
                 <td className='tableValue'>{Number(width_bikelane_right).toFixed(1)}</td>
             </tr>
             <tr>
-            <td className='notes'>{width_bikelane_rule_left}</td>
+                <td className='notes'>{width_bikelane_rule_left}</td>
                 <td className='notes'>{width_bikelane_rule_right}</td>
             </tr>
             <tr><td className='tableDescription' colSpan="2">Bike Lane Buffer</td></tr>
@@ -125,11 +129,13 @@ const InfoDetail = ({selectedFeature}) => {
         for (const ltsType of [mixed, biking_permitted, bike_lane_separation, bikelane_noparking, bikelane_yesparking]) {
             console.log(ltsType[0], (typeof ltsType[1] !== 'undefined'), (typeof ltsType[2] !== 'undefined'))
             if ((typeof ltsType[1] !== 'undefined') || (typeof ltsType[2] !== 'undefined')) {
-                ltsRow.push([<tr>
-                                <td>{ltsType[0]}</td>
-                                <td>{ltsType[1]}</td>
-                                <td>{ltsType[2]}</td>
-                            </tr>])
+                ltsRow.push([<>
+                    <tr><td className='tableDescription' colSpan="2">{ltsType[0]}</td></tr>
+                    <tr>
+                        <td className='tableValue'>{ltsType[1]}</td>
+                        <td className='tableValue'>{ltsType[2]}</td>
+                    </tr>
+                    </>])
             }
         }
         console.log('lts row', ltsRow)
@@ -142,8 +148,8 @@ const InfoDetail = ({selectedFeature}) => {
                 <table className='tableAdvancedMode'>
                     <thead>
                         <tr>
-                            <th className='tableDirection'><CardinalDirection start={start} end={end}/></th>
-                            <th className='tableDirection'><CardinalDirection start={start} end={end} inverse={true}/></th>
+                            <th><CardinalDirection start={start} end={end}/></th>
+                            <th><CardinalDirection start={start} end={end} inverse={true}/></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -154,61 +160,71 @@ const InfoDetail = ({selectedFeature}) => {
                         </tr>
                         <tr><td className='tableDescription' colSpan="2">LTS</td></tr>
                         <tr>
-                            <td><b>{LTS_left}</b></td>
-                            <td><b>{LTS_right}</b></td>
+                            <td className='tableValue'><b>{LTS_left}</b></td>
+                            <td className='tableValue'><b>{LTS_right}</b></td>
                         </tr>
                         <tr><td className='tableSection' colSpan="2">Bike Infrastructure</td></tr>
                         <tr><td className='tableDescription' colSpan="2">Bike Permitted</td></tr>
                         <tr>
-                            <td>{biking_permitted_left}</td>
-                            <td>{biking_permitted_right}</td>
+                            <td className='tableValue'>{biking_permitted_left}</td>
+                            <td className='tableValue'>{biking_permitted_right}</td>
                         </tr>
                         <tr>
-                            <td><font color="gray">{biking_permitted_rule_left}</font></td>
-                            <td><font color="gray">{biking_permitted_rule_right}</font></td>
+                            <td className='notes'>{biking_permitted_rule_left}</td>
+                            <td className='notes'>{biking_permitted_rule_right}</td>
                         </tr>
                         <BikeLaneInfo data = {selectedFeature.properties}/>
 
                         <tr><td className='tableSection' colSpan="2">Street Design for Cars</td></tr>
-                        <tr><td className='tableDescription' colSpan="2">Road Type</td></tr>
+                        <tr><td className='tableDescription' colSpan="2">Road Designation</td></tr>
                         <tr>
                             <td className='tableValue' colSpan="2">{highway}</td>
                         </tr>
                         <tr><td className='tableDescription' colSpan="2">Oneway</td></tr>
                         <tr>
-                            <td className='tableValue' colSpan="2">{oneway} <font color="gray">{street_narrow_wide}</font></td>
+                            <td className='tableValue' colSpan="2">{oneway} {street_narrow_wide}</td>
                         </tr>
                         <tr><td className='tableDescription' colSpan="2">Street Width</td></tr>
-                        <tr>
-                            <td className='tableValue' colSpan="2">{Number(width_street).toFixed(1)} <font color="gray">{width_street_rule}</font></td>
-                        </tr>
+                        <tr><td className='tableValue' colSpan="2">{Number(width_street).toFixed(1)}</td></tr>
+                        <tr><td className='notes' colSpan="2">{width_street_rule}</td></tr>
+
                         <tr><td className='tableDescription' colSpan="2">Parking Width</td></tr>
                         <tr>
-                            <td className='tableValue'>{Number(width_parking_left).toFixed(1)} <font color="gray">{width_parking_rule_left}</font></td>
-                            <td className='tableValue'>{Number(width_parking_right).toFixed(1)} <font color="gray">{width_parking_rule_right}</font></td>
+                            <td className='tableValue'>{Number(width_parking_left).toFixed(1)}</td>
+                            <td className='tableValue'>{Number(width_parking_right).toFixed(1)}</td>
                         </tr>
-                        <tr><td className='tableDescription' colSpan="2">Lane Count</td></tr>
                         <tr>
-                            <td className='tableValue' colSpan="2">{lane_count}<br /><font color="gray">{lane_count_rule}</font></td>
+                            <td className='notes'>{width_parking_rule_left}</td>
+                            <td className='notes'>{width_parking_rule_right}</td>
                         </tr>
+                        
+                        <tr><td className='tableDescription' colSpan="2">Lane Count</td></tr>
+                        <tr><td className='tableValue' colSpan="2">{lane_count}</td></tr>
+                        <tr><td className='notes' colSpan="2">{lane_count_rule}</td></tr>
+
                         <tr><td className='tableDescription' colSpan="2">Parking</td></tr>
                         <tr>
-                            <td className='tableValue'>{parking_left}<br /><font color="gray">{parking_rule_left}</font></td>
-                            <td className='tableValue'>{parking_right}<br /><font color="gray">{parking_rule_right}</font></td>
+                            <td className='tableValue'>{parking_left}</td>
+                            <td className='tableValue'>{parking_right}</td>
                         </tr>
+                        <tr>
+                            <td className='notes'>{parking_rule_left}</td>
+                            <td className='notes'>{parking_rule_right}</td>
+                        </tr>
+
                         <tr><td className='tableDescription' colSpan="2">Prevailing Speed</td></tr>
-                        <tr>
-                            <td className='tableValue' colSpan="2">{speed}<br /><font color="gray">{speed_rule}</font></td>
-                        </tr>
+                        <tr><td className='tableValue' colSpan="2">{speed}</td></tr>
+                        <tr><td className='notes' colSpan="2">{speed_rule}</td></tr>
+
                         <tr><td className='tableDescription' colSpan="2">Centerline</td></tr>
-                        <tr>
-                            <td className='tableValue' colSpan="2">{centerline}<br /><font color="gray">{centerline_rule}</font></td>
-                        </tr>
+                        <tr><td className='tableValue' colSpan="2">{centerline}</td></tr>
+                        <tr><td className='notes' colSpan="2">{centerline_rule}</td></tr>
+                        
                         <tr><td className='tableDescription' colSpan="2">Average Daily Traffic (ADT)</td></tr>
-                        <tr>
-                            <td className='tableValue' colSpan="2">{ADT}<br /><font color="gray">{ADT_rule}</font></td>
-                        </tr>
-                        <tr><td className='tableDescription' colSpan="2">LTS Calculations</td></tr>
+                        <tr><td className='tableValue' colSpan="2">{ADT}</td></tr>
+                        <tr><td className='notes' colSpan="2">{ADT_rule}</td></tr>
+
+                        <tr><td className='tableSection' colSpan="2">LTS Calculations</td></tr>
                         <LTSInfo data = {selectedFeature.properties}/>
                         
                         <tr><td className='tableSection' colSpan="2">Technical Info</td></tr>

@@ -142,20 +142,46 @@ p {
   display: block;
 }
 
-td {
-  text-align: center;
-}
-
 .tableContainer {
   /* https://thelinuxcode.com/make-html-table-vertically-scrollable/ */
   overflow: hidden;  
   max-width: 400px;
+  max-height: 500px;
+
   /* max-height: 80%; */
   /* height: 600px; */
-  max-height: 500px;
-  overflow-y: scroll; 
-  overflow-x: scroll; 
+  /* overflow-y: scroll;  */
+  /* overflow-x: scroll;  */
   /* bottom: 30px; */
+
+  overflow-y: auto;
+  height: 500px;
+}
+
+.tableContainer thead th {
+  position: sticky; /* make the table heads sticky */
+  top: 0px; /* table head will be placed from the top of the table and sticks to it */
+  background-color: #524F41;
+
+  /* border: 5px solid; */
+  /* border-color: #36342C; */
+  /* border-radius: 8px 8px 0px 0px; */
+  /* border-spacing: 0px; */
+  padding: 9.67px 12.09px 9.67px 12.09px;
+  font-family: rubik, sans-serif;
+  font-size: 1.25em;
+  color: #FFFFFF;
+  font-weight: 400;
+  width: 100px;
+}
+
+table {
+  border-collapse: collapse; /* make the table borders collapse to each other */
+  width: 100%;
+}
+
+td {
+  text-align: center;
 }
 
 .tableStreetName {
@@ -164,20 +190,6 @@ td {
   font-weight: 600;
   text-align: left;
   color: #1B1A16;
-}
-
-.tableDirection {
-  border: 5px solid;
-  border-color: #36342C;
-  background-color: #524F41;
-  border-radius: 8px 8px 0px 0px;
-  border-spacing: 0px;
-  padding: 9.67px 12.09px 9.67px 12.09px;
-  font-family: rubik, sans-serif;
-  font-size: 1.25em;
-  color: #FFFFFF;
-  font-weight: 400;
-  width: 100px;
 }
 
 .tableBox{
@@ -190,6 +202,7 @@ td {
   font-family: rubik, sans-serif;
   font-size: 1.5em;
   padding-top: 15px;
+  background-color: #88836c;
 }
 
 .tableDescription {
@@ -214,7 +227,7 @@ td {
 
 /* .tableAdvancedMode tr:nth-child(even){background-color: #f2f2f2;} */
 
-.tableAdvancedMode .notes {
+.notes {
   color: gray;
   font-size: 0.8em;
   font-weight: 300;

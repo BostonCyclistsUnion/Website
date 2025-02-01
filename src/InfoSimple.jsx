@@ -108,8 +108,8 @@ const InfoSimple = ({selectedFeature}) => {
             <table>
                 <thead>
                     <tr>
-                        <th className='tableDirection'><CardinalDirection start={start} end={end}/></th>
-                        <th className='tableDirection'><CardinalDirection start={start} end={end} inverse={true}/></th>
+                        <th><CardinalDirection start={start} end={end}/></th>
+                        <th><CardinalDirection start={start} end={end} inverse={true}/></th>
                     </tr>
                 </thead>
 
