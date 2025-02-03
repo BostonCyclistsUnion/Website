@@ -57,16 +57,16 @@ const TextLTS = ({ltsValue}) => {
 
     switch (ltsValue) {
         case 1:
-            textValue = 'Carefree'
+            textValue = '1 - Carefree'
             break
         case 2:
-            textValue = 'Easygoing'
+            textValue = '2 - Easygoing'
             break
         case 3:
-            textValue = 'Tense'
+            textValue = '3 - Tense'
             break
         case 4:
-            textValue = 'White Knuckles'
+            textValue = '4 - White Knuckles'
             break
         case 0:
             textValue = 'Biking not permitted'

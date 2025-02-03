@@ -143,7 +143,7 @@ const InfoDetail = ({selectedFeature}) => {
     }
     return (
         <div>
-            <h1>{name}</h1>
+            <h1 className='tableStreetName'>{name}</h1>
             <div className='tableContainer'>
                 <table className='tableAdvancedMode'>
                     <thead>

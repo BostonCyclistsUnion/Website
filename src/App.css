@@ -124,7 +124,7 @@ p {
   right: 10px;
   /* bottom: 30px; */
   /* width: 280px; */
-  /* max-height: 90%; */
+  max-height: 90%;
   background-color: #ffffffd3;
   /* border: 1px solid #353535; */
   padding: 10px;
@@ -144,18 +144,17 @@ p {
 
 .tableContainer {
   /* https://thelinuxcode.com/make-html-table-vertically-scrollable/ */
-  overflow: hidden;  
   max-width: 400px;
   max-height: 500px;
-
   /* max-height: 80%; */
   /* height: 600px; */
+
+  overflow: hidden;
+  overflow-y: auto;
   /* overflow-y: scroll;  */
   /* overflow-x: scroll;  */
-  /* bottom: 30px; */
 
-  overflow-y: auto;
-  height: 500px;
+  /* bottom: 30px; */
 }
 
 .tableContainer thead th {
