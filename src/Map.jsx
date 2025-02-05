@@ -79,8 +79,22 @@ function Map() {
       minZoom: MIN_ZOOM,
       maxZoom: MAX_ZOOM,
       maxBounds: BOUNDS,
-      style: 'mapbox://styles/mapbox/light-v11'
+      // style: 'mapbox://styles/mapbox/light-v11',
+      // light-v11 doesn't seem like able to show T stations, using config can mimic light-v11 on standard style
+      style: 'mapbox://styles/mapbox/standard',
+      config: {
+        basemap: {
+          lightPreset: 'day',
+          showPlaceLabels: false,
+          showPointOfInterestLabels: false,
+          theme: 'monochrome',
+          show3dObjects: false,
+          showTransitLabels: true,
+          showRoadLabels: true
+        }
+      }
     });
+
 
     mapRef.current.on('load', function () {
       mapRef.current.addSource('LTS_source', {
@@ -88,14 +102,13 @@ function Map() {
           url: 'mapbox://skilcoyne.stressmap_tiles'
       })
 
-      
-
       // Add LTS data layer
       mapRef.current.addLayer({
           'id': 'lts-layer',
           "type": "line",
           'source': 'LTS_source',
-          'source-layer': 'lts',
+          'source-layer': 'lts', // replaces 'road-label-simple' which seems to work for light-v11 but not standard style
+          'slot': 'middle',
           'paint': {
               'line-color': [
                   'match',
@@ -109,7 +122,7 @@ function Map() {
               'line-width': LINE_WIDTH
           }
       },
-      'road-label-simple' // Add layer below labels
+      // 'road-label-simple' // Add layer below labels
       )
 
       // Add selected LTS segment layer
@@ -119,6 +132,7 @@ function Map() {
           "type": "line",
           'source': 'LTS_source',
           'source-layer': 'lts',
+          'slot': 'middle',
           'paint': {
               'line-color': [
                   'match',
@@ -133,7 +147,7 @@ function Map() {
             },
           filter: ['in', 'osmid', '']
         },
-        'road-label-simple'
+        // 'road-label-simple'
       );
 
       // get the current center coordinates and zoom level from the map
