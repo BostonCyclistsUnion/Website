@@ -5,17 +5,18 @@
  * All fields are optional. If a field is not passed, it will not be rendered.
  */
 
-// TODO: write CSS file to style these TextSections nicely
 // TODO: add an optional image to the props that can be passed to include an image below each section per the Figma mock shared by Adam.
+
+import './LandingPageTextSection.css';
 
 export default function LandingPageTextSection(props) {
     const { title, subheading, paragraph } = props;
 
     return(
-        <div className='LandingPageTextSection'>
-            <h3>{title}</h3>
-            <p><b>{subheading}</b></p>
-            <p>{paragraph}</p>
+        <div>
+            <h3 className='title'>{title}</h3>
+            <p className='subheading'>{subheading}</p>
+            <p className='paragraph'>{paragraph}</p>
         </div>
     )
 }
