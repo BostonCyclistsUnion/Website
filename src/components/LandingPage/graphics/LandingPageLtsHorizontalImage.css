@@ -1,0 +1,20 @@
+.lts-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Create 4 columns */
+    grid-template-rows: repeat(2, auto);   /* Create 2 rows */
+    gap: 5px;                              /* spacing between LTS icons */
+    max-width: 640px;                      /* match the width of the paragraphs (defined in App.css) */
+    margin: 0 auto;                        /* center the flex box */
+}
+
+.lts-item {
+    display: flex;
+    flex-direction: column;  /* Stack the icon above the text */
+    align-items: center;     /* Center the content horizontally */
+}
+
+.lts-container img {
+    width: 100%;  /* Optional: you can control the size of the images */
+    max-width: 100px; /* Max width of the images, adjust as needed */
+}
+

@@ -1,4 +1,6 @@
-/* TODO: make the landing page prettier with CSS */
+.landing-page-text-section {
+    margin: 0 auto;      /* Center the content */
+}
 
 .title {
 }
@@ -9,3 +11,10 @@
 
 .paragraph {
 }
+
+.landing-page-text-section .graphic {
+    width: 100%;         /* Make the graphic the same width as the paragraph */
+    max-width: 100%;     /* Ensure the graphic doesn't overflow */
+    display: block;      /* Ensure it behaves like a block element */
+}
+

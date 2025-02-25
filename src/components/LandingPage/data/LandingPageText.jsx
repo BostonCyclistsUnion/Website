@@ -9,13 +9,15 @@
  */
 
 import { Link } from 'react-router-dom';
-import { STRESS_MAP_PAGE_ROUTE } from '../../routes/routes';
+import { LANDING_PAGE_ROUTE, STRESS_MAP_PAGE_ROUTE } from '../../routes/routes';
+import LandingPageLtsHorizontalImage from '../graphics/LandingPageLtsHorizontalImage.jsx';
 
 const LandingPageText = [
     {
         title: 'What is Level of Traffic Stress?',
         subheading: 'A method for assessing how bike-friendly a street truly is.',
-        paragraph: "Level of Traffic Stress is a system developed by Northeastern University's Professor Peter Furth to capture..."
+        paragraph: "Level of Traffic Stress is a system developed by Northeastern University's Professor Peter Furth to capture...",
+        graphic: <LandingPageLtsHorizontalImage />
     },
     {
         title: 'How does this map work?',
