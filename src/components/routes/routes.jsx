@@ -1,2 +1,2 @@
-export const LANDING_PAGE_ROUTE = "/Website"
-export const STRESS_MAP_PAGE_ROUTE = "/Website/map"
+export const LANDING_PAGE_ROUTE = "/"
+export const STRESS_MAP_PAGE_ROUTE = "/map"

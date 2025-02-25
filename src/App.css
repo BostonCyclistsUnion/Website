@@ -51,7 +51,7 @@ h4, .head4 {
   text-align: center;
 }
 
-p {
+p, ul {
   color:#524F41;
   font-family: rubik, sans-serif;
   font-size: 1.0em;

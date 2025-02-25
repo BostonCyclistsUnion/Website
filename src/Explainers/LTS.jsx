@@ -182,6 +182,7 @@ const LTS = ({}) => {
                 calculate the LTS, in these cases we make assumptions based on the other tags about 
                 what the most common situation is. In these cases, adding the proper tags when our 
                 assumptions are wrong will result in a more accurate calculation.
+                </p>
                 <ul>
                 <li>highway: Describes the type of road</li>
                 <li>cycleway: Describes the type of bike lane. Sub-tags add details about bike lane, 
@@ -196,7 +197,7 @@ const LTS = ({}) => {
                 <li>lane_markings: Are lane lines painted? Used to estimate daily car traffic</li>
                 <li>lanes: Number of lanes</li>
                 </ul>
-                </p>
+                
         </Collapsible>
     </div>
     )
