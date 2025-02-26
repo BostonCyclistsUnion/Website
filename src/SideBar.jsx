@@ -30,8 +30,15 @@ const ShowSidebar = ({selectedFeature, advancedMode}) => {
         )
 }
 
-const SideBar = ({selectedFeature, advancedMode=false}) => {
+const SideBar = ({selectedFeature, zoom, zoomLimit, advancedMode=false}) => {
     console.log('SideBar/selectedFeature', selectedFeature)
+    if(zoom < zoomLimit) {
+        return (
+        <div id='sidebar' className='sidebar'>
+            <p>Zoom in to select a street segment and learn more about it</p>
+        </div>
+        )
+    }
     if(selectedFeature == undefined) {
         return (
         <div id='sidebar' className='sidebar'>

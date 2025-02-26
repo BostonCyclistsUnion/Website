@@ -16,13 +16,14 @@ const INITIAL_CENTER = [-71.05777, 42.3224]
 const INITIAL_ZOOM = 11.4
 const MAX_ZOOM = 18
 const MIN_ZOOM = 10
+const ZOOM_UNION = 12
 const BOUNDS = [
   [-71.2000, 42.1800], // Southwest coordinates
   [-70.9000, 42.4600] // Northeast coordinates
 ];
 const LINE_WIDTH = 4
 
-const COLOR_SCALE = ['#63B281', '#DDA34E', '#AA5939', '#522B2A', 'white'] // Colors chosen by Adam L
+const COLOR_SCALE = ['#63B281', '#DDA34E', '#AA5939', '#522B2A', 'grey'] // Colors chosen by Adam L
 
 function Map() {
   // stores the feature that the user is currently viewing (triggers the modal)
@@ -113,10 +114,14 @@ function Map() {
               'line-color': [
                   'match',
                   ['get', 'LTS'],
-                  1, COLOR_SCALE[0],
-                  2, COLOR_SCALE[1],
-                  3, COLOR_SCALE[2],
-                  4, COLOR_SCALE[3],
+                  // 1, COLOR_SCALE[0],
+                  // 2, COLOR_SCALE[1],
+                  // 3, COLOR_SCALE[2],
+                  // 4, COLOR_SCALE[3],
+                  "1.0", COLOR_SCALE[0],
+                  "2.0", COLOR_SCALE[1],
+                  "3.0", COLOR_SCALE[2],
+                  "4.0", COLOR_SCALE[3],
                   COLOR_SCALE[4]
               ],
               'line-width': LINE_WIDTH
@@ -137,10 +142,14 @@ function Map() {
               'line-color': [
                   'match',
                   ['get', 'LTS'],
-                  1, COLOR_SCALE[0],
-                  2, COLOR_SCALE[1],
-                  3, COLOR_SCALE[2],
-                  4, COLOR_SCALE[3],
+                  // 1, COLOR_SCALE[0],
+                  // 2, COLOR_SCALE[1],
+                  // 3, COLOR_SCALE[2],
+                  // 4, COLOR_SCALE[3],
+                  "1.0", COLOR_SCALE[0],
+                  "2.0", COLOR_SCALE[1],
+                  "3.0", COLOR_SCALE[2],
+                  "4.0", COLOR_SCALE[3],
                   COLOR_SCALE[4]
               ],
               'line-width': LINE_WIDTH * 3
@@ -235,7 +244,7 @@ function Map() {
           <ModeToggle advancedMode={advancedMode} />
         </button>
 
-        <SideBar selectedFeature={activeFeature} advancedMode={advancedMode}/>
+        <SideBar selectedFeature={activeFeature} zoom={zoom} zoomLimit={ZOOM_UNION} advancedMode={advancedMode}/>
 
       </div>
     </>

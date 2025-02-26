@@ -55,7 +55,7 @@ export const CardinalDirection = ({start, end, inverse=false}) => {
 const TextLTS = ({ltsValue}) => {
     let textValue = 'Unknown LTS Value: ' + ltsValue
 
-    switch (ltsValue) {
+    switch (Number(ltsValue)) {
         case 1:
             textValue = '1 - Carefree'
             break
