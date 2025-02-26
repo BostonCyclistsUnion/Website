@@ -18,6 +18,7 @@ function LandingPage() {
                     title={landingPageText.title}
                     subheading={landingPageText.subheading}
                     paragraph={landingPageText.paragraph}
+                    graphic={landingPageText.graphic}
                     />
                 ))
             }
