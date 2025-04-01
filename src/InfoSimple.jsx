@@ -81,18 +81,14 @@ const InfoSimple = ({selectedFeature}) => {
     const {
       name,
       highway,
-      LTS_left,
-      LTS_right,
-      biking_permitted_left,
-      biking_permitted_right,
-      biking_permitted_rule_left,
-      biking_permitted_rule_right,
-      bike_lane_exist_left,
-      bike_lane_exist_right,
-      bike_lane_exist_rule_left,
-      bike_lane_exist_rule_right,
-      bike_lane_separation_left,
-      bike_lane_separation_right,
+      LTS_fwd,
+      LTS_rev,
+      bike_allowed_fwd,
+      bike_allowed_rev,
+      bike_lane_fwd,
+      bike_lane_rev,
+      separation_fwd,
+      separation_rev,
       osmid
     } = selectedFeature.properties
 
@@ -108,28 +104,28 @@ const InfoSimple = ({selectedFeature}) => {
             <table>
                 <thead>
                     <tr>
-                        <th><CardinalDirection start={start} end={end}/></th>
-                        <th><CardinalDirection start={start} end={end} inverse={true}/></th>
+                        {bike_allowed_rev ? <th><CardinalDirection start={start} end={end} inverse={true}/></th> : Null}
+                        {bike_allowed_fwd ? <th><CardinalDirection start={start} end={end}/></th> : Null}
                     </tr>
                 </thead>
 
                 <tbody className='tableBox'>
                     <tr><td className='tableDescription' colSpan="2">Biking Stress Level</td></tr>
                     <tr>
-                        <td className='tableValue'><TextLTS ltsValue={LTS_left} /></td>
-                        <td className='tableValue'><TextLTS ltsValue={LTS_right} /></td>
+                        {bike_allowed_rev ? <td className='tableValue'><TextLTS ltsValue={LTS_rev} /></td> : Null}
+                        {bike_allowed_fwd ? <td className='tableValue'><TextLTS ltsValue={LTS_fwd} /></td> : Null}
                     </tr>
 
                     <tr><td className='tableDescription' colSpan="2">Bike Lane</td></tr>
                     <tr>
-                        <td className='tableValue'>{bike_lane_exist_left}</td>
-                        <td className='tableValue'>{bike_lane_exist_right}</td>
+                        {bike_allowed_rev ? <td className='tableValue'>{bike_lane_rev}</td> : Null}
+                        {bike_allowed_fwd ? <td className='tableValue'>{bike_lane_fwd}</td> : Null}
                     </tr>
 
                     <tr><td className='tableDescription' colSpan="2">Bike Lane Separation</td></tr>
                     <tr>
-                        <td className='tableValue'>{bike_lane_separation_left}</td>
-                        <td className='tableValue'>{bike_lane_separation_right}</td>
+                        {bike_allowed_rev ? <td className='tableValue'>{separation_rev}</td> : Null}
+                        {bike_allowed_fwd ? <td className='tableValue'>{separation_fwd}</td> : Null}
                     </tr>
                 </tbody>
             </table>
