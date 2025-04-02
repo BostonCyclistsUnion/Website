@@ -34,6 +34,9 @@ const InfoDetail = ({selectedFeature}) => {
 
     const osmidurl = "https://www.openstreetmap.org/way/" + osmid.toString()
 
+    const allowed_fwd = (bike_allowed_fwd === 'True');
+    const allowed_rev = (bike_allowed_rev === 'True');
+
     const BikeLaneInfo = ({data}) => {
         const {highway, bike_lane_fwd, bike_lane_rev, 
             separation_fwd, separation_rev,
@@ -52,8 +55,8 @@ const InfoDetail = ({selectedFeature}) => {
             bikelane = <>
             <tr><td className='tableDescription' colSpan="2">Bike Lane</td></tr>
             <tr>
-                <td className='tableValue'>{bike_lane_rev}</td>
-                <td className='tableValue'>{bike_lane_fwd}</td>
+                {allowed_rev && <td className='tableValue'>{bike_lane_rev}</td>}
+                {allowed_fwd && <td className='tableValue'>{bike_lane_fwd}</td>}
             </tr>
             </>
         }
@@ -64,31 +67,31 @@ const InfoDetail = ({selectedFeature}) => {
             <>
             {bikelane}
             <tr>
-                <td className='notes'>{separation_rev}</td>
-                <td className='notes'>{separation_fwd}</td>
+                {allowed_rev && <td className='notes'>{separation_rev}</td>}
+                {allowed_fwd && <td className='notes'>{separation_fwd}</td>}
             </tr>
             <tr><td className='tableDescription' colSpan="2">Bike Lane Width</td></tr>
             <tr>
-                <td className='tableValue'>{Number(bike_width_rev).toFixed(1)}</td>
-                <td className='tableValue'>{Number(bike_width_fwd).toFixed(1)}</td>
+                {allowed_rev && <td className='tableValue'>{Number(bike_width_rev).toFixed(1)}</td>}
+                {allowed_fwd && <td className='tableValue'>{Number(bike_width_fwd).toFixed(1)}</td>}
             </tr>
             <tr>
-                <td className='notes'>{bike_width_rule_rev}</td>
-                <td className='notes'>{bike_width_rule_fwd}</td>
+                {allowed_rev && <td className='notes'>{bike_width_rule_rev}</td>}
+                {allowed_fwd && <td className='notes'>{bike_width_rule_fwd}</td>}
             </tr>
             <tr><td className='tableDescription' colSpan="2">Bike Lane Buffer</td></tr>
             <tr>
-                <td className='tableValue'>{Number(buffer_rev).toFixed(1)}</td>
-                <td className='tableValue'>{Number(buffer_fwd).toFixed(1)}</td>
+                {allowed_rev && <td className='tableValue'>{Number(buffer_rev).toFixed(1)}</td>}
+                {allowed_fwd && <td className='tableValue'>{Number(buffer_fwd).toFixed(1)}</td>}
             </tr>
             <tr>
-                <td className='notes'>{buffer_rule_rev}</td>
-                <td className='notes'>{buffer_rule_fwd}</td>
+                {allowed_rev && <td className='notes'>{buffer_rule_rev}</td>}
+                {allowed_fwd && <td className='notes'>{buffer_rule_fwd}</td>}
             </tr>
             <tr><td className='tableDescription' colSpan="2">Bike Lane Reach</td></tr>
             <tr>
-                <td className='tableValue'>{Number(bike_reach_rev).toFixed(1)}</td>
-                <td className='tableValue'>{Number(bike_reach_fwd).toFixed(1)}</td>
+                {allowed_rev && <td className='tableValue'>{Number(bike_reach_rev).toFixed(1)}</td>}
+                {allowed_fwd && <td className='tableValue'>{Number(bike_reach_fwd).toFixed(1)}</td>}
             </tr>
             </>
         )
@@ -114,8 +117,8 @@ const InfoDetail = ({selectedFeature}) => {
                 ltsRow.push([<>
                     <tr><td className='tableDescription' colSpan="2">{ltsType[0]}</td></tr>
                     <tr>
-                        <td className='tableValue'>{ltsType[1]}</td>
-                        <td className='tableValue'>{ltsType[2]}</td>
+                        {allowed_rev && <td className='tableValue'>{ltsType[1]}</td>}
+                        {allowed_fwd && <td className='tableValue'>{ltsType[2]}</td>}
                     </tr>
                     </>])
             }
@@ -130,21 +133,21 @@ const InfoDetail = ({selectedFeature}) => {
                 <table className='tableAdvancedMode'>
                     <thead>
                         <tr>
-                            <th><CardinalDirection start={start} end={end}/></th>
-                            <th><CardinalDirection start={start} end={end} inverse={true}/></th>
+                            {allowed_rev && <th><CardinalDirection start={start} end={end} inverse={true}/></th>}
+                            {allowed_fwd && <th><CardinalDirection start={start} end={end}/></th>}
                         </tr>
                     </thead>
                     <tbody>
                         <tr><td className='tableDescription' colSpan="2">LTS</td></tr>
                         <tr>
-                            <td className='tableValue'><b>{LTS_rev}</b></td>
-                            <td className='tableValue'><b>{LTS_fwd}</b></td>
+                            {allowed_rev && <td className='tableValue'><b>{LTS_rev}</b></td>}
+                            {allowed_fwd && <td className='tableValue'><b>{LTS_fwd}</b></td>}
                         </tr>
                         <tr><td className='tableSection' colSpan="2">Bike Infrastructure</td></tr>
                         <tr><td className='tableDescription' colSpan="2">Bike Permitted</td></tr>
                         <tr>
-                            <td className='tableValue'>{bike_allowed_rev}</td>
-                            <td className='tableValue'>{bike_allowed_fwd}</td>
+                            {allowed_rev && <td className='tableValue'>{bike_allowed_rev}</td>}
+                            {allowed_fwd && <td className='tableValue'>{bike_allowed_fwd}</td>}
                         </tr>
                         <BikeLaneInfo data = {selectedFeature.properties}/>
 
@@ -163,8 +166,8 @@ const InfoDetail = ({selectedFeature}) => {
 
                         <tr><td className='tableDescription' colSpan="2">Parking Width</td></tr>
                         <tr>
-                            <td className='tableValue'>{Number(width_parking_rev).toFixed(1)}</td>
-                            <td className='tableValue'>{Number(width_parking_fwd).toFixed(1)}</td>
+                            {allowed_rev && <td className='tableValue'>{Number(width_parking_rev).toFixed(1)}</td>}
+                            {allowed_fwd && <td className='tableValue'>{Number(width_parking_fwd).toFixed(1)}</td>}
                         </tr>
                         
                         <tr><td className='tableDescription' colSpan="2">Lane Count</td></tr>
@@ -173,8 +176,8 @@ const InfoDetail = ({selectedFeature}) => {
 
                         <tr><td className='tableDescription' colSpan="2">Parking</td></tr>
                         <tr>
-                            <td className='tableValue'>{parking_rev}</td>
-                            <td className='tableValue'>{parking_fwd}</td>
+                            {allowed_rev && <td className='tableValue'>{parking_rev}</td>}
+                            {allowed_fwd && <td className='tableValue'>{parking_fwd}</td>}
                         </tr>
 
                         <tr><td className='tableDescription' colSpan="2">Prevailing Speed</td></tr>

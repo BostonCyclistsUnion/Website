@@ -3,8 +3,32 @@
 console.log('InfoSimple loaded')
 
 export const CardinalDirection = ({start, end, inverse=false}) => {
-    let lonnet = end[0] - start[0]
-    let latnet = end[1] - start[1]
+
+    // console.log('typeof(start[0]):', typeof(start[0]))
+    // console.log("typeof(start[0] === 'number')", typeof(start[0]) === 'number')
+    var lonstart
+    var lonend
+    var latstart
+    var latend
+
+    if (typeof(start[0]) === 'number') {
+        console.log('number')
+        lonstart = start[0];
+        lonend = end[0];
+        latstart = start[1];
+        latend = end[1];
+    } else if (typeof(start[0]) === 'object') {
+        console.log('object')
+        lonstart = start[0][0];
+        lonend = end[0][0];
+        latstart = start[0][1];
+        latend = end[0][1];
+    }
+    // let lonnet = end[0] - start[0]
+    // let latnet = end[1] - start[1]
+
+    let lonnet = lonend - lonstart
+    let latnet = latend - latstart
 
     let angle = Math.atan(latnet / lonnet) * (180 / Math.PI) // deg
 
@@ -49,6 +73,10 @@ export const CardinalDirection = ({start, end, inverse=false}) => {
     }
 
     // let output = angle + ' deg | CD: ' + cd
+    console.log('start:', lonstart, latstart)
+    console.log('end:', lonend, latend)
+    console.log('angle:', angle, ' | cd:', cd, ' | inverse:', inverse)
+    console.log('net: ', lonnet, latnet)
     return cd
     }
 
@@ -80,7 +108,7 @@ const InfoSimple = ({selectedFeature}) => {
     console.log('InfoSimple/selectedFeature:', selectedFeature)
     const {
       name,
-      highway,
+    //   highway,
       LTS_fwd,
       LTS_rev,
       bike_allowed_fwd,
@@ -89,13 +117,23 @@ const InfoSimple = ({selectedFeature}) => {
       bike_lane_rev,
       separation_fwd,
       separation_rev,
-      osmid
+      oneway
     } = selectedFeature.properties
 
     const start = selectedFeature.geometry.coordinates[0]
-    const end = selectedFeature.geometry.coordinates[1]
+    const end = selectedFeature.geometry.coordinates.at(-1)
+    console.log('selectedFeature.geometry.coordinates', selectedFeature.geometry.coordinates)
 
-    const osmidurl = "https://www.openstreetmap.org/way/" + osmid.toString()
+    const allowed_fwd = (bike_allowed_fwd === 'True');
+    const allowed_rev = (bike_allowed_rev === 'True');
+
+    const dir_fwd = <CardinalDirection start={start} end={end}/>
+    const dir_rev = <CardinalDirection start={start} end={end} inverse={true}/>
+
+    console.log('name:', name)
+
+    console.log('allowed_fwd:', allowed_fwd, ' | allowed_rev:', allowed_rev)
+    console.log('oneway:', oneway)
 
     return (
         <div>
@@ -104,28 +142,28 @@ const InfoSimple = ({selectedFeature}) => {
             <table>
                 <thead>
                     <tr>
-                        {bike_allowed_rev ? <th><CardinalDirection start={start} end={end} inverse={true}/></th> : Null}
-                        {bike_allowed_fwd ? <th><CardinalDirection start={start} end={end}/></th> : Null}
+                        {allowed_rev && <th>{dir_rev}</th>}
+                        {allowed_fwd && <th>{dir_fwd}</th>}
                     </tr>
                 </thead>
 
                 <tbody className='tableBox'>
                     <tr><td className='tableDescription' colSpan="2">Biking Stress Level</td></tr>
                     <tr>
-                        {bike_allowed_rev ? <td className='tableValue'><TextLTS ltsValue={LTS_rev} /></td> : Null}
-                        {bike_allowed_fwd ? <td className='tableValue'><TextLTS ltsValue={LTS_fwd} /></td> : Null}
+                        {allowed_rev && <td className='tableValue'><TextLTS ltsValue={LTS_rev} /></td>}
+                        {allowed_fwd && <td className='tableValue'><TextLTS ltsValue={LTS_fwd} /></td>}
                     </tr>
 
                     <tr><td className='tableDescription' colSpan="2">Bike Lane</td></tr>
                     <tr>
-                        {bike_allowed_rev ? <td className='tableValue'>{bike_lane_rev}</td> : Null}
-                        {bike_allowed_fwd ? <td className='tableValue'>{bike_lane_fwd}</td> : Null}
+                        {allowed_rev && <td className='tableValue'>{bike_lane_rev}</td>}
+                        {allowed_fwd && <td className='tableValue'>{bike_lane_fwd}</td>}
                     </tr>
 
                     <tr><td className='tableDescription' colSpan="2">Bike Lane Separation</td></tr>
                     <tr>
-                        {bike_allowed_rev ? <td className='tableValue'>{separation_rev}</td> : Null}
-                        {bike_allowed_fwd ? <td className='tableValue'>{separation_fwd}</td> : Null}
+                        {allowed_rev && <td className='tableValue'>{separation_rev}</td>}
+                        {allowed_fwd && <td className='tableValue'>{separation_fwd}</td>}
                     </tr>
                 </tbody>
             </table>
