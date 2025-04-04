@@ -8,7 +8,8 @@ import './App.css'
 // import InfoSimple from './InfoSimple'
 // import InfoDetail from './InfoDetail'
 import Legend from './Legend';
-import SideBar, {ModeToggle} from './SideBar'
+import SideBar, {ModeToggle} from './components/selection/SideBar'
+// import {ModeToggle} from './components/selection/SideBar'
 
 // https://docs.mapbox.com/help/tutorials/use-mapbox-gl-js-with-react/
 
@@ -133,7 +134,7 @@ function Map() {
       // Add selected LTS segment layer
       mapRef.current.addLayer(
         {
-          'id': 'selected_lts',
+          'id': 'selected-lts',
           "type": "line",
           'source': 'LTS_source',
           'source-layer': 'lts',
@@ -176,7 +177,8 @@ function Map() {
         console.log('App/map/click/e.features[0].geometry.coordinates', e.features[0].geometry.coordinates)
 
         setActiveFeature(e.features[0])
-        mapRef.current.setFilter('selected_lts', ['in', 'osmid', e.features[0].id]);
+        // console.log('App/map/click/e.features[0].id', e.features[0].id)
+        mapRef.current.setFilter('selected-lts', ['in', 'osmid', e.features[0].id]);
 
         // Copy coordinates array.
         const coordinates = e.features[0].geometry.coordinates.slice(); // I don't think this works with line strings
@@ -225,7 +227,7 @@ function Map() {
     })
     // Deactivate selected features
     setActiveFeature()
-    mapRef.current.setFilter('selected_lts', ['in', 'osmid', '']);
+    mapRef.current.setFilter('selected-lts', ['in', 'osmid', '']);
   }
 
   return (

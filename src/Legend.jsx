@@ -15,14 +15,14 @@ import logo_stressmap from '/BikeStressMap.svg'
 
 
 const Legend = ({colorScale}) => {
-    console.log('Legend')
+    // console.log('Legend')
 
-    console.log(colorScale)
+    // console.log(colorScale)
     const lts1 = {borderColor: colorScale[0]}
     const lts2 = {borderColor: colorScale[1]}
     const lts3 = {borderColor: colorScale[2]}
     const lts4 = {borderColor: colorScale[3]}
-    console.log(lts1)
+    // console.log(lts1)
     
     // const borderStyle = ({colorScale, index}) => {
     //   return ({borderColor: colorScale[index]})

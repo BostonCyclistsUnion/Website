@@ -1,8 +1,7 @@
 // Layout for advanced data view of LTS info
 console.log('InfoDetail loaded')
 
-import {CardinalDirection} from './InfoSimple'
-
+import Bearing from './Bearing';
 
 const InfoDetail = ({selectedFeature}) => {
     console.log('InfoDetail/selectedFeature:', selectedFeature)
@@ -133,8 +132,8 @@ const InfoDetail = ({selectedFeature}) => {
                 <table className='tableAdvancedMode'>
                     <thead>
                         <tr>
-                            {allowed_rev && <th><CardinalDirection start={start} end={end} inverse={true}/></th>}
-                            {allowed_fwd && <th><CardinalDirection start={start} end={end}/></th>}
+                            {allowed_rev && <th><Bearing start={start} end={end} inverse={true}/></th>}
+                            {allowed_fwd && <th><Bearing start={start} end={end}/></th>}
                         </tr>
                     </thead>
                     <tbody>
