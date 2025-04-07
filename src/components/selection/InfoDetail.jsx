@@ -2,6 +2,7 @@
 console.log('InfoDetail loaded')
 
 import Bearing from './Bearing';
+import StringOut from './StringOut';
 
 const InfoDetail = ({selectedFeature}) => {
     console.log('InfoDetail/selectedFeature:', selectedFeature)
@@ -33,8 +34,15 @@ const InfoDetail = ({selectedFeature}) => {
 
     const osmidurl = "https://www.openstreetmap.org/way/" + osmid.toString()
 
-    const allowed_fwd = (bike_allowed_fwd === 'True');
-    const allowed_rev = (bike_allowed_rev === 'True');
+    var allowed_fwd
+    var allowed_rev
+    if (typeof(bike_allowed_fwd) === 'string') {
+        allowed_fwd = (bike_allowed_fwd === 'True');
+        allowed_rev = (bike_allowed_rev === 'True');
+    } else if (typeof(bike_allowed_fwd) === 'boolean') {
+        allowed_fwd = bike_allowed_fwd;
+        allowed_rev = bike_allowed_rev;
+    }
 
     const BikeLaneInfo = ({data}) => {
         const {highway, bike_lane_fwd, bike_lane_rev, 
@@ -54,8 +62,8 @@ const InfoDetail = ({selectedFeature}) => {
             bikelane = <>
             <tr><td className='tableDescription' colSpan="2">Bike Lane</td></tr>
             <tr>
-                {allowed_rev && <td className='tableValue'>{bike_lane_rev}</td>}
-                {allowed_fwd && <td className='tableValue'>{bike_lane_fwd}</td>}
+                {allowed_rev && <td className='tableValue'>{StringOut(bike_lane_rev)}</td>}
+                {allowed_fwd && <td className='tableValue'>{StringOut(bike_lane_fwd)}</td>}
             </tr>
             </>
         }
@@ -143,11 +151,6 @@ const InfoDetail = ({selectedFeature}) => {
                             {allowed_fwd && <td className='tableValue'><b>{LTS_fwd}</b></td>}
                         </tr>
                         <tr><td className='tableSection' colSpan="2">Bike Infrastructure</td></tr>
-                        <tr><td className='tableDescription' colSpan="2">Bike Permitted</td></tr>
-                        <tr>
-                            {allowed_rev && <td className='tableValue'>{bike_allowed_rev}</td>}
-                            {allowed_fwd && <td className='tableValue'>{bike_allowed_fwd}</td>}
-                        </tr>
                         <BikeLaneInfo data = {selectedFeature.properties}/>
 
                         <tr><td className='tableSection' colSpan="2">Street Design for Cars</td></tr>

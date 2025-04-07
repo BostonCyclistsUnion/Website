@@ -4,6 +4,7 @@ console.log('InfoSimple loaded')
 
 import Bearing from './Bearing';
 import TextLTS from './TextLTS';
+import StringOut from './StringOut';
 
 const InfoSimple = ({selectedFeature}) => {
     console.log('InfoSimple/selectedFeature:', selectedFeature)
@@ -38,15 +39,20 @@ const InfoSimple = ({selectedFeature}) => {
         allowed_rev = bike_allowed_rev;
     }
 
-    
-
     const dir_fwd = <Bearing start={start} end={end}/>
     const dir_rev = <Bearing start={start} end={end} inverse={true}/>
+
+    let bike_lane_fwd_str = StringOut(bike_lane_fwd);
+    let bike_lane_rev_str = StringOut(bike_lane_rev);
+    let separation_fwd_str = StringOut(separation_fwd);
+    let separation_rev_str = StringOut(separation_rev);
 
     console.log('name:', name, '| osmid', osmid, typeof(osmid))
 
     console.log('bike_allowed_fwd:', bike_allowed_fwd, typeof(bike_allowed_fwd), ' | bike_allowed_rev:', bike_allowed_rev, typeof(bike_allowed_rev))
     console.log('allowed_fwd:', allowed_fwd, typeof(allowed_fwd), ' | allowed_rev:', allowed_rev, typeof(allowed_rev))
+    console.log('bike_lane_fwd:', bike_lane_fwd, typeof(bike_lane_fwd), ' | bike_lane_rev:', bike_lane_rev, typeof(bike_lane_rev))
+    console.log('separation_fwd:', separation_fwd, typeof(separation_fwd), ' | separation_rev:', separation_rev, typeof(separation_rev))
     console.log('LTS:', LTS, typeof(LTS), '| LTS_fwd:', LTS_fwd, typeof(LTS_fwd), ' | LTS_rev:', LTS_rev, typeof(LTS_rev))
     console.log('oneway:', oneway, typeof(oneway))
 
@@ -72,14 +78,14 @@ const InfoSimple = ({selectedFeature}) => {
 
                     <tr><td className='tableDescription' colSpan="2">Bike Lane</td></tr>
                     <tr>
-                        {allowed_rev && <td className='tableValue'>{bike_lane_rev}</td>}
-                        {allowed_fwd && <td className='tableValue'>{bike_lane_fwd}</td>}
+                        {allowed_rev && <td className='tableValue'>{bike_lane_rev_str}</td>}
+                        {allowed_fwd && <td className='tableValue'>{bike_lane_fwd_str}</td>}
                     </tr>
 
                     <tr><td className='tableDescription' colSpan="2">Bike Lane Separation</td></tr>
                     <tr>
-                        {allowed_rev && <td className='tableValue'>{separation_rev}</td>}
-                        {allowed_fwd && <td className='tableValue'>{separation_fwd}</td>}
+                        {allowed_rev && <td className='tableValue'>{separation_rev_str}</td>}
+                        {allowed_fwd && <td className='tableValue'>{separation_fwd_str}</td>}
                     </tr>
                 </tbody>
             </table>
