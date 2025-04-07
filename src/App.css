@@ -112,6 +112,7 @@ p, ul {
   right: 10px;
   /* bottom: 30px; */
   /* width: 280px; */
+  min-width: 200px;
   max-height: 90%;
   background-color: #ffffffd3;
   /* border: 1px solid #353535; */
