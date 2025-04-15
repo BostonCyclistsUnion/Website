@@ -1,7 +1,7 @@
 /*
  * This file configures the text on the landing page.
  *
- * Each object in the LandingPageText array will be built into a section on
+ * Each object in the LTSPageText array will be built into a section on
  * the landing page that has a title, subheading, and paragraph section.
  *
  * All fields are optional. If a value is not present in the object,
@@ -9,15 +9,15 @@
  */
 
 import { Link } from 'react-router-dom';
-import { LANDING_PAGE_ROUTE, STRESS_MAP_PAGE_ROUTE } from '../../routes/routes';
-import LandingPageLtsHorizontalImage from '../graphics/LandingPageLtsHorizontalImage.jsx';
+import { LTS_PAGE_ROUTE, MAP_PAGE_ROUTE } from '../../routes/routes.jsx';
+import LTSPageLtsHorizontalImage from '../graphics/LTSPageLtsHorizontalImage.jsx';
 
-const LandingPageText = [
+const LTSPageText = [
     {
         title: 'What is Level of Traffic Stress?',
         subheading: 'A method for assessing how bike-friendly a street truly is.',
         paragraph: "Level of Traffic Stress is a system developed by Northeastern University's Professor Peter Furth to capture...",
-        graphic: <LandingPageLtsHorizontalImage />
+        graphic: <LTSPageLtsHorizontalImage />
     },
     {
         title: 'How does this map work?',
@@ -31,8 +31,8 @@ const LandingPageText = [
     },
     {
         // TODO: make nicer neighborhood-based links to the map
-        title: <Link to={STRESS_MAP_PAGE_ROUTE}>See streets in your neighborhood!</Link>
+        title: <Link to={MAP_PAGE_ROUTE}>See streets in your neighborhood!</Link>
     }
 ]
 
-export default LandingPageText
+export default LTSPageText
