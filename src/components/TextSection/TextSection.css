@@ -12,6 +12,10 @@
 .paragraph {
 }
 
+.list {
+    
+}
+
 .text-section .graphic {
     width: 100%;         /* Make the graphic the same width as the paragraph */
     max-width: 100%;     /* Ensure the graphic doesn't overflow */

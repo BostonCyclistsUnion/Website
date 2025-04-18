@@ -18,6 +18,7 @@ function LabsPage() {
                     title={LTSPageText.title}
                     subheading={LTSPageText.subheading}
                     paragraph={LTSPageText.paragraph}
+                    list={LTSPageText.list}
                     graphic={LTSPageText.graphic}
                     />
                 ))

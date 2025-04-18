@@ -22,69 +22,33 @@ const OSMPageText = [
     },
     {
         title: 'Recommended Map Editing Tools',
-        paragraph: 'These are some of the tools that the BCU Labs team has experience with to make improvements to OpenStreetMap. There are numerous other tools if you find improving the map a fun hobby, with different strengths for different types of editing.'
+        paragraph: 'These are some of the tools that the BCU Labs team has experience with to make improvements to OpenStreetMap. There are numerous other tools if you find improving the map a fun hobby, with different strengths for different types of editing.',
+        list: [
+            'OpenStreetMap.org https://www.openstreetmap.org/',
+            'StreetComplete (Android only, beginner friendly) https://streetcomplete.app/',
+            'MapComplete https://mapcomplete.org/',
+            'OverpassTurbo https://overpass-turbo.eu/',
+            'JOSM',
+            'Vespucci'
+        ]
+    },
+    {
+        title: 'Tags we use',
+        paragraph: 'OSM data is organized as ways (street segments) that have attributes attached to them called tags. These tags contain a key and a value. This is the data that we are able to use to calculate the LTS of each street segment. You can see exactly what tags we use here[link] and a general overview of which tags are most important for our calculations below. Some of the tags are on nearly every segment while others are more rare. For many segments, a tag is missing that we need to be able to calculate the LTS, in these cases we make assumptions based on the other tags about what the most common situation is. In these cases, adding the proper tags when our assumptions are wrong will result in a more accurate calculation.',
+        list: [
+            'highway: Describes the type of road',
+            'cycleway: Describes the type of bike lane. Sub-tags add details about bike lane, including width and separation',
+            'footway: Type of pedestrian path. May have complementing tags to allow bikes',
+            'parking: Is there street parking?',
+            'width: Width of the roadway',
+            'oneway: Is the street a oneway?',
+            'bicycle: Are bicycles allowed on the way?',
+            'access: Is the public allowed here?',
+            'service: Alleys and driveways',
+            'lane_markings: Are lane lines painted? Used to estimate daily car traffic',
+            'lanes: Number of lanes',
+        ]
     }
-{/* <Collapsible header= titleClassName='head1'>
-        
-                <Collapsible header='StreetComplete (Android only, beginner friendly)' titleClassName='head4'>
-                    <p>
-                    https://streetcomplete.app/
-                    </p>
-                </Collapsible>
-                <Collapsible header='OpenStreetMap.org' titleClassName='head4'>
-                    <p>
-                    https://www.openstreetmap.org/
-                    </p>
-                </Collapsible>
-                <Collapsible header='MapComplete' titleClassName='head4'>
-                    <p>
-                    https://mapcomplete.org/
-                    </p>
-                </Collapsible>
-                <Collapsible header='OverpassTurbo' titleClassName='head4'>
-                    <p>
-                    https://overpass-turbo.eu/ 
-                    </p>
-                </Collapsible>
-                <Collapsible header='JOSM' titleClassName='head4'>
-                <h4>JOSM</h4>
-                    <p>
-                    
-                    </p>
-                </Collapsible>
-                <Collapsible header='Vespucci' titleClassName='head4'></Collapsible>
-                    <p>
-                    
-                    </p>
-                </Collapsible>
-            <h3>Tags we use</h3>
-                <p>
-                OSM data is organized as ways (street segments) that have attributes attached to 
-                them called tags. These tags contain a key and a value. This is the data that we are 
-                able to use to calculate the LTS of each street segment. You can see exactly what 
-                tags we use here[link] and a general overview of which tags are most important for 
-                our calculations below. Some of the tags are on nearly every segment while others 
-                are more rare. For many segments, a tag is missing that we need to be able to 
-                calculate the LTS, in these cases we make assumptions based on the other tags about 
-                what the most common situation is. In these cases, adding the proper tags when our 
-                assumptions are wrong will result in a more accurate calculation.
-                </p>
-                <ul>
-                <li>highway: Describes the type of road</li>
-                <li>cycleway: Describes the type of bike lane. Sub-tags add details about bike lane, 
-                    including width and separation</li>
-                <li>footway: Type of pedestrian path. May have complementing tags to allow bikes</li>
-                <li>parking: Is there street parking?</li>
-                <li>width: Width of the roadway</li>
-                <li>oneway: Is the street a oneway?</li>
-                <li>bicycle: Are bicycles allowed on the way?</li>
-                <li>access: Is the public allowed here?</li>
-                <li>service: Alleys and driveways</li>
-                <li>lane_markings: Are lane lines painted? Used to estimate daily car traffic</li>
-                <li>lanes: Number of lanes</li>
-                </ul>
-                
-        </Collapsible> */}
 ]
 
 export default OSMPageText

@@ -8,13 +8,14 @@
 import './TextSection.css';
 
 export default function TextSection(props) {
-    const { title, subheading, paragraph, graphic } = props;
+    const { title, subheading, paragraph, list, graphic } = props;
 
     return(
         <div className='text-section'>
             {title && <h3 className='title'>{title}</h3>}
             {subheading && <p className='subheading'>{subheading}</p>}
             {paragraph && <p className='paragraph'>{paragraph}</p>}
+            {list && <ul className='paragraph'>{list.map(item => <li>{item}</li>)}</ul>}
             {graphic}
         </div>
     )

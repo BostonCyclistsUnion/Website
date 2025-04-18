@@ -16,11 +16,21 @@ const LabsPageText = [
     {
         title: 'Welcome to BCU Labs!',
         subheading: 'Experiments in data-backed advocacy',
-        paragraph: 'We are a volunteer-driven group within Boston Cyclists Union. You can join us to build <here>',
+        paragraph: [
+            'We are a volunteer-driven group within Boston Cyclists Union. ', 
+            'You can join us to build <here>'
+        ],
     },
     {
         title: 'Our Mission',
-        paragraph: 'BCU Labs seeks to draw insight and tell stories from the wealth of biking data in Boston. Our mission is to leverage the power of data through creative experimentation, learn where Boston can improve its infrastructure, whether physical or digital, and continue to empower BCU’s advocacy one pedal at a time. Through our framework of mobility justice and equity, we strive to push for positive change in our bike networks, neighborhoods, and mindsets for everybody, no matter who you are or where you ride.'
+        paragraph: [
+            'BCU Labs seeks to draw insight and tell stories from the wealth of biking data in Boston. ',
+            'Our mission is to leverage the power of data through creative experimentation, learn ',
+            'where Boston can improve its infrastructure, whether physical or digital, and continue ',
+            "to empower BCU’s advocacy one pedal at a time. Through our framework of mobility ",
+            'justice and equity, we strive to push for positive change in our bike networks, ',
+            'neighborhoods, and mindsets for everybody, no matter who you are or where you ride.'
+        ]
     },
     {
         title: 'Our Projects',
@@ -31,8 +41,8 @@ const LabsPageText = [
     {
         title: 'Blog Posts',
         subheading: 'See what we have been writing about',
-        paragraph: '<add links here>'
-    }
+        list: ['<add links here>','<more things>']
+    },
 ]
 
 export default LabsPageText
