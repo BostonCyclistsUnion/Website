@@ -12,14 +12,14 @@ function LabsPage() {
         <div className='wrapper'>
           <img src={wordmark} className='wordmark' />
             {
-                text.map(LTSPageText => (
+                text.map(PageText => (
                 <TextSection 
-                    key={LTSPageText.title}
-                    title={LTSPageText.title}
-                    subheading={LTSPageText.subheading}
-                    paragraph={LTSPageText.paragraph}
-                    list={LTSPageText.list}
-                    graphic={LTSPageText.graphic}
+                    key={PageText.title}
+                    title={PageText.title}
+                    subheading={PageText.subheading}
+                    paragraph={PageText.paragraph}
+                    list={PageText.list}
+                    graphic={PageText.graphic}
                     />
                 ))
             }

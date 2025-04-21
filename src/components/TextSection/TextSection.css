@@ -3,17 +3,29 @@
 }
 
 .title {
+    color:#36342C;
+    font-family: rubik, sans-serif;
+    font-size: 2em;
+    text-align: center;
 }
 
 .subheading {
     font-weight: bold;
+    color:#36342C;
+    font-family: rubik, sans-serif;
+    font-size: 1.6em;
+    text-align: center;
 }
 
 .paragraph {
+    margin-bottom: 10px;
+    font-family: rubik, sans-serif;
+    font-size: 1.0em;
 }
 
 .list {
-    
+    font-family: rubik, sans-serif;
+    font-size: 1.0em;
 }
 
 .text-section .graphic {

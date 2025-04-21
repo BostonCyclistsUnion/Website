@@ -34,7 +34,7 @@ const LabsPageText = [
     },
     {
         title: 'Our Projects',
-        subheading: 'Check out what we have been working on!',
+        // subheading: 'Check out what we have been working on!',
         // paragraph: <Link to={MAP_PAGE_ROUTE}>See how comfortable biking is in Greater Boston</Link>,
         paragraph: <BikeStressMapImageHeader />
     },
