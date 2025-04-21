@@ -1,8 +1,15 @@
 import './App.css'
 
-import LandingPage from './components/LandingPage/LandingPage'
+import LabsPage from './components/LabsPage/LabsPage'
 import MapPage from './components/MapPage/MapPage'
-import { LANDING_PAGE_ROUTE, STRESS_MAP_PAGE_ROUTE } from './components/routes/routes';
+import LTSPage from './components/LTSPage/LTSPage'
+import OSMPage from './components/OSMPage/OSMPage'
+import { 
+  LABS_PAGE_ROUTE,
+  MAP_PAGE_ROUTE,
+  LTS_PAGE_ROUTE,
+  OSM_PAGE_ROUTE,
+} from './components/routes/routes';
 
 import { HashRouter, Route, Routes } from 'react-router-dom';
 
@@ -12,8 +19,10 @@ function App() {
         <div id='primary-column'>
           <HashRouter basename='/'>
             <Routes>
-                <Route path={STRESS_MAP_PAGE_ROUTE} element={<MapPage />} />
-                <Route path={LANDING_PAGE_ROUTE} element={<LandingPage />} />
+              <Route path={LABS_PAGE_ROUTE} element={<LabsPage />} />
+              <Route path={MAP_PAGE_ROUTE} element={<MapPage />} />
+              <Route path={LTS_PAGE_ROUTE} element={<LTSPage />} />
+              <Route path={OSM_PAGE_ROUTE} element={<OSMPage />} />
             </Routes>
           </HashRouter>
         </div>

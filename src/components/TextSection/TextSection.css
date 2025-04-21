@@ -1,0 +1,36 @@
+.text-section {
+    margin: 0 auto;      /* Center the content */
+}
+
+.title {
+    color:#36342C;
+    font-family: rubik, sans-serif;
+    font-size: 2em;
+    text-align: center;
+}
+
+.subheading {
+    font-weight: bold;
+    color:#36342C;
+    font-family: rubik, sans-serif;
+    font-size: 1.6em;
+    text-align: center;
+}
+
+.paragraph {
+    margin-bottom: 10px;
+    font-family: rubik, sans-serif;
+    font-size: 1.0em;
+}
+
+.list {
+    font-family: rubik, sans-serif;
+    font-size: 1.0em;
+}
+
+.text-section .graphic {
+    width: 100%;         /* Make the graphic the same width as the paragraph */
+    max-width: 100%;     /* Ensure the graphic doesn't overflow */
+    display: block;      /* Ensure it behaves like a block element */
+}
+
