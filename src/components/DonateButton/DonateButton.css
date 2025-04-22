@@ -1,0 +1,23 @@
+.DonateButton {
+    display: inline-flex;
+    justify-content: center; /* center the content horizontally */
+    align-items: center; /* center the content vertically */
+    margin: auto;
+    height: 50px;
+    color:rgb(178, 248, 250);
+    background-color: rgb(170, 2, 81);
+    font-family: rubik, sans-serif;
+    font-size: 1.7em;
+    text-align: center;
+    border-radius: 25px;
+    border: 3px solid rgb(170, 2, 81);
+    padding: 0.5em; 
+    text-decoration: none;
+}
+
+.link {
+    display: flex;
+    align-items: center;  
+    justify-content: center;
+    text-decoration: none;
+}

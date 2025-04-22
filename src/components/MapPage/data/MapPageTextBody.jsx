@@ -9,7 +9,14 @@
  */
 
 import { Link } from 'react-router-dom';
-import { LTS_PAGE_ROUTE, MAP_PAGE_ROUTE, LABS_PAGE_ROUTE, OSM_PAGE_ROUTE } from '../../routes/routes.jsx';
+import { 
+    LTS_PAGE_ROUTE,
+    MAP_PAGE_ROUTE,
+    LABS_PAGE_ROUTE,
+    OSM_PAGE_ROUTE,
+        } from '../../routes/routes.jsx';
+import DonateButton from '../../DonateButton/DonateButton.jsx';
+
 
 const PageText = [
     {
@@ -64,6 +71,9 @@ const PageText = [
             <Link to={OSM_PAGE_ROUTE}>fix the data yourself here</Link>,
             ", or fill out this form [link] with what you know and the BCU Labs team will bike there ourselves and fix the data."
         ]
+    },
+    {
+        paragraph: <DonateButton />
     },
 ]   
 

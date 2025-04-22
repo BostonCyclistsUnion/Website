@@ -11,15 +11,21 @@
 import { Link } from 'react-router-dom';
 import { LTS_PAGE_ROUTE, MAP_PAGE_ROUTE, LABS_PAGE_ROUTE } from '../../routes/routes.jsx';
 import BikeStressMapImageHeader from '../../BikeStressMapImageHeader/BikeStressMapImageHeader';
+import DonateButton from '../../DonateButton/DonateButton.jsx';
 
 const LabsPageText = [
     {
         title: 'Welcome to BCU Labs!',
         subheading: 'Experiments in data-backed advocacy',
         paragraph: [
-            'We are a volunteer-driven group within Boston Cyclists Union. ', 
-            'You can join us to build <here>'
+            'We are a volunteer-driven group within ', 
+            <Link to="https://bostoncyclistsunion.org/" >Boston Cyclists Union</Link>,
+            '. You can ',
+            <Link to="https://docs.google.com/forms/d/e/1FAIpQLSefzxEQ-CAbJd_rrt90DHvdglYvP9RLqdDUVsFq28onw9xXJQ/viewform" >join BCU Labs here.</Link>,            
         ],
+    },
+    {
+        paragraph: <DonateButton />
     },
     {
         title: 'Our Mission',
@@ -40,8 +46,11 @@ const LabsPageText = [
     },
     {
         title: 'Blog Posts',
-        subheading: 'See what we have been writing about',
+        subheading: <Link to="https://bostoncyclistsunion.org/author/bcu-labs" >See what we have been writing about</Link>,
         list: ['<add links here>','<more things>']
+    },
+    {
+        paragraph: <DonateButton />
     },
 ]
 
