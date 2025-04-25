@@ -1,7 +1,7 @@
 import './LabsPage.css'
 import { Link } from 'react-router-dom';
 
-import wordmark from '/labs_wordmark.png'
+import LabsHeader from '../ImageLinks/LabsHeader';
 
 import text from './data/LabsPageText'
 
@@ -10,7 +10,7 @@ import TextSection from '../TextSection/TextSection';
 function LabsPage() {
     return(
         <div className='wrapper'>
-          <img src={wordmark} className='wordmark' />
+          <LabsHeader />
             {
                 text.map(PageText => (
                 <TextSection 

@@ -1,7 +1,8 @@
 import './LTSPage.css'
 import { Link } from 'react-router-dom';
 
-import logo_stressmap from '/BikeStressMap.svg'
+import LabsHeader from '../ImageLinks/LabsHeader';
+import BikeStressMap from '../ImageLinks/BikeStressMap';
 
 import text from './data/LTSPageText'
 // import LTSPageTextSection from './LTSPageTextSection';
@@ -11,7 +12,8 @@ import TextSection from '../TextSection/TextSection';
 function LTSPage() {
     return(
         <div className='wrapper'>
-          <img src={logo_stressmap} className='logo_stressmap' />
+            <LabsHeader />
+            <BikeStressMap />
             {
                 text.map(LTSPageText => (
                 // <LTSPageTextSection

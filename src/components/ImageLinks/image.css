@@ -1,0 +1,13 @@
+.labs_wordmark {
+    display: block;
+    margin: 0 auto;
+    max-height: 150px;
+    max-width: 100%;
+}
+
+.stressmap {
+    display: block;
+    margin: 0 auto;
+    min-height: 100px;
+    max-width: 100%;
+}

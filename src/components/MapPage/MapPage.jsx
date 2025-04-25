@@ -2,7 +2,8 @@ import './MapPage.css'
 
 import Map from '../../Map';
 
-import BikeStressMapImageHeader from '../BikeStressMapImageHeader/BikeStressMapImageHeader';
+import LabsHeader from '../ImageLinks/LabsHeader';
+import BikeStressMap from '../ImageLinks/BikeStressMap';
 
 import textHeader from './data/MapPageTextHeader'
 import textBody from './data/MapPageTextBody'
@@ -12,7 +13,8 @@ import TextSection from '../TextSection/TextSection';
 export default function MapPage() {
     return (
         <div className='wrapper'>
-            <BikeStressMapImageHeader />
+            <LabsHeader />
+            <BikeStressMap />
             {
                 textHeader.map(PageText => (
                 <TextSection 

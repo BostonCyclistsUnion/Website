@@ -10,7 +10,7 @@
 
 import { Link } from 'react-router-dom';
 import { LTS_PAGE_ROUTE, MAP_PAGE_ROUTE, LABS_PAGE_ROUTE } from '../../routes/routes.jsx';
-import BikeStressMapImageHeader from '../../BikeStressMapImageHeader/BikeStressMapImageHeader';
+import BikeStressMap from '../../ImageLinks/BikeStressMap';
 import DonateButton from '../../DonateButton/DonateButton.jsx';
 
 const LabsPageText = [
@@ -42,7 +42,7 @@ const LabsPageText = [
         title: 'Our Projects',
         // subheading: 'Check out what we have been working on!',
         // paragraph: <Link to={MAP_PAGE_ROUTE}>See how comfortable biking is in Greater Boston</Link>,
-        paragraph: <BikeStressMapImageHeader />
+        paragraph: <BikeStressMap />
     },
     {
         title: 'Blog Posts',
