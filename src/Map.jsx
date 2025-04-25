@@ -13,8 +13,8 @@ import SideBar, {ModeToggle} from './components/selection/SideBar'
 
 // https://docs.mapbox.com/help/tutorials/use-mapbox-gl-js-with-react/
 
-const INITIAL_CENTER = [-71.05777, 42.3224]
-const INITIAL_ZOOM = 11.4
+const INITIAL_CENTER = [-71.0809, 42.3473]
+const INITIAL_ZOOM = 12
 const MAX_ZOOM = 18
 const MIN_ZOOM = 10
 const ZOOM_UNION = 12
