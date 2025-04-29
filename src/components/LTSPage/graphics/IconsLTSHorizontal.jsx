@@ -1,4 +1,4 @@
-import './LTSPageLtsHorizontalImage.css'
+import './IconsLTSHorizontal.css'
 
 import icon_lts1 from '/Icon_LTS1.svg'
 import icon_lts2 from '/Icon_LTS2.svg'
@@ -33,7 +33,7 @@ function LTSPageLtsImageWithCaption(props) {
     const { lts_name } = props;
 
     return(
-        <div className="lts-item">
+        <div className="lts-icon-item">
             <img src={lts_to_icon_mapping[lts_name].icon} alt={`${lts_name} icon`} />
             <img src={lts_to_icon_mapping[lts_name].text} alt={`${lts_name} text`} />
         </div>
@@ -42,7 +42,7 @@ function LTSPageLtsImageWithCaption(props) {
 
 export default function LTSPageLtsHorizontalImage(props) {
     return(
-        <div className="lts-container">
+        <div className="lts-icon-container">
             {
                 lts_names.map(lts_name => (
                     <LTSPageLtsImageWithCaption 

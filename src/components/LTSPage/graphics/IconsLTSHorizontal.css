@@ -1,4 +1,4 @@
-.lts-container {
+.lts-icon-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* Create 4 columns */
     grid-template-rows: repeat(2, auto);   /* Create 2 rows */
@@ -7,14 +7,14 @@
     margin: 0 auto;                        /* center the flex box */
 }
 
-.lts-item {
+.lts-icon-item {
     display: flex;
     flex-direction: column;  /* Stack the icon above the text */
     align-items: center;     /* Center the content horizontally */
 }
 
-.lts-container img {
+.lts-icon-container img {
     width: 100%;  /* Optional: you can control the size of the images */
-    max-width: 100px; /* Max width of the images, adjust as needed */
+    max-width: 150px; /* Max width of the images, adjust as needed */
 }
 

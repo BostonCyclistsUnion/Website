@@ -10,7 +10,7 @@ import TextSection from '../TextSection/TextSection';
 
 function OSMPage() {
     return(
-        <div className='wrapper'>
+        <div id='primary-column'>
             <LabsHeader />
             <BikeStressMap />
             {

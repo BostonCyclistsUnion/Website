@@ -11,7 +11,7 @@ import TextSection from '../TextSection/TextSection';
 
 function LTSPage() {
     return(
-        <div className='wrapper'>
+        <div id='primary-column'>
             <LabsHeader />
             <BikeStressMap />
             {
@@ -22,6 +22,7 @@ function LTSPage() {
                     title={LTSPageText.title}
                     subheading={LTSPageText.subheading}
                     paragraph={LTSPageText.paragraph}
+                    list={LTSPageText.list}
                     graphic={LTSPageText.graphic}
                     />
                 ))

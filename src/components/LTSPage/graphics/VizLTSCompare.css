@@ -1,0 +1,19 @@
+.lts-viz-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Create 4 columns */
+    gap: 5px;                              /* spacing between LTS icons */
+    max-width: 800px;                      /* match the width of the paragraphs (defined in App.css) */
+    margin: 0 auto;                        /* center the flex box */
+}
+
+.lts-viz-item {
+    display: flex;
+    flex-direction: column;  /* Stack the icon above the text */
+    align-items: center;     /* Center the content horizontally */
+}
+
+.lts-viz-container img {
+    width: 100%;  /* Optional: you can control the size of the images */
+    max-width: 400px; /* Max width of the images, adjust as needed */
+}
+

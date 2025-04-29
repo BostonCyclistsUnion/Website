@@ -12,7 +12,7 @@ import TextSection from '../TextSection/TextSection';
 
 export default function MapPage() {
     return (
-        <div className='wrapper'>
+        <div id='primary-column'>
             <LabsHeader />
             <BikeStressMap />
             {

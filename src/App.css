@@ -13,10 +13,17 @@
   justify-content: center; */
 }
 
+.wrapper {
+  max-width: 640px;
+  margin: auto;
+  /* display: flex;
+  justify-content: center; */
+}
+
 #map-container {
   max-height: 90%;
   height: 800px;
-   width: 90%; 
+  width: 90%; 
   margin: auto;
   /* temporarily set the background color so we can tell where the map container is positioned */
   background-color: lightgrey;
@@ -24,31 +31,43 @@
 }
 
 h1, .head1 {
+  max-width: 640px;
   color:#36342C;
   font-family: rubik, sans-serif;
   font-size: 2.5em;
   text-align: center;
+  margin: auto;
+  margin-bottom: 15px;
 }
 
 h2, .head2 {
+  max-width: 640px;
   color:#36342C;
   font-family: rubik, sans-serif;
   font-size: 2.0em;
   text-align: center;
+  margin: auto;
+  margin-bottom: 15px;
 }
 
 h3, .head3 {
+  max-width: 640px;
   color:#36342C;
   font-family: rubik, sans-serif;
   font-size: 1.7em;
   text-align: center;
+  margin: auto;
+  margin-bottom: 15px;
 }
 
 h4, .head4 {
+  max-width: 640px;
   color:#36342C;
   font-family: rubik, sans-serif;
   font-size: 1.3em;
   text-align: center;
+  margin: auto;
+  margin-bottom: 15px;
 }
 
 p, ul {

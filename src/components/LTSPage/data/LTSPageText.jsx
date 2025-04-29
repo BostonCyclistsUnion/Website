@@ -9,29 +9,47 @@
  */
 
 import { Link } from 'react-router-dom';
-import { LTS_PAGE_ROUTE, MAP_PAGE_ROUTE } from '../../routes/routes.jsx';
-import LTSPageLtsHorizontalImage from '../graphics/LTSPageLtsHorizontalImage.jsx';
+import { LTS_PAGE_ROUTE, MAP_PAGE_ROUTE, OSM_PAGE_ROUTE } from '../../routes/routes.jsx';
+import IconsLTSHorizontal from '../graphics/IconsLTSHorizontal.jsx';
+import LTS_Viz_Compare from '../graphics/VizLTSCompare.jsx';
 
 const PageText = [
     {
         title: 'What is Level of Traffic Stress?',
         subheading: 'A method for assessing how bike-friendly a street truly is.',
-        paragraph: "Level of Traffic Stress is a system developed by Northeastern University's Professor Peter Furth to capture...",
-        graphic: <LTSPageLtsHorizontalImage />
+        paragraph: [
+            "Level of Traffic Stress is a system developed by ",
+            <Link to="https://peterfurth.sites.northeastern.edu/2014/05/21/criteria-for-level-of-traffic-stress/">Northeastern University’s Professor Peter Furth</Link>,
+            " to capture how stressful or comfortable a street feels for cyclists. While a painted bike lane might look bike-friendly on a map, factors like fast and heavy traffic can still make it stressful. The Level of Traffic Stress system considers these elements to give cyclists and planners a clearer view of which routes are truly comfortable.",
+        ]
+    },
+    {
+        paragraph: "The Level of Traffic Stress system categorizes streets into the folowing four levels:",
+        graphic: <IconsLTSHorizontal />
     },
     {
         title: 'How does this map work?',
         subheading: "The map analyzes road and traffic data to rate a street's bike friendliness.",
-        paragraph: 'we use data from OpenStreetMap (OSM)...'
+        paragraph: [
+            <Link to={OSM_PAGE_ROUTE}>We use data</Link>,
+            ' from ',
+            <Link to="https://www.openstreetmap.org">OpenStreetMap (OSM)</Link>,
+            ', an open-source online map that people around the world help build and update. Each street segment is tagged with details such as speed limit, traffic, etc.. which we use to calculate a Level of Traffic Stress for each street segment.',
+            <LTS_Viz_Compare />
+        ]
     },
     {
         title: 'What can you do with this tool?',
-        subheading: 'Expore the connnectivity of the streets in your neighborhood and the design elements that contribute to stress levels.',
-        paragraph: 'Explore the interconnectedness of your bike network by...'
+        list: [
+            'Explore the connnectivity of the streets in your neighborhood',
+            'Find new, more comfortable ways to travel around Greater Boston',
+            'Learn about the design elements that contribute to stress levels',
+            'Identify ways streets you (want to) use could be redesigned to be safer and less stressful',
+        ]
     },
     {
         // TODO: make nicer neighborhood-based links to the map
-        title: <Link to={MAP_PAGE_ROUTE}>See streets in your neighborhood!</Link>
+        subheading: <Link to={MAP_PAGE_ROUTE}>See streets in your neighborhood!</Link>
     },
     {
         title: 'A deep dive into Level of Traffic Stress',
