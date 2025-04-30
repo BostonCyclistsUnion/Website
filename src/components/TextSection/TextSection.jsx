@@ -40,7 +40,7 @@ export default function TextSection(props) {
             {subheading && <h2 className='subheading'>{subheading}</h2>}
             {<Para paragraph={paragraph} />}
             {list && <ul className='paragraph'>{list.map(item => <li>{item}</li>)}</ul>}
-            {graphic}
+            {graphic && <div className='graphic'>{graphic}</div>}
         </div>
     )
 }

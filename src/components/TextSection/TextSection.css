@@ -21,16 +21,20 @@
     margin-bottom: 10px;
     font-family: rubik, sans-serif;
     font-size: 1.0em;
+    line-height: 1.4em;
 }
 
 .list {
     font-family: rubik, sans-serif;
     font-size: 1.0em;
+    line-height: 1.4em;
 }
 
 .text-section .graphic {
     width: 100%;         /* Make the graphic the same width as the paragraph */
     max-width: 100%;     /* Ensure the graphic doesn't overflow */
     display: block;      /* Ensure it behaves like a block element */
+    padding-top: 25x;
+    padding-bottom: 25px;
 }
 
