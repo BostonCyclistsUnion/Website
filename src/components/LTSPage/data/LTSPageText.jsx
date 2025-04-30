@@ -54,7 +54,8 @@ const PageText = [
     {
         title: 'A deep dive into Level of Traffic Stress',
         paragraph: [
-            "Our Stress Map is based on a heuristic concept called Level of Traffic Stress (LTS). This has been developed in part by Prof. Peter Furth of Northeastern University and BCU Board Member and is commonly used by planning and engineering professionals. Our implementation attempts to calculate the most current version, v2.2. This version uses many factors of the street design to categorize streets. Unfortunately, our primary data source, OSM, does not have all of the necessary data tagged for each street segment. Engineers could manually collect data for individual street improvement projects to accurately rate a street segment, but to achieve a regional map, we make educated assumptions on what the street looks like. If you see something wrong, we wrote up how to fix the data here[link: improve map].",
+            "Our Stress Map is based on a heuristic concept called Level of Traffic Stress (LTS). This has been developed in part by Prof. Peter Furth of Northeastern University and BCU Board Member and is commonly used by planning and engineering professionals. Our implementation attempts to calculate the most current version, v2.2. This version uses many factors of the street design to categorize streets. Unfortunately, our primary data source, OSM, does not have all of the necessary data tagged for each street segment. Engineers could manually collect data for individual street improvement projects to accurately rate a street segment, but to achieve a regional map, we make educated assumptions on what the street looks like. If you see something wrong, you can go ",
+            <Link to={OSM_PAGE_ROUTE}>here to see how to fix the data.</Link>
         ]
     },
     {
