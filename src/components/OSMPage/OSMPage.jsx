@@ -2,6 +2,8 @@ import './OSMPage.css'
 import { Link } from 'react-router-dom';
 
 import LabsHeader from '../ImageLinks/LabsHeader';
+import LabsFooter from '../Footer/Footer';
+
 import BikeStressMap from '../ImageLinks/BikeStressMap';
 
 import text from './data/OSMPageText'
@@ -25,6 +27,7 @@ function OSMPage() {
                     />
                 ))
             }
+            <LabsFooter />
       </div>
     )
 }

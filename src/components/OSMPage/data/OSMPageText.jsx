@@ -9,14 +9,21 @@
  */
 
 import { Link } from 'react-router-dom';
-import { LTS_PAGE_ROUTE, MAP_PAGE_ROUTE, LABS_PAGE_ROUTE, OSM_PAGE_ROUTE } from '../../routes/routes.jsx';
+import { 
+    LTS_PAGE_ROUTE, 
+    MAP_PAGE_ROUTE, 
+    LABS_PAGE_ROUTE, 
+    // OSM_PAGE_ROUTE 
+        } from '../../routes/routes.jsx';
 
 const OSMPageText = [
     {
         title: 'What is OpenStreetMaps?',
         paragraph: [
             <Link to="https://www.openstreetmap.org">OpenStreetMap (OSM)</Link>,
-            ' is the data source for the calculations used to rate each segment. This is an incredible resource, much like Wikipedia, that is volunteer edited to add details and keep the map current to changes (e.g. new bike lanes being installed). By editing the map directly, you will make the Stress Map more accurate, and you will improve the baseline data used in most of your favorite bike and navigation apps, including ',
+            ' is the data source for the calculations used to rate each street segment on our ',
+            <Link to={MAP_PAGE_ROUTE}>Stress Map</Link>,
+            '. OSM is an incredible resource, much like Wikipedia, that is volunteer-edited to add details and keep the map current to changes (e.g. new bike lanes being installed). By editing the map directly, you will make the Stress Map more accurate, and you will improve the baseline data used in most of your favorite bike and navigation apps, including ',
             <Link to="https://account.bluebikes.com/map">BlueBikes</Link>,
             ', ',
             <Link to="https://www.strava.com/">Strava</Link>,
@@ -34,14 +41,12 @@ const OSMPageText = [
         paragraph: [
             'If you are interested in the type of projects we are working on, ',
             <Link to="https://docs.google.com/forms/d/e/1FAIpQLSefzxEQ-CAbJd_rrt90DHvdglYvP9RLqdDUVsFq28onw9xXJQ/viewform" >join us at BCU Labs!</Link>,
-            'Any and all levels of experience are welcomed. We are always looking for new volunteers that are interested in data-backed analysis and storytelling. Check out what we are working on in ',
-            <Link to="https://github.com/BostonCyclistsUnion">GitHub</Link>,
-            '.'
+            ' Any and all levels of experience are welcomed. We are always looking for new volunteers that are interested in data-backed analysis and storytelling.'
         ],
     },
     {
         title: 'Recommended Map Editing Tools',
-        paragraph: 'These are some of the tools that the BCU Labs team has experience with to make improvements to OpenStreetMap. There are numerous other tools if you find improving the map a fun hobby, with different strengths for different types of editing.',
+        paragraph: 'These are some of the tools that the BCU Labs team has experience with to edit OpenStreetMap. Each of these tools has different strengths for different types of editing and you may find value using multiple of them.',
         list: [
             <Link to="https://www.openstreetmap.org/">OpenStreetMap.org</Link>,
             <Link to="https://streetcomplete.app/">StreetComplete (Android only, beginner friendly)</Link>,
@@ -61,7 +66,12 @@ const OSMPageText = [
             ' of each street segment. ',
             'You can see exactly what tags we use ',
             <Link to="https://github.com/BostonCyclistsUnion/StressMap/tree/main/config">here</Link>,
-            ' and a general overview of which tags are most important for our calculations below. Some of the tags are on nearly every segment while others are more rare. For many segments, a tag is missing that we need to be able to calculate the LTS, in these cases we make assumptions based on the other tags about what the most common situation is. In these cases, adding the proper tags when our assumptions are wrong will result in a more accurate calculation.',
+            ' and a general overview of which tags are most important for our calculations below. '
+        ]
+    },
+    {
+        paragraph: [
+            'Some of the tags are on nearly every segment while others are more rare. For many segments, a tag is missing that we need to be able to calculate the LTS. In these cases we make assumptions based on the other tags. Adding the proper tags when our assumptions are wrong will result in a more accurate calculation.',
         ],
         list: [
             [<Link to="https://wiki.openstreetmap.org/Key:highway">highway</Link>, ": Describes the type of road"],

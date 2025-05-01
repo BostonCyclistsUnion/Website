@@ -6,7 +6,7 @@ import './image.css'
 export default function BikeStressMap() {
     return(
         <div>
-            <Link to={MAP_PAGE_ROUTE}><img src={logo_stressmap} className='stressmap' /></Link>
+            <Link to={MAP_PAGE_ROUTE}><img src={logo_stressmap} alt='Bike Stress Map' className='stressmap' /></Link>
         </div>
     )
 }

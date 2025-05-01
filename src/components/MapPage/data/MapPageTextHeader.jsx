@@ -9,19 +9,41 @@
  */
 
 import { Link } from 'react-router-dom';
-import { LTS_PAGE_ROUTE, MAP_PAGE_ROUTE, LABS_PAGE_ROUTE, OSM_PAGE_ROUTE } from '../../routes/routes.jsx';
+import { 
+    LTS_PAGE_ROUTE, 
+    MAP_PAGE_ROUTE, 
+    LABS_PAGE_ROUTE, 
+    OSM_PAGE_ROUTE 
+        } from '../../routes/routes.jsx';
+
+
+import BikeStressMap from '../../ImageLinks/BikeStressMap';
 
 const PageText = [
     {
-        title: 'Welcome to the BCU Labs Bike Stress Map',
+        title: ['Welcome to the BCU Labs', <BikeStressMap />],
         subheading: 'Explore how comfortable it is to bike in Greater Boston',
         paragraph: [
             <Link to={LABS_PAGE_ROUTE}>BCU Labs</Link>,
-            ' is working to build data-backed tools to help people identify the strengths and weaknesses of the biking network in Greater Boston. We aim to help provide the vocabulary to communicate your experience biking in Boston.',           
+            ' is working to build data-backed tools to help people identify the strengths and weaknesses of the biking network in Greater Boston.',
         ],
     },
     {
-        paragraph: 'The Bike Stress Map is our first project, rating every street in Boston, Cambridge, Somerville, and Brookline based on how comfortable it is to ride a bike on. Start clicking around the map below to see your neighborhood or commute. Maybe you will find a new, more comfortable route. Keep scrolling to read up in more detail how we are rating streets and what you can do to improve the map.',
+        paragraph: 'With this stress map, we aim to:',
+        list: [
+            'Help provide the vocabulary to communicate your experience biking in Boston',
+            'Show people alternative routes that may be lower-stress',
+            'Highlight gaps in the network that could be candidates for improvements',
+        ]
+    },
+    {
+        paragraph: [
+            'The Bike Stress Map is our first project, rating every street in Boston, Cambridge, ',
+            'Somerville, and Brookline based on how comfortable it is to ride a bike on. ',
+            'It is a work in progress and a community effort – read below for ways to contribute or ',
+            <Link to={OSM_PAGE_ROUTE}>update the map</Link>,
+            '.'
+        ]
     },
 ]
 

@@ -1,0 +1,12 @@
+.foot {
+    padding-top: 25px;
+}
+
+.foot .text {
+    color:#575550;
+    font-family: rubik, sans-serif;
+    font-size: 1.0em;
+    max-width: 640px;
+    margin: auto;
+    text-align: center;
+}

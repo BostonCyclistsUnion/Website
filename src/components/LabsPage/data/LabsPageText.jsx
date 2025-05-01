@@ -11,7 +11,7 @@
 import { Link } from 'react-router-dom';
 import { LTS_PAGE_ROUTE, MAP_PAGE_ROUTE, LABS_PAGE_ROUTE } from '../../routes/routes.jsx';
 import BikeStressMap from '../../ImageLinks/BikeStressMap';
-import DonateButton from '../../DonateButton/DonateButton.jsx';
+import DonateButton from '../../Buttons/DonateButton.jsx';
 
 const LabsPageText = [
     {
@@ -39,18 +39,9 @@ const LabsPageText = [
         ]
     },
     {
-        title: 'Our Projects',
+        title: 'Our Projects and Writing',
         // subheading: 'Check out what we have been working on!',
         // paragraph: <Link to={MAP_PAGE_ROUTE}>See how comfortable biking is in Greater Boston</Link>,
-        paragraph: <BikeStressMap />
-    },
-    {
-        title: 'Blog Posts',
-        subheading: <Link to="https://bostoncyclistsunion.org/author/bcu-labs" >See what we have been writing about</Link>,
-        list: ['<add links here>','<more things>']
-    },
-    {
-        paragraph: <DonateButton />
     },
 ]
 
