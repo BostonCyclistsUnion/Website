@@ -10,16 +10,14 @@
     display: flex;
     flex-direction: column;  /* Stack the icon above the text */
     align-items: center;     /* Center the content horizontally */
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
 }
 
 .lts-viz-container img {
     width: 100%;  /* Optional: you can control the size of the images */
     max-width: 300px; /* Max width of the images, adjust as needed */
-}
-
-.lts-viz-container img .large {
-    width: 150%;  /* Optional: you can control the size of the images */
-    max-width: 500px; /* Max width of the images, adjust as needed */
 }
   
 .dialog {
@@ -62,10 +60,4 @@
 .popup-image {
     width: 100%;
     height: auto;
-}
-
-button {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
 }
