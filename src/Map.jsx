@@ -16,7 +16,7 @@ import SideBar, {ModeToggle} from './components/selection/SideBar'
 const INITIAL_CENTER = [-71.0809, 42.3473]
 const INITIAL_ZOOM = 12
 const MAX_ZOOM = 18
-const MIN_ZOOM = 10
+const MIN_ZOOM = 12
 const ZOOM_UNION = 12
 const BOUNDS = [
   [-71.2000, 42.1800], // Southwest coordinates

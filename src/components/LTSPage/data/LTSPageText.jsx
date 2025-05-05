@@ -35,8 +35,8 @@ const PageText = [
             ' from ',
             <Link to="https://www.openstreetmap.org">OpenStreetMap (OSM)</Link>,
             ', an open-source online map that people around the world help build and update. Each street segment is tagged with details such as speed limit, traffic, etc.. which we use to calculate a Level of Traffic Stress for each street segment.',
-            <LTS_Viz_Compare />
-        ]
+        ],
+        graphic: <LTS_Viz_Compare />
     },
     {
         title: 'What can you do with this tool?',
