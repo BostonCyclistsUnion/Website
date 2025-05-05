@@ -39,7 +39,15 @@ export default function TextSection(props) {
             {/* {title && <h1 className='title'>{htmlToReactParser.parse(title)}</h1>} */}
             {subheading && <h2 className='subheading'>{subheading}</h2>}
             {<Para paragraph={paragraph} />}
-            {list && <ul className='paragraph'>{list.map(item => <li>{item}</li>)}</ul>}
+            {/* {list && <ul className='paragraph'>{list.map(item => <li>{item}</li>)}</ul>} */}
+            {list && <> 
+                {list.map((item, index) => 
+                    <ul className='paragraph' key={index}>
+                        <li>{item}</li>
+                    </ul> )
+                }
+                </>
+            }
             {graphic && <div className='graphic'>{graphic}</div>}
         </div>
     )
