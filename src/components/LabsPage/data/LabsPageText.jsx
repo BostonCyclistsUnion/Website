@@ -9,8 +9,8 @@
  */
 
 import { Link } from 'react-router-dom';
-import { LTS_PAGE_ROUTE, MAP_PAGE_ROUTE, LABS_PAGE_ROUTE } from '../../routes/routes.jsx';
-import BikeStressMap from '../../ImageLinks/BikeStressMap';
+// import { LTS_PAGE_ROUTE, MAP_PAGE_ROUTE, LABS_PAGE_ROUTE } from '../../routes/routes.jsx';
+// import BikeStressMap from '../../ImageLinks/BikeStressMap';
 import DonateButton from '../../Buttons/DonateButton.jsx';
 
 const LabsPageText = [

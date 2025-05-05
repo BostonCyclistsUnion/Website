@@ -9,9 +9,14 @@
  */
 
 import { Link } from 'react-router-dom';
-import { LTS_PAGE_ROUTE, MAP_PAGE_ROUTE, OSM_PAGE_ROUTE } from '../../routes/routes.jsx';
+import { 
+    // LTS_PAGE_ROUTE,
+    MAP_PAGE_ROUTE,
+    OSM_PAGE_ROUTE,
+ } from '../../routes/routes.jsx';
 import IconsLTSHorizontal from '../graphics/IconsLTSHorizontal.jsx';
 import LTS_Viz_Compare from '../graphics/VizLTSCompare.jsx';
+import ProjectButton from '../../Buttons/ProjectButton';
 
 const PageText = [
     {
@@ -49,7 +54,10 @@ const PageText = [
     },
     {
         // TODO: make nicer neighborhood-based links to the map
-        subheading: <Link to={MAP_PAGE_ROUTE}>See streets in your neighborhood!</Link>
+        paragraph: <ProjectButton 
+                                link={MAP_PAGE_ROUTE}
+                                title='See streets in your neighborhood!'
+                                />
     },
     {
         title: 'A deep dive into Level of Traffic Stress',
@@ -72,6 +80,12 @@ const PageText = [
             <Link to={OSM_PAGE_ROUTE}>learn how to fix the data here</Link>,
             "."
         ]
+    },
+    {
+        paragraph: <ProjectButton 
+                                link={OSM_PAGE_ROUTE}
+                                title='How we use OSM Data'
+                                />
     },
     {
         paragraph: [

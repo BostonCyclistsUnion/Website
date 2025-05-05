@@ -15,7 +15,7 @@ import {
     LABS_PAGE_ROUTE,
     OSM_PAGE_ROUTE,
         } from '../../routes/routes.jsx';
-
+import ProjectButton from '../../Buttons/ProjectButton';
 
 const PageText = [
     {
@@ -39,6 +39,12 @@ const PageText = [
         paragraph: [
             "Once you are comfortable with the tool, explore less stressful routes to your favorite destinations, plan trips to new ones,  or identify a need to  advocate for specific streets to be improved that would make your journeys better."
         ]    
+    },
+    {
+        paragraph: <ProjectButton 
+                        link={LTS_PAGE_ROUTE}
+                        title='What is Traffic Stress?'
+                        />
     },
     {
         subheading: 'What is this map?',
@@ -75,8 +81,15 @@ const PageText = [
             "Additionally, by utilizing ",
             <Link to="https://www.openstreetmap.org">OpenStreetMap (OSM)</Link>,
             " as the primary data source, we are able to continuously update street ratings as the streets change or the data accuracy improves. ",
-            <Link to={OSM_PAGE_ROUTE}>(Start here to learn how to contribute to OSM)</Link>,
+            // <Link to={OSM_PAGE_ROUTE}>(Start here to learn how to contribute to OSM)</Link>,
         ]    
+    },
+    {
+        paragraph: <ProjectButton 
+                        link={OSM_PAGE_ROUTE}
+                        title='What is OpenStreetMap'
+                        subtitle="and how can you improve our map data?"
+                        />
     },
     {
         paragraph: [
@@ -90,9 +103,15 @@ const PageText = [
     },
     {
         paragraph: [
-            'BCU Labs is working towards these goals too. If you want to help in any way, please ',
-            <Link to="https://docs.google.com/forms/d/e/1FAIpQLSefzxEQ-CAbJd_rrt90DHvdglYvP9RLqdDUVsFq28onw9xXJQ/viewform" >join us at BCU Labs.</Link>,
+            'BCU Labs is working towards these goals too. If you want to help in any way, please:',
+            // <Link to="https://docs.google.com/forms/d/e/1FAIpQLSefzxEQ-CAbJd_rrt90DHvdglYvP9RLqdDUVsFq28onw9xXJQ/viewform" >join us at BCU Labs.</Link>,
         ]
+    },
+    {
+        paragraph: <ProjectButton 
+                        link="https://docs.google.com/forms/d/e/1FAIpQLSefzxEQ-CAbJd_rrt90DHvdglYvP9RLqdDUVsFq28onw9xXJQ/viewform"
+                        title='Join BCU Labs'
+                        />
     },
     {
         subheading: 'What if you disagree with a street segment rating?',
