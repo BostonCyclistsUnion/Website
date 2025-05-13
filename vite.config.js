@@ -3,6 +3,6 @@ import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: 'https://bostoncyclistsunion.github.io/Website/',
+  base: 'https://https://labs.bostoncyclistsunion.org/',
   plugins: [react()],
 })
