@@ -24,13 +24,8 @@ const BOUNDS = [
 ];
 const LINE_WIDTH = 4
 
-// const COLOR_SCALE = ['#63B281', '#DDA34E', '#AA5939', '#522B2A', 'grey'] // Colors chosen by Adam L
-// const COLOR_SCALE = ['#1065ab', '#8ec4de', '#f6a482', '#b31529', 'grey'] // 
-// const COLOR_SCALE = ['#0d7d87', '#99c6cc', '#ff5a5e', '#c31e23', 'grey'] // https://www.simplifiedsciencepublishing.com/resources/best-color-palettes-for-scientific-figures-and-data-visualizations
-// const COLOR_SCALE = ['#3594cc', '#8cc5e3', '#f0b077', '#ea801c', 'grey'] // https://www.simplifiedsciencepublishing.com/resources/best-color-palettes-for-scientific-figures-and-data-visualizations
 const COLOR_SCALE = ['#007191', '#62c8d3', '#f47a00', '#d31f11', 'grey'] // https://www.simplifiedsciencepublishing.com/resources/best-color-palettes-for-scientific-figures-and-data-visualizations
-// const COLOR_SCALE = ['#018571', '#80cdc1', '#dfc27d', '#a6611a', 'grey'] // https://colorbrewer2.org/#type=diverging&scheme=BrBG&n=4
-// const COLOR_SCALE = ['#4dac26', '#b8e186', '#f1b6da', '#d01c8b', 'grey'] // https://colorbrewer2.org/#type=diverging&scheme=PiYG&n=4
+// rgb(0, 113, 145), rgb(98, 200, 211), rgb(244, 122, 0), rgb(211, 31, 17)
 
 
 function Map() {
