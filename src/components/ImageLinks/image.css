@@ -4,6 +4,13 @@
     max-height: 150px;
     max-width: 100%;
     padding-bottom: 20px;
+    /* background-color: rgb(15, 75, 141); */
+    
+}
+
+.header_stripe {
+    background-color: rgb(141, 15, 120);
+    background-size: 100%;
 }
 
 .stressmap {
