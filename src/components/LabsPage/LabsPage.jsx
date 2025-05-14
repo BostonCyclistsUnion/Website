@@ -27,6 +27,11 @@ function LabsPage() {
                 ))
             }
             <ProjectButton 
+                link="https://landway.bostoncyclistsunion.org/"
+                title='Landway Map'
+                subtitle="Mobility Network Vision"
+                />
+            <ProjectButton 
                 link={MAP_PAGE_ROUTE}
                 title='Bike Stress Map'
                 subtitle="See how stressful Boston's streets are"

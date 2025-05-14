@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { MAP_PAGE_ROUTE } from '../routes/routes.jsx';
 import './Button.css'
 
-export default function MapButton( props) {
+export default function ProjectButton( props) {
   const { link, title, subtitle } = props;
     return (
       <div className='Pad'>
