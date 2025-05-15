@@ -235,9 +235,9 @@ function Map() {
   return (
     <>
       <div id='map-container' ref={mapContainerRef} >
-        <div className="topbar">
+        {/* <div className="topbar">
           Longitude: {center[0].toFixed(4)} | Latitude: {center[1].toFixed(4)} | Zoom: {zoom.toFixed(2)}
-        </div>
+        </div> */}
 
         <Legend colorScale={COLOR_SCALE}/>
 
