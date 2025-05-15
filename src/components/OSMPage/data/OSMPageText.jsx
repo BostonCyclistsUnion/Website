@@ -45,6 +45,13 @@ const OSMPageText = [
         ],
     },
     {
+        paragraph: [
+            "If you see a data accuracy issue and want the BCU Labs to investigate and fix it, you can use ",
+            <Link to="https://forms.gle/ytyKV7ZrnzYZToCi9">this form</Link>,
+            " to let us know."
+        ]
+    },
+    {
         title: 'Recommended Map Editing Tools',
         paragraph: 'These are some of the tools that the BCU Labs team has experience with to edit OpenStreetMap. Each of these tools has different strengths for different types of editing and you may find value using multiple of them.',
         list: [
