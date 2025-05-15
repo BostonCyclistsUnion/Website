@@ -7,7 +7,7 @@
 }
 
 #primary-column {
-  max-width: 1500px;
+  /* max-width: 1500px; */
   margin: auto;
   /* display: flex;
   justify-content: center; */
@@ -23,7 +23,8 @@
 #map-container {
   max-height: 90%;
   height: 800px;
-  width: 90%; 
+  width: 90%;
+  max-width: 1500px;
   margin: auto;
   /* temporarily set the background color so we can tell where the map container is positioned */
   background-color: lightgrey;

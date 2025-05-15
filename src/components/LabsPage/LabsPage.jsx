@@ -12,8 +12,10 @@ import ProjectButton from '../Buttons/ProjectButton';
 
 function LabsPage() {
     return(
-        <div className='wrapper'>
+        <div>
             <LabsHeader />
+        <div className='wrapper'>
+            
             {
                 text.map(PageText => (
                 <TextSection 
@@ -42,6 +44,7 @@ function LabsPage() {
                 subtitle="Data analysis, stories, infrastructure projects, and more"
                 />
             <LabsFooter />
+      </div>
       </div>
     )
 }

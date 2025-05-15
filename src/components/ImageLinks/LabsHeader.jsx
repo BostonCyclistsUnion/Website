@@ -5,7 +5,7 @@ import './image.css'
 
 export default function LabsHeader() {
     return(
-        <div className='header_stripe'>
+        <div id='header_stripe'>
             <Link to={LABS_PAGE_ROUTE}><img src={labs_wordmark} className='labs_wordmark' alt='BCU Labs'/></Link>
         </div>
     )

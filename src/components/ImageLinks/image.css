@@ -1,16 +1,19 @@
 .labs_wordmark {
     display: block;
     margin: 0 auto;
-    max-height: 150px;
-    max-width: 100%;
-    padding-bottom: 20px;
-    /* background-color: rgb(15, 75, 141); */
-    
+    max-height: 100px;
+    max-width: 100%;    
 }
 
-.header_stripe {
-    background-color: rgb(141, 15, 120);
-    background-size: 100%;
+#header_stripe {
+    background-color: rgb(15, 75, 141);
+    /* background-size: 100%; */
+    background-size: cover;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    padding-bottom: 20px;
+    background-clip: content-box;
 }
 
 .stressmap {
