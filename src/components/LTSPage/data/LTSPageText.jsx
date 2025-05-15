@@ -29,7 +29,7 @@ const PageText = [
         ]
     },
     {
-        paragraph: "The Level of Traffic Stress system categorizes streets into the folowing four levels:",
+        paragraph: "The Level of Traffic Stress system categorizes streets into the following four levels:",
         graphic: <IconsLTSHorizontal />
     },
     {
@@ -46,7 +46,7 @@ const PageText = [
     {
         title: 'What can you do with this tool?',
         list: [
-            'Explore the connnectivity of the streets in your neighborhood',
+            'Explore the connectivity of the streets in your neighborhood',
             'Find new, more comfortable ways to travel around Greater Boston',
             'Learn about the design elements that contribute to stress levels',
             'Identify ways streets you (want to) use could be redesigned to be safer and less stressful',
