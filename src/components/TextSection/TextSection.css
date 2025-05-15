@@ -1,5 +1,7 @@
 .text-section {
     margin: 0 auto;      /* Center the content */
+    max-width: 640px;
+    width: 90%;
 }
 
 .title {
