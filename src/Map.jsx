@@ -127,7 +127,16 @@ function Map() {
                   // "4.0", COLOR_SCALE[3],
                   COLOR_SCALE[4]
               ],
-              'line-width': LINE_WIDTH
+              'line-width': LINE_WIDTH,
+              // 'line-dasharray': [ // this just doesn't render very good looking
+              //     'match',
+              //     ['get', 'LTS'],
+              //     1, ["literal", [1, 0]],
+              //     2, ["literal", [2, 2]],
+              //     3, ["literal", [1, 3]],
+              //     4, ["literal", [1, 5]],
+              //     ["literal", [1, 1]]
+              // ],
           }
       },
       // 'road-label-simple' // Add layer below labels
