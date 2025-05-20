@@ -21,7 +21,8 @@ const InfoSimple = ({selectedFeature}) => {
       separation_fwd,
       separation_rev,
       oneway,
-      osmid
+      osmid,
+      speed, speed_rule
     } = selectedFeature.properties
 
     const start = selectedFeature.geometry.coordinates[0]
@@ -87,6 +88,10 @@ const InfoSimple = ({selectedFeature}) => {
                         {allowed_rev && <td className='tableValue'>{separation_rev_str}</td>}
                         {allowed_fwd && <td className='tableValue'>{separation_fwd_str}</td>}
                     </tr>
+
+                    <tr><td className='tableDescription' colSpan="2">Prevailing Automobile Speed</td></tr>
+                        <tr><td className='tableValue' colSpan="2">{speed}</td></tr>
+                        <tr><td className='notes' colSpan="2">{speed_rule}</td></tr>
                 </tbody>
             </table>
             </div>
