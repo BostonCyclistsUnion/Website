@@ -10,6 +10,7 @@ import './App.css'
 import Legend from './Legend';
 import SideBar, {ModeToggle} from './components/selection/SideBar'
 // import {ModeToggle} from './components/selection/SideBar'
+import Overpass from './components/Overpass/overpass';
 
 // https://docs.mapbox.com/help/tutorials/use-mapbox-gl-js-with-react/
 
@@ -241,6 +242,29 @@ function Map() {
     mapRef.current.setFilter('selected-lts', ['in', 'osmid', '']);
   }
 
+  const handleBikeParking = () => {
+    console.log('Bike parking button pressed');
+    Overpass().then((bike_parking_json) => {
+      console.log(bike_parking_json),
+      mapRef.current.addSource('bike-parking', {
+              type: 'geojson',
+              // Use a URL for the value for the `data` property.
+              data: bike_parking_json
+          }),
+      mapRef.current.addLayer({
+              'id': 'bike-parking-layer',
+              'type': 'circle',
+              'source': 'bike-parking',
+              'paint': {
+                  'circle-radius': 4,
+                  'circle-stroke-width': 2,
+                  'circle-color': 'red',
+                  'circle-stroke-color': 'white'
+              }
+          })
+    });
+  }
+
   return (
     <>
       <div id='map-container' ref={mapContainerRef} >
@@ -255,6 +279,10 @@ function Map() {
         </button>
         <button className='advanced-button' onClick={handleAdvancedMode}>
           <ModeToggle advancedMode={advancedMode} />
+        </button>
+
+        <button className='bike-parking-button' onClick={handleBikeParking}>
+          Bike Parking
         </button>
 
         <SideBar selectedFeature={activeFeature} zoom={zoom} zoomLimit={ZOOM_UNION} advancedMode={advancedMode}/>

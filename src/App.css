@@ -126,6 +126,16 @@ p, ul {
   cursor: pointer;
 }
 
+.bike-parking-button {
+  position: absolute;
+  top: 25px;
+  z-index: 1;
+  left: 50px;
+  padding: 4px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
 .sidebar {
   position: absolute;
   top: 50px;
