@@ -242,27 +242,47 @@ function Map() {
     mapRef.current.setFilter('selected-lts', ['in', 'osmid', '']);
   }
 
-  const handleBikeParking = () => {
-    console.log('Bike parking button pressed');
-    Overpass().then((bike_parking_json) => {
-      console.log(bike_parking_json),
-      mapRef.current.addSource('bike-parking', {
-              type: 'geojson',
-              // Use a URL for the value for the `data` property.
-              data: bike_parking_json
-          }),
-      mapRef.current.addLayer({
-              'id': 'bike-parking-layer',
-              'type': 'circle',
-              'source': 'bike-parking',
-              'paint': {
-                  'circle-radius': 4,
-                  'circle-stroke-width': 2,
-                  'circle-color': 'red',
-                  'circle-stroke-color': 'white'
-              }
-          })
-    });
+  const [bikeParking, setBikeParking] = useState(false);
+  console.log('bikeParking is created and set to ' + bikeParking)
+
+  const handleBikeParking = (checkboxState) => {
+    setBikeParking(checkboxState)
+    console.log('Bike parking checkbox changed to ' + !bikeParking);
+    var bikeParkingLayerName = 'bike-parking-layer'
+
+    // Create bike parking layer if needed
+    if(checkboxState) {
+      if(typeof mapRef.current.getLayer(bikeParkingLayerName) == 'undefined') {
+        Overpass(mapRef).then((bike_parking_json) => {
+          // console.log(bike_parking_json),
+          mapRef.current.addSource('bike-parking', {
+                  type: 'geojson',
+                  // Use a URL for the value for the `data` property.
+                  data: bike_parking_json
+              }),
+          mapRef.current.addLayer({
+                  'id': bikeParkingLayerName,
+                  'type': 'circle',
+                  'source': 'bike-parking',
+                  'paint': {
+                      'circle-radius': 4,
+                      'circle-stroke-width': 2,
+                      'circle-color': 'red',
+                      'circle-stroke-color': 'white'
+                  },
+                  layout: {
+                    'visibility': 'visible'
+                  }
+              })
+        });
+      } else {
+        console.log("Turning on " + bikeParkingLayerName)
+        mapRef.current.setLayoutProperty(bikeParkingLayerName, 'visibility', 'visible');
+      }
+    } else {
+      console.log("Turning off " + bikeParkingLayerName)
+      mapRef.current.setLayoutProperty(bikeParkingLayerName, 'visibility', 'none');
+    }
   }
 
   return (
@@ -281,9 +301,14 @@ function Map() {
           <ModeToggle advancedMode={advancedMode} />
         </button>
 
-        <button className='bike-parking-button' onClick={handleBikeParking}>
-          Bike Parking
-        </button>
+        <label className='bike-parking-button'>
+          Bike Parking: <input 
+                            type="checkbox" 
+                            name="bikeParkingCheckbox"
+                            defaultChecked={bikeParking} 
+                            onChange={e => handleBikeParking(e.target.checked)}
+                          />
+        </label>
 
         <SideBar selectedFeature={activeFeature} zoom={zoom} zoomLimit={ZOOM_UNION} advancedMode={advancedMode}/>
 
