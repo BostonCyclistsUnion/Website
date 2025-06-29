@@ -136,6 +136,16 @@ p, ul {
   cursor: pointer;
 }
 
+#options-menu {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  max-width: 100px;
+  background-color: #ffffffe3;
+  padding: 10px;
+  z-index: 1;
+}
+
 .sidebar {
   position: absolute;
   top: 50px;

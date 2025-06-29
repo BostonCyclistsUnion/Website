@@ -265,9 +265,9 @@ function Map() {
                   'type': 'circle',
                   'source': 'bike-parking',
                   'paint': {
-                      'circle-radius': 4,
-                      'circle-stroke-width': 2,
-                      'circle-color': 'red',
+                      'circle-radius': 3,
+                      'circle-stroke-width': 1,
+                      'circle-color': COLOR_SCALE[0],
                       'circle-stroke-color': 'white'
                   },
                   layout: {
@@ -301,14 +301,16 @@ function Map() {
           <ModeToggle advancedMode={advancedMode} />
         </button>
 
-        <label className='bike-parking-button'>
-          Bike Parking: <input 
-                            type="checkbox" 
-                            name="bikeParkingCheckbox"
-                            defaultChecked={bikeParking} 
-                            onChange={e => handleBikeParking(e.target.checked)}
-                          />
-        </label>
+        <div id='options-menu'>
+          <label >
+            Bike Parking: <input 
+                              type="checkbox" 
+                              name="bikeParkingCheckbox"
+                              defaultChecked={bikeParking} 
+                              onChange={e => handleBikeParking(e.target.checked)}
+                            />
+          </label>
+        </div>
 
         <SideBar selectedFeature={activeFeature} zoom={zoom} zoomLimit={ZOOM_UNION} advancedMode={advancedMode}/>
 
