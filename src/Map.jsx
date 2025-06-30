@@ -11,6 +11,7 @@ import Legend from './Legend';
 import SideBar, {ModeToggle} from './components/selection/SideBar'
 // import {ModeToggle} from './components/selection/SideBar'
 import Overpass from './components/Overpass/overpass';
+import Intersections from './components/Intersections/Intersections';
 
 // https://docs.mapbox.com/help/tutorials/use-mapbox-gl-js-with-react/
 
@@ -70,7 +71,7 @@ function Map() {
     } else {
       setActiveMobileView('map')
     }
-  }
+  } 
 
   // Load Mapbox map with:
   // - add LTS layer
@@ -236,6 +237,10 @@ function Map() {
     setActiveFeatureType()
     mapRef.current.setFilter('selected-lts', ['in', 'osmid', '']);
   }
+
+  Intersections().then((intersections) => {
+    console.log('intersections', intersections)
+  })
 
   const [bikeParking, setBikeParking] = useState(false);
   console.log('bikeParking is created and set to ' + bikeParking)
