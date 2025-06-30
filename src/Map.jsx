@@ -32,6 +32,7 @@ const COLOR_SCALE = ['#007191', '#62c8d3', '#f47a00', '#d31f11', 'grey'] // http
 function Map() {
   // stores the feature that the user is currently viewing (triggers the modal)
   const [activeFeature, setActiveFeature] = useState()
+  const [activeFeatureType, setActiveFeatureType] = useState()
   const [advancedMode, setAdvancedMode] = useState(false);
   console.log('advancedMode:', advancedMode);
 
@@ -122,10 +123,6 @@ function Map() {
                   2, COLOR_SCALE[1],
                   3, COLOR_SCALE[2],
                   4, COLOR_SCALE[3],
-                  // "1.0", COLOR_SCALE[0],
-                  // "2.0", COLOR_SCALE[1],
-                  // "3.0", COLOR_SCALE[2],
-                  // "4.0", COLOR_SCALE[3],
                   COLOR_SCALE[4]
               ],
               'line-width': LINE_WIDTH,
@@ -159,10 +156,6 @@ function Map() {
                   2, COLOR_SCALE[1],
                   3, COLOR_SCALE[2],
                   4, COLOR_SCALE[3],
-                  // "1.0", COLOR_SCALE[0],
-                  // "2.0", COLOR_SCALE[1],
-                  // "3.0", COLOR_SCALE[2],
-                  // "4.0", COLOR_SCALE[3],
                   COLOR_SCALE[4]
               ],
               'line-width': LINE_WIDTH * 3
@@ -189,6 +182,7 @@ function Map() {
         console.log('App/map/click/e.features[0].geometry.coordinates', e.features[0].geometry.coordinates)
 
         setActiveFeature(e.features[0])
+        setActiveFeatureType('lts')
         // console.log('App/map/click/e.features[0].id', e.features[0].id)
         mapRef.current.setFilter('selected-lts', ['in', 'osmid', e.features[0].id]);
 
@@ -239,6 +233,7 @@ function Map() {
     })
     // Deactivate selected features
     setActiveFeature()
+    setActiveFeatureType()
     mapRef.current.setFilter('selected-lts', ['in', 'osmid', '']);
   }
 
@@ -274,6 +269,22 @@ function Map() {
                     'visibility': 'visible'
                   }
               })
+          mapRef.current.on('click', bikeParkingLayerName, (e) => {
+            console.log('App/map/click/e.features[0]', e.features[0])
+            console.log('App/map/click/e.features[0].geometry.coordinates', e.features[0].geometry.coordinates)
+
+            setActiveFeature(e.features[0])
+            setActiveFeatureType('bikeParking')
+          })
+          // Change the cursor to a pointer when the mouse is over the LTS layer.
+          mapRef.current.on('mouseenter', bikeParkingLayerName, () => {
+            mapRef.current.getCanvas().style.cursor = 'pointer'
+          })
+
+          // Change it back to a pointer when it leaves.
+          mapRef.current.on('mouseleave', bikeParkingLayerName, () => {
+            mapRef.current.getCanvas().style.cursor = '';
+          })
         });
       } else {
         console.log("Turning on " + bikeParkingLayerName)
@@ -312,7 +323,11 @@ function Map() {
           </label>
         </div>
 
-        <SideBar selectedFeature={activeFeature} zoom={zoom} zoomLimit={ZOOM_UNION} advancedMode={advancedMode}/>
+        <SideBar 
+            selectedFeature={activeFeature} 
+            selectedFeatureType={activeFeatureType} 
+            zoom={zoom} zoomLimit={ZOOM_UNION} 
+            advancedMode={advancedMode}/>
 
       </div>
     </>

@@ -162,10 +162,10 @@ p, ul {
 
 .sidebar .basicMode {
   display: block;
-  width: 411px;
+  /* max-width: 400px;
   background-color: #F8F8F8;
   border-radius: 4px;
-  filter: drop-shadow(0px 1px 6px #2927211A);
+  filter: drop-shadow(0px 1px 6px #2927211A); */
 }
 .sidebar .advancedMode {
   display: block;
