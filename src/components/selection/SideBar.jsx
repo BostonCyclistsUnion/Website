@@ -5,6 +5,7 @@ console.log('SideBar loaded')
 import InfoSimple from './InfoSimple'
 import InfoDetail from './InfoDetail'
 import InfoBikeParking from './InfoBikeParking'
+import InfoBluebikes from './InfoBluebikes'
 
 export const ModeToggle = ({advancedMode}) => {
     console.log('ModeToggle/advancedMode', advancedMode)
@@ -35,6 +36,13 @@ const ShowSidebar = ({selectedFeature, selectedFeatureType, advancedMode}) => {
         return (
             <div className='basicMode'>
                 <InfoBikeParking selectedFeature={selectedFeature} />
+            </div>
+        )
+    } else if (selectedFeatureType == 'bluebikeStation') {
+        console.log('return bluebike Station sidebar')
+        return (
+            <div className='basicMode'>
+                <InfoBluebikes selectedFeature={selectedFeature} />
             </div>
         )
     }
