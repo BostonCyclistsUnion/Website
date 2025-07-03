@@ -11,6 +11,7 @@ import Legend from './Legend';
 import SideBar, {ModeToggle} from './components/selection/SideBar'
 // import {ModeToggle} from './components/selection/SideBar'
 import Overpass from './components/Overpass/overpass';
+import Bluebikes from './components/GBFS/GBFS';
 
 // https://docs.mapbox.com/help/tutorials/use-mapbox-gl-js-with-react/
 
@@ -239,6 +240,8 @@ function Map() {
 
   const [bikeParking, setBikeParking] = useState(false);
   console.log('bikeParking is created and set to ' + bikeParking)
+  const [bluebikeStations, setBluebikeStations] = useState(false);
+  console.log('bluebikeStations is created and set to ' + bluebikeStations)
 
   const handleBikeParking = (checkboxState) => {
     setBikeParking(checkboxState)
@@ -296,6 +299,16 @@ function Map() {
     }
   }
 
+  const handleBluebikeStations = (checkboxState) => {
+    setBluebikeStations(checkboxState)
+    console.log('bluebikeStations checkbox changed to ' + !bluebikeStations);
+    // let bluebikeStationsGeojson = Bluebikes()
+    // console.log('bluebikeStationsGeojson', bluebikeStationsGeojson)
+    Bluebikes().then((bluebikeStationsGeojson) => {
+      console.log('bluebikeStationsGeojson', bluebikeStationsGeojson)
+    })
+  }
+
   return (
     <>
       <div id='map-container' ref={mapContainerRef} >
@@ -319,6 +332,14 @@ function Map() {
                               name="bikeParkingCheckbox"
                               defaultChecked={bikeParking} 
                               onChange={e => handleBikeParking(e.target.checked)}
+                            />
+          </label>
+          <label >
+            BlueBike Stations: <input 
+                              type="checkbox" 
+                              name="bluebikeStationCheckbox"
+                              defaultChecked={bluebikeStations} 
+                              onChange={e => handleBluebikeStations(e.target.checked)}
                             />
           </label>
         </div>
