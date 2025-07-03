@@ -302,12 +302,55 @@ function Map() {
   const handleBluebikeStations = (checkboxState) => {
     setBluebikeStations(checkboxState)
     console.log('bluebikeStations checkbox changed to ' + !bluebikeStations);
-    // let bluebikeStationsGeojson = Bluebikes()
-    // console.log('bluebikeStationsGeojson', bluebikeStationsGeojson)
-    Bluebikes().then((bluebikeStationsGeojson) => {
-      console.log('bluebikeStationsGeojson', bluebikeStationsGeojson)
-    })
-  }
+    var bluebikeLayerName = 'bluebike-layer'
+
+    if(checkboxState) {
+      if(typeof mapRef.current.getLayer(bluebikeLayerName) == 'undefined') {
+        Bluebikes().then((bluebikeStationsGeojson) => {
+          console.log('bluebikeStationsGeojson', bluebikeStationsGeojson)
+          mapRef.current.addSource('bluebike-stations', {
+                type: 'geojson',
+                data: bluebikeStationsGeojson
+            }),
+          mapRef.current.addLayer({
+                  'id': bluebikeLayerName,
+                  'type': 'circle',
+                  'source': 'bluebike-stations',
+                  'paint': {
+                      'circle-radius': 5,
+                      'circle-stroke-width': 1,
+                      'circle-color': COLOR_SCALE[1],
+                      'circle-stroke-color': 'white'
+                  },
+                  layout: {
+                    'visibility': 'visible'
+                  }
+              })
+          mapRef.current.on('click', bluebikeLayerName, (e) => {
+            console.log('App/map/click/e.features[0]', e.features[0])
+            console.log('App/map/click/e.features[0].geometry.coordinates', e.features[0].geometry.coordinates)
+
+            setActiveFeature(e.features[0])
+            setActiveFeatureType('bluebikeStation')
+          })
+          // Change the cursor to a pointer when the mouse is over the LTS layer.
+          mapRef.current.on('mouseenter', bluebikeLayerName, () => {
+            mapRef.current.getCanvas().style.cursor = 'pointer'
+          })
+
+          // Change it back to a pointer when it leaves.
+          mapRef.current.on('mouseleave', bluebikeLayerName, () => {
+            mapRef.current.getCanvas().style.cursor = '';
+          })
+      })
+    } else {
+      console.log("Turning on " + bluebikeLayerName)
+      mapRef.current.setLayoutProperty(bluebikeLayerName, 'visibility', 'visible');
+    }
+  } else {
+    console.log("Turning off " + bluebikeLayerName)
+    mapRef.current.setLayoutProperty(bluebikeLayerName, 'visibility', 'none');
+  }}
 
   return (
     <>
