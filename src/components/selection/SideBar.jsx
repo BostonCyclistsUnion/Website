@@ -5,6 +5,7 @@ console.log('SideBar loaded')
 import InfoSimple from './InfoSimple'
 import InfoDetail from './InfoDetail'
 import InfoBikeParking from './InfoBikeParking'
+import InfoIntersections from './InfoIntersections'
 
 export const ModeToggle = ({advancedMode}) => {
     console.log('ModeToggle/advancedMode', advancedMode)
@@ -35,6 +36,13 @@ const ShowSidebar = ({selectedFeature, selectedFeatureType, advancedMode}) => {
         return (
             <div className='basicMode'>
                 <InfoBikeParking selectedFeature={selectedFeature} />
+            </div>
+        )
+    } else if (selectedFeatureType == 'intersections') {
+        console.log('return intersections sidebar')
+        return (
+            <div className='basicMode'>
+                <InfoIntersections selectedFeature={selectedFeature} />
             </div>
         )
     }

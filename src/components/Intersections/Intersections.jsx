@@ -12,7 +12,7 @@ export default async function Intersections() {
     
     csv2geojson.csv2geojson(await csvdata, {
         latfield: 'lat',
-        lonfield: 'long',
+        lonfield: 'lon',
         delimiter: ','
         }, function(err, data) {
             // console.log('csv2geojson function', err, data)

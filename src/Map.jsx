@@ -238,9 +238,65 @@ function Map() {
     mapRef.current.setFilter('selected-lts', ['in', 'osmid', '']);
   }
 
-  Intersections().then((intersections) => {
-    console.log('intersections', intersections)
-  })
+
+  const [intersections, setIntersections] = useState(false);
+  console.log('intersections is created and set to ' + intersections)
+
+  const handleIntersections = (checkboxState) => {
+    setIntersections(checkboxState)
+    console.log('Intersections checkbox changed to ' + !intersections);
+    var intersectionsLayerName = 'intersections-layer'
+
+    // Create intersections layer if needed
+    if(checkboxState) {
+      if(typeof mapRef.current.getLayer(intersectionsLayerName) == 'undefined') {
+        Intersections(mapRef).then((intersections_json) => {
+          // console.log(intersections_json),
+          mapRef.current.addSource('intersections', {
+                  type: 'geojson',
+                  // Use a URL for the value for the `data` property.
+                  data: intersections_json
+              }),
+          mapRef.current.addLayer({
+                  'id': intersectionsLayerName,
+                  'type': 'circle',
+                  'source': 'intersections',
+                  'paint': {
+                      'circle-radius': 5,
+                      'circle-stroke-width': 1,
+                      'circle-color': COLOR_SCALE[3],
+                      'circle-stroke-color': 'white'
+                  },
+                  layout: {
+                    'visibility': 'visible'
+                  }
+              })
+          mapRef.current.on('click', intersectionsLayerName, (e) => {
+            console.log('App/map/click/e.features[0]', e.features[0])
+            console.log('App/map/click/e.features[0].geometry.coordinates', e.features[0].geometry.coordinates)
+
+            setActiveFeature(e.features[0])
+            setActiveFeatureType('intersections')
+          })
+          // Change the cursor to a pointer when the mouse is over the LTS layer.
+          mapRef.current.on('mouseenter', intersectionsLayerName, () => {
+            mapRef.current.getCanvas().style.cursor = 'pointer'
+          })
+
+          // Change it back to a pointer when it leaves.
+          mapRef.current.on('mouseleave', intersectionsLayerName, () => {
+            mapRef.current.getCanvas().style.cursor = '';
+          })
+        });
+      } else {
+        console.log("Turning on " + intersectionsLayerName)
+        mapRef.current.setLayoutProperty(intersectionsLayerName, 'visibility', 'visible');
+      }
+    } else {
+      console.log("Turning off " + intersectionsLayerName)
+      mapRef.current.setLayoutProperty(intersectionsLayerName, 'visibility', 'none');
+    }
+  }
 
   const [bikeParking, setBikeParking] = useState(false);
   console.log('bikeParking is created and set to ' + bikeParking)
@@ -318,6 +374,14 @@ function Map() {
         </button>
 
         <div id='options-menu'>
+          <label >
+            Intersections: <input 
+                              type="checkbox" 
+                              name="bikeParkingCheckbox"
+                              defaultChecked={intersections} 
+                              onChange={e => handleIntersections(e.target.checked)}
+                            />
+          </label>
           <label >
             Bike Parking: <input 
                               type="checkbox" 
