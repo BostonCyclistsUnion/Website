@@ -5,13 +5,13 @@ import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css';
 import './App.css'
 
-// import InfoSimple from './InfoSimple'
-// import InfoDetail from './InfoDetail'
 import Legend from './Legend';
 import SideBar, {ModeToggle} from './components/selection/SideBar'
 // import {ModeToggle} from './components/selection/SideBar'
 import Overpass from './components/Overpass/overpass';
 import Bluebikes from './components/GBFS/GBFS';
+import Intersections from './components/Intersections/Intersections';
+
 
 // https://docs.mapbox.com/help/tutorials/use-mapbox-gl-js-with-react/
 
@@ -34,29 +34,26 @@ function Map() {
   // stores the feature that the user is currently viewing (triggers the modal)
   const [activeFeature, setActiveFeature] = useState()
   const [activeFeatureType, setActiveFeatureType] = useState()
+
   const [advancedMode, setAdvancedMode] = useState(false);
   // console.log('advancedMode:', advancedMode);
+  const [displayLTS, setLTS] = useState(true);
+  // console.log('displayLTS:', displayLTS);
+  const [displayIntersections, setIntersections] = useState(false);
+  // console.log('displayIntersections:' + displayIntersections)
+  const [displayBikeParking, setBikeParking] = useState(false);
+  // console.log('displayBikeParking:' + displayBikeParking)
 
   // for toggling between map view and card view on small screens
   // From https://github.com/mapbox/public-tools-and-demos/blob/main/projects/demo-realestate/src/App.jsx
   // still need to figure out how this works
-  const [activeMobileView, setActiveMobileView] = useState('map')
+  // const [activeMobileView, setActiveMobileView] = useState('map')
 
   const mapRef = useRef()
   const mapContainerRef = useRef()
 
   const [center, setCenter] = useState(INITIAL_CENTER)
   const [zoom, setZoom] = useState(INITIAL_ZOOM)
-
-  // // on click, set the active feature
-  // const handleFeatureClick = (feature) => {
-  //   setActiveFeature(feature)
-  // }
-
-  // // when the modal is closed, clear the active feature
-  // const handleModalClose = () => {
-  //   setActiveFeature(undefined)
-  // }
 
   const handleAdvancedMode = () => {
     console.log('advancedMode switched from', advancedMode);
@@ -65,13 +62,13 @@ function Map() {
   
 
   // toggle the map and card view on mobile devices
-  const handleActiveMobileClick = () => {
-    if (activeMobileView === 'map') {
-      setActiveMobileView('cards')
-    } else {
-      setActiveMobileView('map')
-    }
-  }
+  // const handleActiveMobileClick = () => {
+  //   if (activeMobileView === 'map') {
+  //     setActiveMobileView('cards')
+  //   } else {
+  //     setActiveMobileView('map')
+  //   }
+  // } 
 
   // Load Mapbox map with:
   // - add LTS layer
@@ -244,10 +241,84 @@ function Map() {
   const [bluebikeStations, setBluebikeStations] = useState(false);
   // handleBluebikeStations(bluebikeStations)
   // console.log('bluebikeStations is created and set to ' + bluebikeStations)
+  const handleIntersections = (checkboxState) => {
+    setIntersections(checkboxState)
+    console.log('Intersections checkbox changed to ' + !displayIntersections);
+    var intersectionsLayerName = 'intersections-layer'
+
+    // Create intersections layer if needed
+    if(checkboxState) {
+      if(typeof mapRef.current.getLayer(intersectionsLayerName) == 'undefined') {
+        Intersections(mapRef).then((intersections_json) => {
+          // console.log(intersections_json),
+          mapRef.current.addSource('intersections', {
+                  type: 'geojson',
+                  // Use a URL for the value for the `data` property.
+                  data: intersections_json
+              }),
+          mapRef.current.addLayer({
+                  'id': intersectionsLayerName,
+                  'type': 'circle',
+                  'source': 'intersections',
+                  'paint': {
+                      // 'circle-radius': 5,
+                      'circle-radius': [
+                        'interpolate',  // Make circles larger as the user zooms from z12 to z18.
+                          ['exponential', 1.75],
+                          ['zoom'],
+                          12, 6,
+                          18, 20
+                        ],
+                      'circle-stroke-width': 1,
+                      // 'circle-color': COLOR_SCALE[3],
+                      'circle-color': [
+                        'match',
+                          ['get', 'score'],
+                          '6', COLOR_SCALE[0],
+                          '5', COLOR_SCALE[1],
+                          '4', COLOR_SCALE[2],
+                          '3', COLOR_SCALE[2],
+                          '2', COLOR_SCALE[3],
+                          '1', COLOR_SCALE[3],
+                          '0', COLOR_SCALE[3],
+                          COLOR_SCALE[3],
+                        ],
+                      'circle-stroke-color': 'white'
+                  },
+                  layout: {
+                    'visibility': 'visible'
+                  }
+              })
+          mapRef.current.on('click', intersectionsLayerName, (e) => {
+            console.log('App/map/click/e.features[0]', e.features[0])
+            console.log('App/map/click/e.features[0].geometry.coordinates', e.features[0].geometry.coordinates)
+
+            setActiveFeature(e.features[0])
+            setActiveFeatureType('intersections')
+          })
+          // Change the cursor to a pointer when the mouse is over the LTS layer.
+          mapRef.current.on('mouseenter', intersectionsLayerName, () => {
+            mapRef.current.getCanvas().style.cursor = 'pointer'
+          })
+
+          // Change it back to a pointer when it leaves.
+          mapRef.current.on('mouseleave', intersectionsLayerName, () => {
+            mapRef.current.getCanvas().style.cursor = '';
+          })
+        });
+      } else {
+        console.log("Turning on " + intersectionsLayerName)
+        mapRef.current.setLayoutProperty(intersectionsLayerName, 'visibility', 'visible');
+      }
+    } else {
+      console.log("Turning off " + intersectionsLayerName)
+      mapRef.current.setLayoutProperty(intersectionsLayerName, 'visibility', 'none');
+    }
+  }
 
   const handleBikeParking = (checkboxState) => {
     setBikeParking(checkboxState)
-    console.log('Bike parking checkbox changed to ' + !bikeParking);
+    console.log('Bike parking checkbox changed to ' + !displayBikeParking);
     var bikeParkingLayerName = 'bike-parking-layer'
 
     // Create bike parking layer if needed
@@ -382,10 +453,18 @@ function Map() {
         <div id='options-menu'>
           <h1 id='options-title'>Map Features</h1>
           <div><label className='options-layer'>
+            Intersections: <input 
+                              type="checkbox" 
+                              name="bikeParkingCheckbox"
+                              defaultChecked={displayIntersections} 
+                              onChange={e => handleIntersections(e.target.checked)}
+                            />
+          </label></div>
+          <div><label className='options-layer'>
             Bike Parking: <input 
                               type="checkbox" 
                               name="bikeParkingCheckbox"
-                              defaultChecked={bikeParking} 
+                              defaultChecked={displayBikeParking} 
                               onChange={e => handleBikeParking(e.target.checked)}
                             />
           </label></div>

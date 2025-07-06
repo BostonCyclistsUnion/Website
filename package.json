@@ -13,6 +13,7 @@
     "deploy": "gh-pages -d dist --cname labs.bostoncyclistsunion.org"
   },
   "dependencies": {
+    "csv2geojson": "^5.1.2",
     "html-to-react": "1.7.0",
     "jmespath": "^0.16.0",
     "mapbox-gl": "^3.8.0",
