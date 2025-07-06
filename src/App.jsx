@@ -16,13 +16,13 @@ import { HashRouter, Route, Routes } from 'react-router-dom';
 function App() {
     
     return (
-        <div id='primary-column'>
-          <HashRouter basename='/'>
-            <Routes>
-              <Route path={LABS_PAGE_ROUTE} element={<LabsPage />} />
-              <Route path={MAP_PAGE_ROUTE} element={<MapPage />} />
-              <Route path={LTS_PAGE_ROUTE} element={<LTSPage />} />
-              <Route path={OSM_PAGE_ROUTE} element={<OSMPage />} />
+        <div id='primary-column' key='website'>
+          <HashRouter basename='/' key='hashrouter'>
+            <Routes key='routes'>
+              <Route path={LABS_PAGE_ROUTE} element={<LabsPage />} key='route-LabsPage'/>
+              <Route path={MAP_PAGE_ROUTE} element={<MapPage />} key='route-MapPage'/>
+              <Route path={LTS_PAGE_ROUTE} element={<LTSPage />} key='route-LTSPage'/>
+              <Route path={OSM_PAGE_ROUTE} element={<OSMPage />} key='route-OSMPage'/>
             </Routes>
           </HashRouter>
         </div>
