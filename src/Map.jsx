@@ -42,7 +42,11 @@ function Map() {
   const [displayIntersections, setIntersections] = useState(false);
   // console.log('displayIntersections:' + displayIntersections)
   const [displayBikeParking, setBikeParking] = useState(false);
+  // handleBikeParking(displayBikeParking)
   // console.log('displayBikeParking:' + displayBikeParking)
+  const [bluebikeStations, setBluebikeStations] = useState(false);
+  // handleBluebikeStations(bluebikeStations)
+  // console.log('bluebikeStations is created and set to ' + bluebikeStations))
 
   // for toggling between map view and card view on small screens
   // From https://github.com/mapbox/public-tools-and-demos/blob/main/projects/demo-realestate/src/App.jsx
@@ -235,12 +239,6 @@ function Map() {
     mapRef.current.setFilter('selected-lts', ['in', 'osmid', '']);
   }
 
-  const [bikeParking, setBikeParking] = useState(false);
-  // handleBikeParking(bikeParking)
-  // console.log('bikeParking is created and set to ' + bikeParking)
-  const [bluebikeStations, setBluebikeStations] = useState(false);
-  // handleBluebikeStations(bluebikeStations)
-  // console.log('bluebikeStations is created and set to ' + bluebikeStations)
   const handleIntersections = (checkboxState) => {
     setIntersections(checkboxState)
     console.log('Intersections checkbox changed to ' + !displayIntersections);

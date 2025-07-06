@@ -44,6 +44,8 @@ const ShowSidebar = ({selectedFeature, selectedFeatureType, advancedMode}) => {
         return (
             <div className='basicMode'>
                 <InfoBluebikes selectedFeature={selectedFeature} />
+            </div>
+        )
     } else if (selectedFeatureType == 'intersections') {
         console.log('return intersections sidebar')
         return (
