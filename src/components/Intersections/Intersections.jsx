@@ -6,7 +6,8 @@ export default async function Intersections() {
 
     const response = await fetch(csvurl);
     const csvdata = await response.text();
-    console.log('CSV retrieved', await csvdata)
+    // console.log('CSV retrieved', await csvdata)
+    console.log('CSV retrieved')
 
     let geojsontest
     

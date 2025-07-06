@@ -5,8 +5,6 @@ import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css';
 import './App.css'
 
-// import InfoSimple from './InfoSimple'
-// import InfoDetail from './InfoDetail'
 import Legend from './Legend';
 import SideBar, {ModeToggle} from './components/selection/SideBar'
 // import {ModeToggle} from './components/selection/SideBar'
@@ -34,29 +32,26 @@ function Map() {
   // stores the feature that the user is currently viewing (triggers the modal)
   const [activeFeature, setActiveFeature] = useState()
   const [activeFeatureType, setActiveFeatureType] = useState()
+
   const [advancedMode, setAdvancedMode] = useState(false);
   console.log('advancedMode:', advancedMode);
+  const [displayLTS, setLTS] = useState(true);
+  console.log('displayLTS:', displayLTS);
+  const [displayIntersections, setIntersections] = useState(false);
+  console.log('displayIntersections:' + displayIntersections)
+  const [displayBikeParking, setBikeParking] = useState(false);
+  console.log('displayBikeParking:' + displayBikeParking)
 
   // for toggling between map view and card view on small screens
   // From https://github.com/mapbox/public-tools-and-demos/blob/main/projects/demo-realestate/src/App.jsx
   // still need to figure out how this works
-  const [activeMobileView, setActiveMobileView] = useState('map')
+  // const [activeMobileView, setActiveMobileView] = useState('map')
 
   const mapRef = useRef()
   const mapContainerRef = useRef()
 
   const [center, setCenter] = useState(INITIAL_CENTER)
   const [zoom, setZoom] = useState(INITIAL_ZOOM)
-
-  // // on click, set the active feature
-  // const handleFeatureClick = (feature) => {
-  //   setActiveFeature(feature)
-  // }
-
-  // // when the modal is closed, clear the active feature
-  // const handleModalClose = () => {
-  //   setActiveFeature(undefined)
-  // }
 
   const handleAdvancedMode = () => {
     console.log('advancedMode switched from', advancedMode);
@@ -65,13 +60,13 @@ function Map() {
   
 
   // toggle the map and card view on mobile devices
-  const handleActiveMobileClick = () => {
-    if (activeMobileView === 'map') {
-      setActiveMobileView('cards')
-    } else {
-      setActiveMobileView('map')
-    }
-  } 
+  // const handleActiveMobileClick = () => {
+  //   if (activeMobileView === 'map') {
+  //     setActiveMobileView('cards')
+  //   } else {
+  //     setActiveMobileView('map')
+  //   }
+  // } 
 
   // Load Mapbox map with:
   // - add LTS layer
@@ -238,13 +233,9 @@ function Map() {
     mapRef.current.setFilter('selected-lts', ['in', 'osmid', '']);
   }
 
-
-  const [intersections, setIntersections] = useState(false);
-  console.log('intersections is created and set to ' + intersections)
-
   const handleIntersections = (checkboxState) => {
     setIntersections(checkboxState)
-    console.log('Intersections checkbox changed to ' + !intersections);
+    console.log('Intersections checkbox changed to ' + !displayIntersections);
     var intersectionsLayerName = 'intersections-layer'
 
     // Create intersections layer if needed
@@ -262,9 +253,28 @@ function Map() {
                   'type': 'circle',
                   'source': 'intersections',
                   'paint': {
-                      'circle-radius': 5,
+                      // 'circle-radius': 5,
+                      'circle-radius': [
+                        'interpolate',  // Make circles larger as the user zooms from z12 to z18.
+                          ['exponential', 1.75],
+                          ['zoom'],
+                          12, 6,
+                          18, 20
+                        ],
                       'circle-stroke-width': 1,
-                      'circle-color': COLOR_SCALE[3],
+                      // 'circle-color': COLOR_SCALE[3],
+                      'circle-color': [
+                        'match',
+                          ['get', 'score'],
+                          '6', COLOR_SCALE[0],
+                          '5', COLOR_SCALE[1],
+                          '4', COLOR_SCALE[2],
+                          '3', COLOR_SCALE[2],
+                          '2', COLOR_SCALE[3],
+                          '1', COLOR_SCALE[3],
+                          '0', COLOR_SCALE[3],
+                          COLOR_SCALE[3],
+                        ],
                       'circle-stroke-color': 'white'
                   },
                   layout: {
@@ -298,12 +308,9 @@ function Map() {
     }
   }
 
-  const [bikeParking, setBikeParking] = useState(false);
-  console.log('bikeParking is created and set to ' + bikeParking)
-
   const handleBikeParking = (checkboxState) => {
     setBikeParking(checkboxState)
-    console.log('Bike parking checkbox changed to ' + !bikeParking);
+    console.log('Bike parking checkbox changed to ' + !displayBikeParking);
     var bikeParkingLayerName = 'bike-parking-layer'
 
     // Create bike parking layer if needed
@@ -378,7 +385,7 @@ function Map() {
             Intersections: <input 
                               type="checkbox" 
                               name="bikeParkingCheckbox"
-                              defaultChecked={intersections} 
+                              defaultChecked={displayIntersections} 
                               onChange={e => handleIntersections(e.target.checked)}
                             />
           </label>
@@ -386,7 +393,7 @@ function Map() {
             Bike Parking: <input 
                               type="checkbox" 
                               name="bikeParkingCheckbox"
-                              defaultChecked={bikeParking} 
+                              defaultChecked={displayBikeParking} 
                               onChange={e => handleBikeParking(e.target.checked)}
                             />
           </label>
