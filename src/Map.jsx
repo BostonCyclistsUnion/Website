@@ -308,41 +308,43 @@ function Map() {
       if(typeof mapRef.current.getLayer(bluebikeLayerName) == 'undefined') {
         Bluebikes().then((bluebikeStationsGeojson) => {
           console.log('bluebikeStationsGeojson', bluebikeStationsGeojson)
-          mapRef.current.addSource('bluebike-stations', {
-                type: 'geojson',
-                data: bluebikeStationsGeojson
-            }),
-          mapRef.current.addLayer({
+          mapRef.current.loadImage('/bluebike_classic.png', (error, image) => {
+            if (error) throw error;
+            // Add the loaded image to the style's sprite.
+            mapRef.current.addImage('bluebike_classic_img', image);
+          
+            mapRef.current.addSource('bluebike-stations', {
+                  type: 'geojson',
+                  data: bluebikeStationsGeojson
+              }),
+            mapRef.current.addLayer({
                   'id': bluebikeLayerName,
-                  'type': 'circle',
+                  'type': 'symbol',
                   'source': 'bluebike-stations',
-                  'paint': {
-                      'circle-radius': 5,
-                      'circle-stroke-width': 1,
-                      'circle-color': COLOR_SCALE[1],
-                      'circle-stroke-color': 'white'
-                  },
                   layout: {
-                    'visibility': 'visible'
+                    'visibility': 'visible',
+                    'icon-image': 'bluebike_classic_img',
+                    'icon-size': 1,
+                    'icon-allow-overlap': true,
                   }
-              })
-          mapRef.current.on('click', bluebikeLayerName, (e) => {
-            console.log('App/map/click/e.features[0]', e.features[0])
-            console.log('App/map/click/e.features[0].geometry.coordinates', e.features[0].geometry.coordinates)
+                })
+            mapRef.current.on('click', bluebikeLayerName, (e) => {
+              console.log('App/map/click/e.features[0]', e.features[0])
+              console.log('App/map/click/e.features[0].geometry.coordinates', e.features[0].geometry.coordinates)
 
-            setActiveFeature(e.features[0])
-            setActiveFeatureType('bluebikeStation')
-          })
-          // Change the cursor to a pointer when the mouse is over the LTS layer.
-          mapRef.current.on('mouseenter', bluebikeLayerName, () => {
-            mapRef.current.getCanvas().style.cursor = 'pointer'
-          })
+              setActiveFeature(e.features[0])
+              setActiveFeatureType('bluebikeStation')
+            })
+            // Change the cursor to a pointer when the mouse is over the LTS layer.
+            mapRef.current.on('mouseenter', bluebikeLayerName, () => {
+              mapRef.current.getCanvas().style.cursor = 'pointer'
+            })
 
-          // Change it back to a pointer when it leaves.
-          mapRef.current.on('mouseleave', bluebikeLayerName, () => {
-            mapRef.current.getCanvas().style.cursor = '';
-          })
-      })
+            // Change it back to a pointer when it leaves.
+            mapRef.current.on('mouseleave', bluebikeLayerName, () => {
+              mapRef.current.getCanvas().style.cursor = '';
+            })
+      })});
     } else {
       console.log("Turning on " + bluebikeLayerName)
       mapRef.current.setLayoutProperty(bluebikeLayerName, 'visibility', 'visible');
