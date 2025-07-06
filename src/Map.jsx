@@ -35,7 +35,7 @@ function Map() {
   const [activeFeature, setActiveFeature] = useState()
   const [activeFeatureType, setActiveFeatureType] = useState()
   const [advancedMode, setAdvancedMode] = useState(false);
-  console.log('advancedMode:', advancedMode);
+  // console.log('advancedMode:', advancedMode);
 
   // for toggling between map view and card view on small screens
   // From https://github.com/mapbox/public-tools-and-demos/blob/main/projects/demo-realestate/src/App.jsx
@@ -239,9 +239,11 @@ function Map() {
   }
 
   const [bikeParking, setBikeParking] = useState(false);
-  console.log('bikeParking is created and set to ' + bikeParking)
+  // handleBikeParking(bikeParking)
+  // console.log('bikeParking is created and set to ' + bikeParking)
   const [bluebikeStations, setBluebikeStations] = useState(false);
-  console.log('bluebikeStations is created and set to ' + bluebikeStations)
+  // handleBluebikeStations(bluebikeStations)
+  // console.log('bluebikeStations is created and set to ' + bluebikeStations)
 
   const handleBikeParking = (checkboxState) => {
     setBikeParking(checkboxState)
@@ -307,7 +309,8 @@ function Map() {
     if(checkboxState) {
       if(typeof mapRef.current.getLayer(bluebikeLayerName) == 'undefined') {
         Bluebikes().then((bluebikeStationsGeojson) => {
-          console.log('bluebikeStationsGeojson', bluebikeStationsGeojson)
+          // console.log('bluebikeStationsGeojson', bluebikeStationsGeojson)
+          console.log('bluebikeStationsGeojson loaded')
           mapRef.current.loadImage('/bluebike_classic.png', (error, image) => {
             if (error) throw error;
             // Add the loaded image to the style's sprite.
@@ -324,7 +327,13 @@ function Map() {
                   layout: {
                     'visibility': 'visible',
                     'icon-image': 'bluebike_classic_img',
-                    'icon-size': 1,
+                    'icon-size': [
+                        'interpolate',  // Make circles larger as the user zooms from z12 to z18.
+                          ['linear'],
+                          ['zoom'],
+                          12, 0.5,
+                          18, 2
+                        ],
                     'icon-allow-overlap': true,
                   }
                 })
@@ -371,22 +380,23 @@ function Map() {
         </button>
 
         <div id='options-menu'>
-          <label >
+          <h1 id='options-title'>Map Features</h1>
+          <div><label className='options-layer'>
             Bike Parking: <input 
                               type="checkbox" 
                               name="bikeParkingCheckbox"
                               defaultChecked={bikeParking} 
                               onChange={e => handleBikeParking(e.target.checked)}
                             />
-          </label>
-          <label >
+          </label></div>
+          <div><label className='options-layer'>
             BlueBike Stations: <input 
                               type="checkbox" 
                               name="bluebikeStationCheckbox"
                               defaultChecked={bluebikeStations} 
                               onChange={e => handleBluebikeStations(e.target.checked)}
                             />
-          </label>
+          </label></div>
         </div>
 
         <SideBar 

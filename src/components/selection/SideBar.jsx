@@ -8,14 +8,14 @@ import InfoBikeParking from './InfoBikeParking'
 import InfoBluebikes from './InfoBluebikes'
 
 export const ModeToggle = ({advancedMode}) => {
-    console.log('ModeToggle/advancedMode', advancedMode)
+    // console.log('ModeToggle/advancedMode', advancedMode)
     if (advancedMode) return ('Show Fewer Details')
     return ('Show Advanced Details')
 }
 
 
 const ShowSidebar = ({selectedFeature, selectedFeatureType, advancedMode}) => {
-    console.log('ShowSidebar/advancedMode', advancedMode)
+    // console.log('ShowSidebar/advancedMode', advancedMode)
     if (selectedFeatureType == 'lts') {
         if (advancedMode) {
             console.log('return advanced sidebar')
@@ -49,8 +49,8 @@ const ShowSidebar = ({selectedFeature, selectedFeatureType, advancedMode}) => {
 }
 
 const SideBar = ({selectedFeature, selectedFeatureType, zoom, zoomLimit, advancedMode=false}) => {
-    console.log('SideBar/selectedFeature', selectedFeature)
-    console.log('SideBar/selectedFeatureType', selectedFeatureType)
+    if (selectedFeature) {console.log('SideBar/selectedFeature', selectedFeature)}
+    if (selectedFeatureType) {console.log('SideBar/selectedFeatureType', selectedFeatureType)}
     if(zoom < zoomLimit) {
         return (
         <div id='sidebar' className='sidebar'>
