@@ -9,7 +9,9 @@ import Legend from './Legend';
 import SideBar, {ModeToggle} from './components/selection/SideBar'
 // import {ModeToggle} from './components/selection/SideBar'
 import Overpass from './components/Overpass/overpass';
+import Bluebikes from './components/GBFS/GBFS';
 import Intersections from './components/Intersections/Intersections';
+
 
 // https://docs.mapbox.com/help/tutorials/use-mapbox-gl-js-with-react/
 
@@ -34,13 +36,13 @@ function Map() {
   const [activeFeatureType, setActiveFeatureType] = useState()
 
   const [advancedMode, setAdvancedMode] = useState(false);
-  console.log('advancedMode:', advancedMode);
+  // console.log('advancedMode:', advancedMode);
   const [displayLTS, setLTS] = useState(true);
-  console.log('displayLTS:', displayLTS);
+  // console.log('displayLTS:', displayLTS);
   const [displayIntersections, setIntersections] = useState(false);
-  console.log('displayIntersections:' + displayIntersections)
+  // console.log('displayIntersections:' + displayIntersections)
   const [displayBikeParking, setBikeParking] = useState(false);
-  console.log('displayBikeParking:' + displayBikeParking)
+  // console.log('displayBikeParking:' + displayBikeParking)
 
   // for toggling between map view and card view on small screens
   // From https://github.com/mapbox/public-tools-and-demos/blob/main/projects/demo-realestate/src/App.jsx
@@ -233,6 +235,12 @@ function Map() {
     mapRef.current.setFilter('selected-lts', ['in', 'osmid', '']);
   }
 
+  const [bikeParking, setBikeParking] = useState(false);
+  // handleBikeParking(bikeParking)
+  // console.log('bikeParking is created and set to ' + bikeParking)
+  const [bluebikeStations, setBluebikeStations] = useState(false);
+  // handleBluebikeStations(bluebikeStations)
+  // console.log('bluebikeStations is created and set to ' + bluebikeStations)
   const handleIntersections = (checkboxState) => {
     setIntersections(checkboxState)
     console.log('Intersections checkbox changed to ' + !displayIntersections);
@@ -364,6 +372,68 @@ function Map() {
     }
   }
 
+  const handleBluebikeStations = (checkboxState) => {
+    setBluebikeStations(checkboxState)
+    console.log('bluebikeStations checkbox changed to ' + !bluebikeStations);
+    var bluebikeLayerName = 'bluebike-layer'
+
+    if(checkboxState) {
+      if(typeof mapRef.current.getLayer(bluebikeLayerName) == 'undefined') {
+        Bluebikes().then((bluebikeStationsGeojson) => {
+          // console.log('bluebikeStationsGeojson', bluebikeStationsGeojson)
+          console.log('bluebikeStationsGeojson loaded')
+          mapRef.current.loadImage('/bluebike_classic.png', (error, image) => {
+            if (error) throw error;
+            // Add the loaded image to the style's sprite.
+            mapRef.current.addImage('bluebike_classic_img', image);
+          
+            mapRef.current.addSource('bluebike-stations', {
+                  type: 'geojson',
+                  data: bluebikeStationsGeojson
+              }),
+            mapRef.current.addLayer({
+                  'id': bluebikeLayerName,
+                  'type': 'symbol',
+                  'source': 'bluebike-stations',
+                  layout: {
+                    'visibility': 'visible',
+                    'icon-image': 'bluebike_classic_img',
+                    'icon-size': [
+                        'interpolate',  // Make circles larger as the user zooms from z12 to z18.
+                          ['linear'],
+                          ['zoom'],
+                          12, 0.5,
+                          18, 2
+                        ],
+                    'icon-allow-overlap': true,
+                  }
+                })
+            mapRef.current.on('click', bluebikeLayerName, (e) => {
+              console.log('App/map/click/e.features[0]', e.features[0])
+              console.log('App/map/click/e.features[0].geometry.coordinates', e.features[0].geometry.coordinates)
+
+              setActiveFeature(e.features[0])
+              setActiveFeatureType('bluebikeStation')
+            })
+            // Change the cursor to a pointer when the mouse is over the LTS layer.
+            mapRef.current.on('mouseenter', bluebikeLayerName, () => {
+              mapRef.current.getCanvas().style.cursor = 'pointer'
+            })
+
+            // Change it back to a pointer when it leaves.
+            mapRef.current.on('mouseleave', bluebikeLayerName, () => {
+              mapRef.current.getCanvas().style.cursor = '';
+            })
+      })});
+    } else {
+      console.log("Turning on " + bluebikeLayerName)
+      mapRef.current.setLayoutProperty(bluebikeLayerName, 'visibility', 'visible');
+    }
+  } else {
+    console.log("Turning off " + bluebikeLayerName)
+    mapRef.current.setLayoutProperty(bluebikeLayerName, 'visibility', 'none');
+  }}
+
   return (
     <>
       <div id='map-container' ref={mapContainerRef} >
@@ -381,22 +451,31 @@ function Map() {
         </button>
 
         <div id='options-menu'>
-          <label >
+          <h1 id='options-title'>Map Features</h1>
+          <div><label className='options-layer'>
             Intersections: <input 
                               type="checkbox" 
                               name="bikeParkingCheckbox"
                               defaultChecked={displayIntersections} 
                               onChange={e => handleIntersections(e.target.checked)}
                             />
-          </label>
-          <label >
+          </label></div>
+          <div><label className='options-layer'>
             Bike Parking: <input 
                               type="checkbox" 
                               name="bikeParkingCheckbox"
                               defaultChecked={displayBikeParking} 
                               onChange={e => handleBikeParking(e.target.checked)}
                             />
-          </label>
+          </label></div>
+          <div><label className='options-layer'>
+            BlueBike Stations: <input 
+                              type="checkbox" 
+                              name="bluebikeStationCheckbox"
+                              defaultChecked={bluebikeStations} 
+                              onChange={e => handleBluebikeStations(e.target.checked)}
+                            />
+          </label></div>
         </div>
 
         <SideBar 

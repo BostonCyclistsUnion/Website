@@ -5,17 +5,18 @@ console.log('SideBar loaded')
 import InfoSimple from './InfoSimple'
 import InfoDetail from './InfoDetail'
 import InfoBikeParking from './InfoBikeParking'
+import InfoBluebikes from './InfoBluebikes'
 import InfoIntersections from './InfoIntersections'
 
 export const ModeToggle = ({advancedMode}) => {
-    console.log('ModeToggle/advancedMode', advancedMode)
+    // console.log('ModeToggle/advancedMode', advancedMode)
     if (advancedMode) return ('Show Fewer Details')
     return ('Show Advanced Details')
 }
 
 
 const ShowSidebar = ({selectedFeature, selectedFeatureType, advancedMode}) => {
-    console.log('ShowSidebar/advancedMode', advancedMode)
+    // console.log('ShowSidebar/advancedMode', advancedMode)
     if (selectedFeatureType == 'lts') {
         if (advancedMode) {
             console.log('return advanced sidebar')
@@ -38,6 +39,11 @@ const ShowSidebar = ({selectedFeature, selectedFeatureType, advancedMode}) => {
                 <InfoBikeParking selectedFeature={selectedFeature} />
             </div>
         )
+    } else if (selectedFeatureType == 'bluebikeStation') {
+        console.log('return bluebike Station sidebar')
+        return (
+            <div className='basicMode'>
+                <InfoBluebikes selectedFeature={selectedFeature} />
     } else if (selectedFeatureType == 'intersections') {
         console.log('return intersections sidebar')
         return (
@@ -49,8 +55,8 @@ const ShowSidebar = ({selectedFeature, selectedFeatureType, advancedMode}) => {
 }
 
 const SideBar = ({selectedFeature, selectedFeatureType, zoom, zoomLimit, advancedMode=false}) => {
-    console.log('SideBar/selectedFeature', selectedFeature)
-    console.log('SideBar/selectedFeatureType', selectedFeatureType)
+    if (selectedFeature) {console.log('SideBar/selectedFeature', selectedFeature)}
+    if (selectedFeatureType) {console.log('SideBar/selectedFeatureType', selectedFeatureType)}
     if(zoom < zoomLimit) {
         return (
         <div id='sidebar' className='sidebar'>

@@ -21,10 +21,10 @@ import BikeStressMap from '../../ImageLinks/BikeStressMap';
 
 const PageText = [
     {
-        title: ['Welcome to the BCU Labs', <BikeStressMap />],
+        title: ['Welcome to the BCU Labs', <BikeStressMap key='stress map logo'/>],
         subheading: 'Explore how comfortable it is to bike in Greater Boston',
         paragraph: [
-            <Link to={LABS_PAGE_ROUTE}>BCU Labs</Link>,
+            <Link to={LABS_PAGE_ROUTE} key='bcu labs link'>BCU Labs</Link>,
             ' is working to build data-backed tools to help people identify the strengths and weaknesses of the biking network in Greater Boston.',
         ],
     },

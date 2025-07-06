@@ -14,8 +14,8 @@ import TextSection from '../TextSection/TextSection';
 
 export default function MapPage() {
     return (
-        <div id='primary-column'>
-            <LabsHeader />
+        <div id='primary-column' key='map-page'>
+            <LabsHeader key='map-header'/>
             {/* <BikeStressMap /> */}
             {
                 textHeader.map(PageText => (
@@ -29,7 +29,7 @@ export default function MapPage() {
                     />
                 ))
             }
-            <Map />
+            <Map key='labs-map'/>
             {
                 textBody.map(PageText => (
                 <TextSection 
@@ -42,7 +42,7 @@ export default function MapPage() {
                     />
                 ))
             }
-            <LabsFooter />
+            <LabsFooter key='map-footer'/>
         </div>
     )
 }
