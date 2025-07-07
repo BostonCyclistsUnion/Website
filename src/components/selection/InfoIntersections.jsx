@@ -38,6 +38,12 @@ const InfoIntersections = ({selectedFeature}) => {
         notes,
     } = selectedFeature.properties
 
+    const {
+        coordinates
+    } = selectedFeature._geometry
+    let [lon, lat] = coordinates
+    // console.log('coords', coordinates, lat, lon)
+    let streetviewLink = 'https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=' + lat + '%2C' + lon 
 
     return (
         <div>
@@ -48,6 +54,7 @@ const InfoIntersections = ({selectedFeature}) => {
             {DaylitCrosswalks && <p>{formatDetails('Crosswalks Daylit', DaylitCrosswalks)}</p>}
             {projectName && <p>Project: <Link to={projectLink}>{projectName}</Link></p>}
             {notes && <p>{notes}</p>}
+            <p><Link to={streetviewLink}>Google Streetview</Link></p>
         </div>
     )
 }
