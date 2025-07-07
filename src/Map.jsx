@@ -29,6 +29,8 @@ const LINE_WIDTH = 4
 const COLOR_SCALE = ['#007191', '#62c8d3', '#f47a00', '#d31f11', 'grey'] // https://www.simplifiedsciencepublishing.com/resources/best-color-palettes-for-scientific-figures-and-data-visualizations
 // rgb(0, 113, 145), rgb(98, 200, 211), rgb(244, 122, 0), rgb(211, 31, 17)
 
+const HEATMAP_ZOOM_MAX = 14
+const HEATMAP_ZOOM_MIN = MIN_ZOOM
 
 function Map() {
   // stores the feature that the user is currently viewing (triggers the modal)
@@ -390,6 +392,7 @@ function Map() {
                   'id': bikeParkingLayerName,
                   'type': 'circle',
                   'source': 'bike-parking',
+                  minzoom: 13,
                   'paint': {
                       'circle-radius': 3,
                       'circle-stroke-width': 1,
@@ -400,6 +403,66 @@ function Map() {
                     'visibility': 'visible'
                   }
               })
+
+          mapRef.current.addLayer({
+                  id: bikeParkingLayerName+'-heat',
+                  type: 'heatmap',
+                  source: 'bike-parking',
+                  maxzoom: HEATMAP_ZOOM_MAX,
+                  layout: {
+                    'visibility': 'visible'
+                  },
+                  paint: {
+                    // Increase the heatmap weight based on frequency and property magnitude
+                    // 'heatmap-weight': [
+                    //   'interpolate',
+                    //   ['linear'],
+                    //   ['get', 'capacity'],
+                    //   0,
+                    //   0,
+                    //   6,
+                    //   1
+                    // ],
+                    // Increase the heatmap color weight weight by zoom level
+                    // heatmap-intensity is a multiplier on top of heatmap-weight
+                    'heatmap-intensity': [
+                      'interpolate',
+                      ['linear'],
+                      ['zoom'],
+                      0,
+                      1,
+                      HEATMAP_ZOOM_MIN,
+                      3
+                    ],
+                    // Color ramp for heatmap.  Domain is 0 (low) to 1 (high).
+                    // Begin color ramp at 0-stop with a 0-transparancy color
+                    // to create a blur-like effect.
+                    'heatmap-color': [
+                      'interpolate',
+                      ['linear'],
+                      ['heatmap-density'],
+                      0,
+                      'rgba(33,102,172,0)',
+                      // 0.2,
+                      // 'rgb(103,169,207)',
+                      0.4,
+                      'rgb(209,229,240)',
+                      0.6,
+                      'rgb(253,219,199)',
+                      0.8,
+                      'rgb(239,138,98)',
+                      1,
+                      'rgb(178,24,43)'
+                    ],
+                    // Adjust the heatmap radius by zoom level
+                    // 'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 1, HEATMAP_ZOOM_MIN, 9, HEATMAP_ZOOM_MAX],
+                    'heatmap-radius': 10,
+                    // Transition from heatmap to circle layer by zoom level
+                    'heatmap-opacity': ['interpolate', ['linear'], ['zoom'], HEATMAP_ZOOM_MIN, 0.9, HEATMAP_ZOOM_MAX, 0]
+                  },
+                  // slot: 'top'
+          });
+
           mapRef.current.on('click', bikeParkingLayerName, (e) => {
             console.log('App/map/click/e.features[0]', e.features[0])
             console.log('App/map/click/e.features[0].geometry.coordinates', e.features[0].geometry.coordinates)
@@ -420,10 +483,12 @@ function Map() {
       } else {
         console.log("Turning on " + bikeParkingLayerName)
         mapRef.current.setLayoutProperty(bikeParkingLayerName, 'visibility', 'visible');
+        mapRef.current.setLayoutProperty(bikeParkingLayerName+'-heat', 'visibility', 'visible');
       }
     } else {
       console.log("Turning off " + bikeParkingLayerName)
       mapRef.current.setLayoutProperty(bikeParkingLayerName, 'visibility', 'none');
+      mapRef.current.setLayoutProperty(bikeParkingLayerName+'-heat', 'visibility', 'none');
     }
   }
 

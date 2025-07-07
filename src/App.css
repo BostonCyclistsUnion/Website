@@ -176,6 +176,7 @@ p, ul {
   /* border: 1px solid #353535; */
   padding: 10px;
   z-index: 1;
+  max-width: 450px;
 }
 
 .sidebar .basicMode {
