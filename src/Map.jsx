@@ -37,7 +37,12 @@ function Map() {
 
   const [advancedMode, setAdvancedMode] = useState(false);
   // console.log('advancedMode:', advancedMode);
+  
   const [displayLTS, setLTS] = useState(true);
+  const [displayLTS1, setLTS1] = useState(true);
+  const [displayLTS2, setLTS2] = useState(true);
+  const [displayLTS3, setLTS3] = useState(true);
+  const [displayLTS4, setLTS4] = useState(true);
   // console.log('displayLTS:', displayLTS);
   const [displayIntersections, setIntersections] = useState(false);
   // console.log('displayIntersections:' + displayIntersections)
@@ -64,6 +69,37 @@ function Map() {
     setAdvancedMode(advancedMode => !advancedMode);
   }
   
+  const handleLTS1 = () => {
+    console.log('displayLTS1 switched from', displayLTS1);
+    setLTS1(displayLTS1 => !displayLTS1);
+    setLTSfilter(1)
+  }
+  const handleLTS2 = () => {
+    console.log('displayLTS2 switched from', displayLTS2);
+    setLTS2(displayLTS2 => !displayLTS2);
+    setLTSfilter(2)
+  }
+  const handleLTS3 = () => {
+    console.log('displayLTS3 switched from', displayLTS3);
+    setLTS3(displayLTS3 => !displayLTS3);
+    setLTSfilter(3)
+  }
+  const handleLTS4 = () => {
+    console.log('displayLTS4 switched from', displayLTS4);
+    setLTS4(displayLTS4 => !displayLTS4);
+    setLTSfilter(4)
+  }
+  const setLTSfilter = (level) => {
+    let ltsFilter = mapRef.current.getFilter('lts-layer')
+    // console.log('ltsFilter', ltsFilter)
+    if (ltsFilter.includes(level)) {
+      const index = ltsFilter.indexOf(level);
+      ltsFilter.splice(index, 1); // 2nd parameter means remove one item only
+    } else {
+      ltsFilter.push(level)
+    }
+    mapRef.current.setFilter('lts-layer', ltsFilter);
+  }
 
   // toggle the map and card view on mobile devices
   // const handleActiveMobileClick = () => {
@@ -137,14 +173,17 @@ function Map() {
               //     4, ["literal", [1, 5]],
               //     ["literal", [1, 1]]
               // ],
-          }
+          },
+          layout: {
+            'visibility': 'visible'
+          },
+          filter: ['in', 'LTS', 1,2,3,4],
       },
       // 'road-label-simple' // Add layer below labels
       )
 
       // Add selected LTS segment layer
-      mapRef.current.addLayer(
-        {
+      mapRef.current.addLayer({
           'id': 'selected-lts',
           "type": "line",
           'source': 'LTS_source',
@@ -162,7 +201,10 @@ function Map() {
               ],
               'line-width': LINE_WIDTH * 3
             },
-          filter: ['in', 'osmid', '']
+          filter: ['in', 'osmid', ''],
+          layout: {
+            'visibility': 'visible'
+          }
         },
         // 'road-label-simple'
       );
@@ -237,6 +279,21 @@ function Map() {
     setActiveFeature()
     setActiveFeatureType()
     mapRef.current.setFilter('selected-lts', ['in', 'osmid', '']);
+  }
+
+  const handleLTS = (checkboxState) => {
+    setLTS(checkboxState)
+    console.log('LTS checkbox changed to ' + !displayLTS);
+
+    if(checkboxState) {
+        console.log("Turning on LTS")
+        mapRef.current.setLayoutProperty('lts-layer', 'visibility', 'visible');
+        mapRef.current.setLayoutProperty('selected-lts', 'visibility', 'visible');
+    } else {
+      console.log("Turning off LTS")
+      mapRef.current.setLayoutProperty('lts-layer', 'visibility', 'none');
+      mapRef.current.setLayoutProperty('selected-lts', 'visibility', 'none');
+    }
   }
 
   const handleIntersections = (checkboxState) => {
@@ -439,7 +496,18 @@ function Map() {
           Longitude: {center[0].toFixed(4)} | Latitude: {center[1].toFixed(4)} | Zoom: {zoom.toFixed(2)}
         </div> */}
 
-        <Legend colorScale={COLOR_SCALE}/>
+        <Legend 
+          colorScale={COLOR_SCALE}
+          lts_display={displayLTS}
+          lts1_display={displayLTS1}
+          lts2_display={displayLTS2}
+          lts3_display={displayLTS3}
+          lts4_display={displayLTS4}
+          handleLTS1={handleLTS1}
+          handleLTS2={handleLTS2}
+          handleLTS3={handleLTS3}
+          handleLTS4={handleLTS4}
+        />
 
         <button className='reset-button' onClick={handleReset}>
           Reset
@@ -451,28 +519,40 @@ function Map() {
         <div id='options-menu'>
           <h1 id='options-title'>Map Features</h1>
           <div><label className='options-layer'>
-            Intersections: <input 
-                              type="checkbox" 
-                              name="bikeParkingCheckbox"
-                              defaultChecked={displayIntersections} 
-                              onChange={e => handleIntersections(e.target.checked)}
-                            />
+            <input 
+              type="checkbox" 
+              name="ltsCheckbox"
+              defaultChecked={displayLTS} 
+              onChange={e => handleLTS(e.target.checked)}
+            />
+            Stress Map
           </label></div>
           <div><label className='options-layer'>
-            Bike Parking: <input 
-                              type="checkbox" 
-                              name="bikeParkingCheckbox"
-                              defaultChecked={displayBikeParking} 
-                              onChange={e => handleBikeParking(e.target.checked)}
-                            />
+            <input 
+              type="checkbox" 
+              name="bikeParkingCheckbox"
+              defaultChecked={displayIntersections} 
+              onChange={e => handleIntersections(e.target.checked)}
+            />
+            Intersections
           </label></div>
           <div><label className='options-layer'>
-            BlueBike Stations: <input 
-                              type="checkbox" 
-                              name="bluebikeStationCheckbox"
-                              defaultChecked={bluebikeStations} 
-                              onChange={e => handleBluebikeStations(e.target.checked)}
-                            />
+            <input 
+              type="checkbox" 
+              name="bikeParkingCheckbox"
+              defaultChecked={displayBikeParking} 
+              onChange={e => handleBikeParking(e.target.checked)}
+            />
+            Bike Parking
+          </label></div>
+          <div><label className='options-layer'>
+            <input 
+              type="checkbox" 
+              name="bluebikeStationCheckbox"
+              defaultChecked={bluebikeStations} 
+              onChange={e => handleBluebikeStations(e.target.checked)}
+            />
+            BlueBike Stations
           </label></div>
         </div>
 
