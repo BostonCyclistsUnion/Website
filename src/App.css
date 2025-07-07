@@ -236,6 +236,16 @@ td {
   font-weight: 600;
   text-align: left;
   color: #1B1A16;
+  margin-bottom: 5px;
+}
+
+.tableSubheading {
+  font-family: rubik, sans-serif;
+  font-size: 1.2em;
+  font-weight: 450;
+  text-align: left;
+  color: #1B1A16;
+  margin-bottom: 5px;
 }
 
 .tableBox{

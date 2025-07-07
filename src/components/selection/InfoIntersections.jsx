@@ -43,12 +43,13 @@ const InfoIntersections = ({selectedFeature}) => {
     } = selectedFeature._geometry
     let [lon, lat] = coordinates
     // console.log('coords', coordinates, lat, lon)
+    // https://developers.google.com/maps/documentation/urls/get-started
     let streetviewLink = 'https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=' + lat + '%2C' + lon 
 
     return (
         <div>
             <h1 className='tableStreetName'>{name}</h1>
-            <h2>Intersection Details</h2>
+            <h2 className='tableSubheading'>Intersection Details</h2>
             {ProtectedBikeLanes && <p>{formatDetails('Bike Lanes Separated', ProtectedBikeLanes)}</p>}
             {ProtectedCorners && <p>{formatDetails('Corners Protected', ProtectedCorners)}</p>}
             {DaylitCrosswalks && <p>{formatDetails('Crosswalks Daylit', DaylitCrosswalks)}</p>}
