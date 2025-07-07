@@ -8,8 +8,8 @@ export default function ProjectButton( props) {
       <div className='Pad'>
         <Link to={link} >
           <button className='Button Project'>
-            <div className='Title'>{title} </div>
-            <div className='Subitle'>{subtitle} </div>
+            <h1 className='ButtonProjectTitle'>{title} </h1>
+            <h2 className='ButtonProjectSubtitle'>{subtitle} </h2>
           </button>
         </Link>
       </div>
