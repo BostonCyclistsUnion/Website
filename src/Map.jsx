@@ -534,7 +534,7 @@ function Map() {
               defaultChecked={displayIntersections} 
               onChange={e => handleIntersections(e.target.checked)}
             />
-            Intersections
+            Intersection Audits
           </label></div>
           <div><label className='options-layer'>
             <input 

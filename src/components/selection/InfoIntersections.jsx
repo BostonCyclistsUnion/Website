@@ -49,7 +49,7 @@ const InfoIntersections = ({selectedFeature}) => {
     return (
         <div>
             <h1 className='tableStreetName'>{name}</h1>
-            <h2 className='tableSubheading'>Intersection Details</h2>
+            <h2 className='tableSubheading'>Intersection Audit Details</h2>
             {ProtectedBikeLanes && <p>{formatDetails('Bike Lanes Separated', ProtectedBikeLanes)}</p>}
             {ProtectedCorners && <p>{formatDetails('Corners Protected', ProtectedCorners)}</p>}
             {DaylitCrosswalks && <p>{formatDetails('Crosswalks Daylit', DaylitCrosswalks)}</p>}
