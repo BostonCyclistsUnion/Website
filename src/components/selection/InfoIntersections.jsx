@@ -36,6 +36,7 @@ const InfoIntersections = ({selectedFeature}) => {
         projectName,
         projectLink,
         notes,
+        lastUpdated,
     } = selectedFeature.properties
 
     const {
@@ -56,6 +57,8 @@ const InfoIntersections = ({selectedFeature}) => {
             {projectName && <p>Project: <Link to={projectLink}>{projectName}</Link></p>}
             {notes && <p>{notes}</p>}
             <p><Link to={streetviewLink}>Google Streetview</Link></p>
+            <p>Audit Last Updated: {lastUpdated}</p>
+            <p><Link to=''>Let us know if something looks wrong</Link></p>
         </div>
     )
 }
