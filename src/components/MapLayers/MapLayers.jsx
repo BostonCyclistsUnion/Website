@@ -11,7 +11,7 @@ function hoverMousePointer (mapRef, layerID) {
     })
 }
 
-function featureClick (mapRef, layerID, featureID) {
+function featureClick (mapRef, layerID, featureID, setActiveFeature, setActiveFeatureType) {
     // When a click event occurs on a feature in the places layer, open a popup at the
     // location of the feature, with description HTML from its properties.
     mapRef.current.on('click', layerID, (e) => {
@@ -21,11 +21,15 @@ function featureClick (mapRef, layerID, featureID) {
         setActiveFeature(e.features[0])
         setActiveFeatureType(featureID)
         // console.log('App/map/click/e.features[0].id', e.features[0].id)
-        mapRef.current.setFilter(layerID+'-selected', ['in', 'osmid', e.features[0].id]);
+
+        // Update the filter on highlighting the selected object
+        if(typeof mapRef.current.getLayer(layerID+'-selected') != 'undefined') {
+          mapRef.current.setFilter(layerID+'-selected', ['in', 'osmid', e.features[0].id]);
+        }
     });
 }
 
-export function layerLTS (mapRef) {
+export function layerLTS (mapRef, ltsLayerName) {
     mapRef.current.addSource('LTS_source', {
           type: 'vector',
           url: 'mapbox://skilcoyne.stressmap_tiles'
@@ -33,7 +37,7 @@ export function layerLTS (mapRef) {
 
       // Add LTS data layer
       mapRef.current.addLayer({
-          'id': 'lts-layer',
+          'id': ltsLayerName,
           "type": "line",
           'source': 'LTS_source',
           'source-layer': 'lts', // replaces 'road-label-simple' which seems to work for light-v11 but not standard style
@@ -69,7 +73,7 @@ export function layerLTS (mapRef) {
 
       // Add selected LTS segment layer
       mapRef.current.addLayer({
-          'id': 'lts-layer-selected',
+          'id': ltsLayerName + '-selected',
           "type": "line",
           'source': 'LTS_source',
           'source-layer': 'lts',
@@ -94,31 +98,12 @@ export function layerLTS (mapRef) {
         // 'road-label-simple'
       );
 
-      // Change the cursor to a pointer when the mouse is over the LTS layer.
-      mapRef.current.on('mouseenter', 'lts-layer', () => {
-        mapRef.current.getCanvas().style.cursor = 'pointer'
-      })
-
-      // Change it back to a pointer when it leaves.
-      mapRef.current.on('mouseleave', 'lts-layer', () => {
-        mapRef.current.getCanvas().style.cursor = '';
-      })
-
-      // When a click event occurs on a feature in the places layer, open a popup at the
-      // location of the feature, with description HTML from its properties.
-      mapRef.current.on('click', 'lts-layer', (e) => {
-        console.log('App/map/click/e.features[0]', e.features[0])
-        console.log('App/map/click/e.features[0].geometry.coordinates', e.features[0].geometry.coordinates)
-
-        setActiveFeature(e.features[0])
-        setActiveFeatureType('lts')
-        // console.log('App/map/click/e.features[0].id', e.features[0].id)
-        mapRef.current.setFilter('lts-layer-selected', ['in', 'osmid', e.features[0].id]);
-      });
+      hoverMousePointer(mapRef, ltsLayerName)
+      featureClick(mapRef, ltsLayerName, 'lts', setActiveFeature, setActiveFeatureType)
 
 }
 
-export function layerIntersections (mapRef, intersectionsLayerName, intersections_json, COLOR_SCALE) {
+export function layerIntersections (mapRef, intersectionsLayerName, intersections_json, COLOR_SCALE, setActiveFeature, setActiveFeatureType) {
   mapRef.current.addSource('intersections', {
           type: 'geojson',
           // Use a URL for the value for the `data` property.
@@ -157,19 +142,13 @@ export function layerIntersections (mapRef, intersectionsLayerName, intersection
             'visibility': 'visible'
           }
       })
-  mapRef.current.on('click', intersectionsLayerName, (e) => {
-    console.log('App/map/click/e.features[0]', e.features[0])
-    console.log('App/map/click/e.features[0].geometry.coordinates', e.features[0].geometry.coordinates)
-
-    setActiveFeature(e.features[0])
-    setActiveFeatureType('intersections')
-  })
 
   hoverMousePointer(mapRef, intersectionsLayerName)
+  featureClick(mapRef, intersectionsLayerName, 'intersections', setActiveFeature, setActiveFeatureType)
 
 }
 
-export function layerBikeParking (mapRef, bikeParkingLayerName, bike_parking_json, COLOR_SCALE) {
+export function layerBikeParking (mapRef, bikeParkingLayerName, bike_parking_json, COLOR_SCALE, setActiveFeature, setActiveFeatureType) {
   mapRef.current.addSource('bike-parking', {
           type: 'geojson',
           // Use a URL for the value for the `data` property.
@@ -179,7 +158,6 @@ export function layerBikeParking (mapRef, bikeParkingLayerName, bike_parking_jso
           'id': bikeParkingLayerName,
           'type': 'circle',
           'source': 'bike-parking',
-          // minzoom: 13,
           'paint': {
               'circle-radius': 3,
               'circle-stroke-width': 1,
@@ -249,19 +227,12 @@ export function layerBikeParking (mapRef, bikeParkingLayerName, bike_parking_jso
   //         },
   //         // slot: 'top'
   // });
-
-  mapRef.current.on('click', bikeParkingLayerName, (e) => {
-    console.log('App/map/click/e.features[0]', e.features[0])
-    console.log('App/map/click/e.features[0].geometry.coordinates', e.features[0].geometry.coordinates)
-
-    setActiveFeature(e.features[0])
-    setActiveFeatureType('bikeParking')
-  })
   
-  hoverMousePointer (mapRef, bikeParkingLayerName)
+  hoverMousePointer(mapRef, bikeParkingLayerName)
+  featureClick(mapRef, bikeParkingLayerName, 'bikeParking', setActiveFeature, setActiveFeatureType)
 }
 
-export function layerBlueBikes (mapRef, bluebikeLayerName, bluebikeStationsGeojson) {
+export function layerBlueBikes (mapRef, bluebikeLayerName, bluebikeStationsGeojson, setActiveFeature, setActiveFeatureType) {
   mapRef.current.loadImage('/bluebike_classic.png', (error, image) => {
     if (error) throw error;
     // Add the loaded image to the style's sprite.
@@ -288,21 +259,8 @@ export function layerBlueBikes (mapRef, bluebikeLayerName, bluebikeStationsGeojs
             'icon-allow-overlap': true,
           }
         })
-    mapRef.current.on('click', bluebikeLayerName, (e) => {
-      console.log('App/map/click/e.features[0]', e.features[0])
-      console.log('App/map/click/e.features[0].geometry.coordinates', e.features[0].geometry.coordinates)
 
-      setActiveFeature(e.features[0])
-      setActiveFeatureType('bluebikeStation')
-    })
-    // Change the cursor to a pointer when the mouse is over the LTS layer.
-    mapRef.current.on('mouseenter', bluebikeLayerName, () => {
-      mapRef.current.getCanvas().style.cursor = 'pointer'
-    })
-
-    // Change it back to a pointer when it leaves.
-    mapRef.current.on('mouseleave', bluebikeLayerName, () => {
-      mapRef.current.getCanvas().style.cursor = '';
-    })
+    hoverMousePointer(mapRef, bluebikeLayerName)
+    featureClick(mapRef, bluebikeLayerName, 'bluebikeStation', setActiveFeature, setActiveFeatureType)
   })
 }

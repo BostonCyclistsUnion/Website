@@ -309,7 +309,7 @@ function Map() {
       if(typeof mapRef.current.getLayer(intersectionsLayerName) == 'undefined') {
         Intersections(mapRef).then((intersections_json) => {
           // console.log(intersections_json),
-          layerIntersections(mapRef, intersectionsLayerName, intersections_json, COLOR_SCALE)
+          layerIntersections(mapRef, intersectionsLayerName, intersections_json, COLOR_SCALE, setActiveFeature, setActiveFeatureType)
         }
       );
       } else {
@@ -332,7 +332,7 @@ function Map() {
       if(typeof mapRef.current.getLayer(bikeParkingLayerName) == 'undefined') {
         Overpass(mapRef).then((bike_parking_json) => {
           // console.log(bike_parking_json),
-          layerBikeParking (mapRef, bikeParkingLayerName, bike_parking_json, COLOR_SCALE)
+          layerBikeParking(mapRef, bikeParkingLayerName, bike_parking_json, COLOR_SCALE, setActiveFeature, setActiveFeatureType)
         });
       } else {
         console.log("Turning on " + bikeParkingLayerName)
@@ -356,7 +356,7 @@ function Map() {
         Bluebikes().then((bluebikeStationsGeojson) => {
           // console.log('bluebikeStationsGeojson', bluebikeStationsGeojson)
           console.log('bluebikeStationsGeojson loaded')
-          layerBlueBikes (mapRef, bluebikeLayerName, bluebikeStationsGeojson)
+          layerBlueBikes(mapRef, bluebikeLayerName, bluebikeStationsGeojson, setActiveFeature, setActiveFeatureType)
         });
     } else {
       console.log("Turning on " + bluebikeLayerName)
