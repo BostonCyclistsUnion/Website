@@ -12,6 +12,12 @@ import Overpass from './components/Overpass/overpass';
 import Bluebikes from './components/GBFS/GBFS';
 import Intersections from './components/Intersections/Intersections';
 
+import { 
+  layerIntersections, 
+  layerLTS,
+  layerBikeParking,
+  layerBlueBikes,
+} from './components/MapLayers/MapLayers';
 
 // https://docs.mapbox.com/help/tutorials/use-mapbox-gl-js-with-react/
 
@@ -245,11 +251,6 @@ function Map() {
             }
         }
 
-        // new mapboxgl.Popup()
-        //     .setLngLat(e.lngLat) // Changed to use click location instead of feature location (I think)
-        //     .setHTML(description)
-        //     .setMaxWidth("600px")
-        //     .addTo(mapRef.current);
       });
 
       // Change the cursor to a pointer when the mouse is over the LTS layer.
@@ -308,61 +309,9 @@ function Map() {
       if(typeof mapRef.current.getLayer(intersectionsLayerName) == 'undefined') {
         Intersections(mapRef).then((intersections_json) => {
           // console.log(intersections_json),
-          mapRef.current.addSource('intersections', {
-                  type: 'geojson',
-                  // Use a URL for the value for the `data` property.
-                  data: intersections_json
-              }),
-          mapRef.current.addLayer({
-                  'id': intersectionsLayerName,
-                  'type': 'circle',
-                  'source': 'intersections',
-                  'paint': {
-                      // 'circle-radius': 5,
-                      'circle-radius': [
-                        'interpolate',  // Make circles larger as the user zooms from z12 to z18.
-                          ['exponential', 1.75],
-                          ['zoom'],
-                          12, 6,
-                          18, 20
-                        ],
-                      'circle-stroke-width': 1,
-                      // 'circle-color': COLOR_SCALE[3],
-                      'circle-color': [
-                        'match',
-                          ['get', 'score'],
-                          '6', COLOR_SCALE[0],
-                          '5', COLOR_SCALE[1],
-                          '4', COLOR_SCALE[2],
-                          '3', COLOR_SCALE[2],
-                          '2', COLOR_SCALE[3],
-                          '1', COLOR_SCALE[3],
-                          '0', COLOR_SCALE[3],
-                          COLOR_SCALE[3],
-                        ],
-                      'circle-stroke-color': 'white'
-                  },
-                  layout: {
-                    'visibility': 'visible'
-                  }
-              })
-          mapRef.current.on('click', intersectionsLayerName, (e) => {
-            console.log('App/map/click/e.features[0]', e.features[0])
-            console.log('App/map/click/e.features[0].geometry.coordinates', e.features[0].geometry.coordinates)
-
-            setActiveFeature(e.features[0])
-            setActiveFeatureType('intersections')
-          })
-          // Change the cursor to a pointer when the mouse is over the LTS layer.
-          mapRef.current.on('mouseenter', intersectionsLayerName, () => {
-            mapRef.current.getCanvas().style.cursor = 'pointer'
-          })
-
-          // Change it back to a pointer when it leaves.
-          mapRef.current.on('mouseleave', intersectionsLayerName, () => {
-            mapRef.current.getCanvas().style.cursor = '';
-          })
-        });
+          layerIntersections(mapRef, intersectionsLayerName, intersections_json, COLOR_SCALE)
+        }
+      );
       } else {
         console.log("Turning on " + intersectionsLayerName)
         mapRef.current.setLayoutProperty(intersectionsLayerName, 'visibility', 'visible');
@@ -383,112 +332,17 @@ function Map() {
       if(typeof mapRef.current.getLayer(bikeParkingLayerName) == 'undefined') {
         Overpass(mapRef).then((bike_parking_json) => {
           // console.log(bike_parking_json),
-          mapRef.current.addSource('bike-parking', {
-                  type: 'geojson',
-                  // Use a URL for the value for the `data` property.
-                  data: bike_parking_json
-              }),
-          mapRef.current.addLayer({
-                  'id': bikeParkingLayerName,
-                  'type': 'circle',
-                  'source': 'bike-parking',
-                  minzoom: 13,
-                  'paint': {
-                      'circle-radius': 3,
-                      'circle-stroke-width': 1,
-                      'circle-color': COLOR_SCALE[0],
-                      'circle-stroke-color': 'white'
-                  },
-                  layout: {
-                    'visibility': 'visible'
-                  }
-              })
-
-          mapRef.current.addLayer({
-                  id: bikeParkingLayerName+'-heat',
-                  type: 'heatmap',
-                  source: 'bike-parking',
-                  maxzoom: HEATMAP_ZOOM_MAX,
-                  layout: {
-                    'visibility': 'visible'
-                  },
-                  paint: {
-                    // Increase the heatmap weight based on frequency and property magnitude
-                    // 'heatmap-weight': [
-                    //   'interpolate',
-                    //   ['linear'],
-                    //   ['get', 'capacity'],
-                    //   0,
-                    //   0,
-                    //   6,
-                    //   1
-                    // ],
-                    // Increase the heatmap color weight weight by zoom level
-                    // heatmap-intensity is a multiplier on top of heatmap-weight
-                    'heatmap-intensity': [
-                      'interpolate',
-                      ['linear'],
-                      ['zoom'],
-                      0,
-                      1,
-                      HEATMAP_ZOOM_MIN,
-                      3
-                    ],
-                    // Color ramp for heatmap.  Domain is 0 (low) to 1 (high).
-                    // Begin color ramp at 0-stop with a 0-transparancy color
-                    // to create a blur-like effect.
-                    'heatmap-color': [
-                      'interpolate',
-                      ['linear'],
-                      ['heatmap-density'],
-                      0,
-                      'rgba(33,102,172,0)',
-                      // 0.2,
-                      // 'rgb(103,169,207)',
-                      0.4,
-                      'rgb(209,229,240)',
-                      0.6,
-                      'rgb(253,219,199)',
-                      0.8,
-                      'rgb(239,138,98)',
-                      1,
-                      'rgb(178,24,43)'
-                    ],
-                    // Adjust the heatmap radius by zoom level
-                    // 'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 1, HEATMAP_ZOOM_MIN, 9, HEATMAP_ZOOM_MAX],
-                    'heatmap-radius': 10,
-                    // Transition from heatmap to circle layer by zoom level
-                    'heatmap-opacity': ['interpolate', ['linear'], ['zoom'], HEATMAP_ZOOM_MIN, 0.9, HEATMAP_ZOOM_MAX, 0]
-                  },
-                  // slot: 'top'
-          });
-
-          mapRef.current.on('click', bikeParkingLayerName, (e) => {
-            console.log('App/map/click/e.features[0]', e.features[0])
-            console.log('App/map/click/e.features[0].geometry.coordinates', e.features[0].geometry.coordinates)
-
-            setActiveFeature(e.features[0])
-            setActiveFeatureType('bikeParking')
-          })
-          // Change the cursor to a pointer when the mouse is over the LTS layer.
-          mapRef.current.on('mouseenter', bikeParkingLayerName, () => {
-            mapRef.current.getCanvas().style.cursor = 'pointer'
-          })
-
-          // Change it back to a pointer when it leaves.
-          mapRef.current.on('mouseleave', bikeParkingLayerName, () => {
-            mapRef.current.getCanvas().style.cursor = '';
-          })
+          layerBikeParking (mapRef, bikeParkingLayerName, bike_parking_json, COLOR_SCALE)
         });
       } else {
         console.log("Turning on " + bikeParkingLayerName)
         mapRef.current.setLayoutProperty(bikeParkingLayerName, 'visibility', 'visible');
-        mapRef.current.setLayoutProperty(bikeParkingLayerName+'-heat', 'visibility', 'visible');
+        // mapRef.current.setLayoutProperty(bikeParkingLayerName+'-heat', 'visibility', 'visible');
       }
     } else {
       console.log("Turning off " + bikeParkingLayerName)
       mapRef.current.setLayoutProperty(bikeParkingLayerName, 'visibility', 'none');
-      mapRef.current.setLayoutProperty(bikeParkingLayerName+'-heat', 'visibility', 'none');
+      // mapRef.current.setLayoutProperty(bikeParkingLayerName+'-heat', 'visibility', 'none');
     }
   }
 
@@ -502,49 +356,8 @@ function Map() {
         Bluebikes().then((bluebikeStationsGeojson) => {
           // console.log('bluebikeStationsGeojson', bluebikeStationsGeojson)
           console.log('bluebikeStationsGeojson loaded')
-          mapRef.current.loadImage('/bluebike_classic.png', (error, image) => {
-            if (error) throw error;
-            // Add the loaded image to the style's sprite.
-            mapRef.current.addImage('bluebike_classic_img', image);
-          
-            mapRef.current.addSource('bluebike-stations', {
-                  type: 'geojson',
-                  data: bluebikeStationsGeojson
-              }),
-            mapRef.current.addLayer({
-                  'id': bluebikeLayerName,
-                  'type': 'symbol',
-                  'source': 'bluebike-stations',
-                  layout: {
-                    'visibility': 'visible',
-                    'icon-image': 'bluebike_classic_img',
-                    'icon-size': [
-                        'interpolate',  // Make circles larger as the user zooms from z12 to z18.
-                          ['linear'],
-                          ['zoom'],
-                          12, 0.5,
-                          18, 2
-                        ],
-                    'icon-allow-overlap': true,
-                  }
-                })
-            mapRef.current.on('click', bluebikeLayerName, (e) => {
-              console.log('App/map/click/e.features[0]', e.features[0])
-              console.log('App/map/click/e.features[0].geometry.coordinates', e.features[0].geometry.coordinates)
-
-              setActiveFeature(e.features[0])
-              setActiveFeatureType('bluebikeStation')
-            })
-            // Change the cursor to a pointer when the mouse is over the LTS layer.
-            mapRef.current.on('mouseenter', bluebikeLayerName, () => {
-              mapRef.current.getCanvas().style.cursor = 'pointer'
-            })
-
-            // Change it back to a pointer when it leaves.
-            mapRef.current.on('mouseleave', bluebikeLayerName, () => {
-              mapRef.current.getCanvas().style.cursor = '';
-            })
-      })});
+          layerBlueBikes (mapRef, bluebikeLayerName, bluebikeStationsGeojson)
+        });
     } else {
       console.log("Turning on " + bluebikeLayerName)
       mapRef.current.setLayoutProperty(bluebikeLayerName, 'visibility', 'visible');
