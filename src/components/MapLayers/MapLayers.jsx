@@ -29,7 +29,10 @@ function featureClick (mapRef, layerID, featureID, setActiveFeature, setActiveFe
     });
 }
 
-export function layerLTS (mapRef, ltsLayerName) {
+export function layerLTS (  mapRef, ltsLayerName, 
+                            COLOR_SCALE, LINE_WIDTH, 
+                            setActiveFeature, setActiveFeatureType
+                          ) {
     mapRef.current.addSource('LTS_source', {
           type: 'vector',
           url: 'mapbox://skilcoyne.stressmap_tiles'
@@ -103,7 +106,11 @@ export function layerLTS (mapRef, ltsLayerName) {
 
 }
 
-export function layerIntersections (mapRef, intersectionsLayerName, intersections_json, COLOR_SCALE, setActiveFeature, setActiveFeatureType) {
+export function layerIntersections (mapRef, 
+                                    intersectionsLayerName, intersections_json, 
+                                    COLOR_SCALE, 
+                                    setActiveFeature, setActiveFeatureType
+                                  ) {
   mapRef.current.addSource('intersections', {
           type: 'geojson',
           // Use a URL for the value for the `data` property.
@@ -148,7 +155,11 @@ export function layerIntersections (mapRef, intersectionsLayerName, intersection
 
 }
 
-export function layerBikeParking (mapRef, bikeParkingLayerName, bike_parking_json, COLOR_SCALE, setActiveFeature, setActiveFeatureType) {
+export function layerBikeParking (mapRef, 
+                                  bikeParkingLayerName, bike_parking_json,
+                                  COLOR_SCALE,
+                                  setActiveFeature, setActiveFeatureType
+                                ) {
   mapRef.current.addSource('bike-parking', {
           type: 'geojson',
           // Use a URL for the value for the `data` property.
@@ -232,7 +243,10 @@ export function layerBikeParking (mapRef, bikeParkingLayerName, bike_parking_jso
   featureClick(mapRef, bikeParkingLayerName, 'bikeParking', setActiveFeature, setActiveFeatureType)
 }
 
-export function layerBlueBikes (mapRef, bluebikeLayerName, bluebikeStationsGeojson, setActiveFeature, setActiveFeatureType) {
+export function layerBlueBikes (mapRef, 
+                                bluebikeLayerName, bluebikeStationsGeojson, 
+                                setActiveFeature, setActiveFeatureType
+                              ) {
   mapRef.current.loadImage('/bluebike_classic.png', (error, image) => {
     if (error) throw error;
     // Add the loaded image to the style's sprite.

@@ -61,6 +61,8 @@ function Map() {
   // handleBluebikeStations(bluebikeStations)
   // console.log('bluebikeStations is created and set to ' + bluebikeStations))
 
+  var bikeParkingLayerName = 'bike-parking-layer'
+
   // for toggling between map view and card view on small screens
   // From https://github.com/mapbox/public-tools-and-demos/blob/main/projects/demo-realestate/src/App.jsx
   // still need to figure out how this works
@@ -147,76 +149,16 @@ function Map() {
       }
     });
 
+    let q = 1
 
     mapRef.current.on('load', function () {
-      mapRef.current.addSource('LTS_source', {
-          type: 'vector',
-          url: 'mapbox://skilcoyne.stressmap_tiles'
-      })
-
-      // Add LTS data layer
-      mapRef.current.addLayer({
-          'id': 'lts-layer',
-          "type": "line",
-          'source': 'LTS_source',
-          'source-layer': 'lts', // replaces 'road-label-simple' which seems to work for light-v11 but not standard style
-          'slot': 'middle',
-          'paint': {
-              'line-color': [
-                  'match',
-                  ['get', 'LTS'],
-                  1, COLOR_SCALE[0],
-                  2, COLOR_SCALE[1],
-                  3, COLOR_SCALE[2],
-                  4, COLOR_SCALE[3],
-                  COLOR_SCALE[4]
-              ],
-              'line-width': LINE_WIDTH,
-              // 'line-dasharray': [ // this just doesn't render very good looking
-              //     'match',
-              //     ['get', 'LTS'],
-              //     1, ["literal", [1, 0]],
-              //     2, ["literal", [2, 2]],
-              //     3, ["literal", [1, 3]],
-              //     4, ["literal", [1, 5]],
-              //     ["literal", [1, 1]]
-              // ],
-          },
-          layout: {
-            'visibility': 'visible'
-          },
-          filter: ['in', 'LTS', 1,2,3,4],
-      },
-      // 'road-label-simple' // Add layer below labels
-      )
-
-      // Add selected LTS segment layer
-      mapRef.current.addLayer({
-          'id': 'selected-lts',
-          "type": "line",
-          'source': 'LTS_source',
-          'source-layer': 'lts',
-          'slot': 'middle',
-          'paint': {
-              'line-color': [
-                  'match',
-                  ['get', 'LTS'],
-                  1, COLOR_SCALE[0],
-                  2, COLOR_SCALE[1],
-                  3, COLOR_SCALE[2],
-                  4, COLOR_SCALE[3],
-                  COLOR_SCALE[4]
-              ],
-              'line-width': LINE_WIDTH * 3
-            },
-          filter: ['in', 'osmid', ''],
-          layout: {
-            'visibility': 'visible'
-          }
-        },
-        // 'road-label-simple'
-      );
-
+      if (displayLTS) {
+        layerLTS(mapRef, 'lts-layer', COLOR_SCALE, LINE_WIDTH, setActiveFeature, setActiveFeatureType)
+      }
+      if (displayBikeParking) {
+        layerBikeParking(mapRef, bikeParkingLayerName, bike_parking_json, COLOR_SCALE, setActiveFeature, setActiveFeatureType)
+      }
+      
       // get the current center coordinates and zoom level from the map
       mapRef.current.on('move', () => {
         const mapCenter = mapRef.current.getCenter()
@@ -225,42 +167,6 @@ function Map() {
         // update state
         setCenter([ mapCenter.lng, mapCenter.lat ])
         setZoom(mapZoom)
-      })
-
-      // When a click event occurs on a feature in the places layer, open a popup at the
-      // location of the feature, with description HTML from its properties.
-      mapRef.current.on('click', 'lts-layer', (e) => {
-        console.log('App/map/click/e.features[0]', e.features[0])
-        console.log('App/map/click/e.features[0].geometry.coordinates', e.features[0].geometry.coordinates)
-
-        setActiveFeature(e.features[0])
-        setActiveFeatureType('lts')
-        // console.log('App/map/click/e.features[0].id', e.features[0].id)
-        mapRef.current.setFilter('selected-lts', ['in', 'osmid', e.features[0].id]);
-
-        // Copy coordinates array.
-        const coordinates = e.features[0].geometry.coordinates.slice(); // I don't think this works with line strings
-        // let description = renderToStaticMarkup(<InfoSimple selectedFeature={activeFeature}/>)
-        
-        // Ensure that if the map is zoomed out such that multiple
-        // copies of the feature are visible, the popup appears
-        // over the copy being pointed to.
-        if (['mercator', 'equirectangular'].includes(mapRef.current.getProjection().name)) {
-            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-            }
-        }
-
-      });
-
-      // Change the cursor to a pointer when the mouse is over the LTS layer.
-      mapRef.current.on('mouseenter', 'lts-layer', () => {
-        mapRef.current.getCanvas().style.cursor = 'pointer'
-      })
-
-      // Change it back to a pointer when it leaves.
-      mapRef.current.on('mouseleave', 'lts-layer', () => {
-        mapRef.current.getCanvas().style.cursor = '';
       })
 
       // Add fullscreen button
@@ -282,6 +188,23 @@ function Map() {
     setActiveFeature()
     setActiveFeatureType()
     mapRef.current.setFilter('selected-lts', ['in', 'osmid', '']);
+  }
+
+  const handleLayerCheckbox = (checkboxState, setState, displayState, layerID) => {
+    setState(checkboxState)
+    console.log(layerID + ' checkbox changed to ' + !displayState);
+
+    if(checkboxState) {
+      console.log("Turning on " + layerID)
+      mapRef.current.setLayoutProperty(layerID, 'visibility', 'visible');
+      if(typeof mapRef.current.getLayer(layerID+'selected') != 'undefined') {
+        mapRef.current.setLayoutProperty(layerID+'selected', 'visibility', 'visible');}
+    } else {
+      console.log("Turning off " + layerID)
+      mapRef.current.setLayoutProperty(layerID, 'visibility', 'none');
+      if(typeof mapRef.current.getLayer(layerID+'selected') != 'undefined') {
+        mapRef.current.setLayoutProperty(layerID+'selected', 'visibility', 'none');}
+    }
   }
 
   const handleLTS = (checkboxState) => {
@@ -325,7 +248,6 @@ function Map() {
   const handleBikeParking = (checkboxState) => {
     setBikeParking(checkboxState)
     console.log('Bike parking checkbox changed to ' + !displayBikeParking);
-    var bikeParkingLayerName = 'bike-parking-layer'
 
     // Create bike parking layer if needed
     if(checkboxState) {
