@@ -8,9 +8,6 @@ import './App.css'
 import Legend from './Legend';
 import SideBar, {ModeToggle} from './components/selection/SideBar'
 // import {ModeToggle} from './components/selection/SideBar'
-import Overpass from './components/Overpass/overpass';
-import Bluebikes from './components/GBFS/GBFS';
-import Intersections from './components/Intersections/Intersections';
 
 import { 
   layerIntersections, 
@@ -23,7 +20,7 @@ import {
 
 const INITIAL_CENTER = [-71.0809, 42.3473]
 const INITIAL_ZOOM = 12
-const MAX_ZOOM = 18
+const MAX_ZOOM = 20
 const MIN_ZOOM = 12
 const ZOOM_UNION = 12
 const BOUNDS = [
@@ -35,8 +32,6 @@ const LINE_WIDTH = 4
 const COLOR_SCALE = ['#007191', '#62c8d3', '#f47a00', '#d31f11', 'grey'] // https://www.simplifiedsciencepublishing.com/resources/best-color-palettes-for-scientific-figures-and-data-visualizations
 // rgb(0, 113, 145), rgb(98, 200, 211), rgb(244, 122, 0), rgb(211, 31, 17)
 
-const HEATMAP_ZOOM_MAX = 14
-const HEATMAP_ZOOM_MIN = MIN_ZOOM
 
 function Map() {
   // stores the feature that the user is currently viewing (triggers the modal)
@@ -57,16 +52,30 @@ function Map() {
   const [displayBikeParking, setBikeParking] = useState(false);
   // handleBikeParking(displayBikeParking)
   // console.log('displayBikeParking:' + displayBikeParking)
-  const [bluebikeStations, setBluebikeStations] = useState(false);
-  // handleBluebikeStations(bluebikeStations)
-  // console.log('bluebikeStations is created and set to ' + bluebikeStations))
+  const [displayBluebikeStations, setBluebikeStations] = useState(false);
+  // handleBluebikeStations(displayBluebikeStations)
+  // console.log('displayBluebikeStations is created and set to ' + displayBluebikeStations))
 
-  var bikeParkingLayerName = 'bike-parking-layer'
+  var ltsLayerName = 'lts-layer'
+  var intersectionsLayerName = 'intersections-layer'
+  var bikeParkingLayerName = 'bike_parking-layer'
+  var bluebikeLayerName = 'bluebike-layer'
 
-  // for toggling between map view and card view on small screens
-  // From https://github.com/mapbox/public-tools-and-demos/blob/main/projects/demo-realestate/src/App.jsx
-  // still need to figure out how this works
-  // const [activeMobileView, setActiveMobileView] = useState('map')
+  const loadLayers = (ltsLayerName, bikeParkingLayerName, bluebikeLayerName, intersectionsLayerName) => {
+    console.log('loadLayers', displayLTS, displayBikeParking, displayBluebikeStations, displayIntersections)
+    if (displayLTS) {
+      layerLTS(mapRef, ltsLayerName, COLOR_SCALE, LINE_WIDTH, setActiveFeature, setActiveFeatureType)
+    }
+    if (displayBikeParking) {
+      layerBikeParking(mapRef, bikeParkingLayerName, COLOR_SCALE, setActiveFeature, setActiveFeatureType)
+    }
+    if (displayBluebikeStations) {
+      layerBlueBikes(mapRef, bluebikeLayerName, COLOR_SCALE, setActiveFeature, setActiveFeatureType)
+    }
+    if (displayIntersections) {
+      layerIntersections(mapRef, intersectionsLayerName, displayIntersections, COLOR_SCALE, setActiveFeature, setActiveFeatureType)
+    }
+  };
 
   const mapRef = useRef()
   const mapContainerRef = useRef()
@@ -100,7 +109,7 @@ function Map() {
     setLTSfilter(4)
   }
   const setLTSfilter = (level) => {
-    let ltsFilter = mapRef.current.getFilter('lts-layer')
+    let ltsFilter = mapRef.current.getFilter(ltsLayerName)
     // console.log('ltsFilter', ltsFilter)
     if (ltsFilter.includes(level)) {
       const index = ltsFilter.indexOf(level);
@@ -108,17 +117,8 @@ function Map() {
     } else {
       ltsFilter.push(level)
     }
-    mapRef.current.setFilter('lts-layer', ltsFilter);
+    mapRef.current.setFilter(ltsLayerName, ltsFilter);
   }
-
-  // toggle the map and card view on mobile devices
-  // const handleActiveMobileClick = () => {
-  //   if (activeMobileView === 'map') {
-  //     setActiveMobileView('cards')
-  //   } else {
-  //     setActiveMobileView('map')
-  //   }
-  // } 
 
   // Load Mapbox map with:
   // - add LTS layer
@@ -152,12 +152,7 @@ function Map() {
     let q = 1
 
     mapRef.current.on('load', function () {
-      if (displayLTS) {
-        layerLTS(mapRef, 'lts-layer', COLOR_SCALE, LINE_WIDTH, setActiveFeature, setActiveFeatureType)
-      }
-      if (displayBikeParking) {
-        layerBikeParking(mapRef, bikeParkingLayerName, bike_parking_json, COLOR_SCALE, setActiveFeature, setActiveFeatureType)
-      }
+      loadLayers(ltsLayerName, bikeParkingLayerName, bluebikeLayerName, intersectionsLayerName)
       
       // get the current center coordinates and zoom level from the map
       mapRef.current.on('move', () => {
@@ -173,6 +168,10 @@ function Map() {
       mapRef.current.addControl(new mapboxgl.FullscreenControl());
     })
 
+    mapRef.current.on('style.load', () => {
+        loadLayers(ltsLayerName, bikeParkingLayerName, bluebikeLayerName, intersectionsLayerName)
+    });
+
     return () => {
       mapRef.current.remove()
     }
@@ -187,14 +186,25 @@ function Map() {
     // Deactivate selected features
     setActiveFeature()
     setActiveFeatureType()
-    mapRef.current.setFilter('selected-lts', ['in', 'osmid', '']);
+    mapRef.current.setFilter(ltsLayerName+'-selected', ['in', 'osmid', '']);
   }
 
   const handleLayerCheckbox = (checkboxState, setState, displayState, layerID) => {
-    setState(checkboxState)
+    setState(checkboxState => !checkboxState)
     console.log(layerID + ' checkbox changed to ' + !displayState);
 
     if(checkboxState) {
+      if(typeof mapRef.current.getLayer(layerID) == 'undefined') {
+        if (layerID == intersectionsLayerName) {
+          layerIntersections(mapRef, intersectionsLayerName, displayIntersections, COLOR_SCALE, setActiveFeature, setActiveFeatureType)
+        } else if (layerID == bikeParkingLayerName) {
+          layerBikeParking(mapRef, bikeParkingLayerName, COLOR_SCALE, setActiveFeature, setActiveFeatureType)
+        } else if (layerID == bluebikeLayerName) {
+          layerBlueBikes(mapRef, bluebikeLayerName, COLOR_SCALE, setActiveFeature, setActiveFeatureType)
+        } else if (layerID == ltsLayerName) {
+          layerLTS(mapRef, ltsLayerName, COLOR_SCALE, LINE_WIDTH, setActiveFeature, setActiveFeatureType)
+        } 
+      }
       console.log("Turning on " + layerID)
       mapRef.current.setLayoutProperty(layerID, 'visibility', 'visible');
       if(typeof mapRef.current.getLayer(layerID+'selected') != 'undefined') {
@@ -206,88 +216,6 @@ function Map() {
         mapRef.current.setLayoutProperty(layerID+'selected', 'visibility', 'none');}
     }
   }
-
-  const handleLTS = (checkboxState) => {
-    setLTS(checkboxState)
-    console.log('LTS checkbox changed to ' + !displayLTS);
-
-    if(checkboxState) {
-        console.log("Turning on LTS")
-        mapRef.current.setLayoutProperty('lts-layer', 'visibility', 'visible');
-        mapRef.current.setLayoutProperty('selected-lts', 'visibility', 'visible');
-    } else {
-      console.log("Turning off LTS")
-      mapRef.current.setLayoutProperty('lts-layer', 'visibility', 'none');
-      mapRef.current.setLayoutProperty('selected-lts', 'visibility', 'none');
-    }
-  }
-
-  const handleIntersections = (checkboxState) => {
-    setIntersections(checkboxState)
-    console.log('Intersections checkbox changed to ' + !displayIntersections);
-    var intersectionsLayerName = 'intersections-layer'
-
-    // Create intersections layer if needed
-    if(checkboxState) {
-      if(typeof mapRef.current.getLayer(intersectionsLayerName) == 'undefined') {
-        Intersections(mapRef).then((intersections_json) => {
-          // console.log(intersections_json),
-          layerIntersections(mapRef, intersectionsLayerName, intersections_json, COLOR_SCALE, setActiveFeature, setActiveFeatureType)
-        }
-      );
-      } else {
-        console.log("Turning on " + intersectionsLayerName)
-        mapRef.current.setLayoutProperty(intersectionsLayerName, 'visibility', 'visible');
-      }
-    } else {
-      console.log("Turning off " + intersectionsLayerName)
-      mapRef.current.setLayoutProperty(intersectionsLayerName, 'visibility', 'none');
-    }
-  }
-
-  const handleBikeParking = (checkboxState) => {
-    setBikeParking(checkboxState)
-    console.log('Bike parking checkbox changed to ' + !displayBikeParking);
-
-    // Create bike parking layer if needed
-    if(checkboxState) {
-      if(typeof mapRef.current.getLayer(bikeParkingLayerName) == 'undefined') {
-        Overpass(mapRef).then((bike_parking_json) => {
-          // console.log(bike_parking_json),
-          layerBikeParking(mapRef, bikeParkingLayerName, bike_parking_json, COLOR_SCALE, setActiveFeature, setActiveFeatureType)
-        });
-      } else {
-        console.log("Turning on " + bikeParkingLayerName)
-        mapRef.current.setLayoutProperty(bikeParkingLayerName, 'visibility', 'visible');
-        // mapRef.current.setLayoutProperty(bikeParkingLayerName+'-heat', 'visibility', 'visible');
-      }
-    } else {
-      console.log("Turning off " + bikeParkingLayerName)
-      mapRef.current.setLayoutProperty(bikeParkingLayerName, 'visibility', 'none');
-      // mapRef.current.setLayoutProperty(bikeParkingLayerName+'-heat', 'visibility', 'none');
-    }
-  }
-
-  const handleBluebikeStations = (checkboxState) => {
-    setBluebikeStations(checkboxState)
-    console.log('bluebikeStations checkbox changed to ' + !bluebikeStations);
-    var bluebikeLayerName = 'bluebike-layer'
-
-    if(checkboxState) {
-      if(typeof mapRef.current.getLayer(bluebikeLayerName) == 'undefined') {
-        Bluebikes().then((bluebikeStationsGeojson) => {
-          // console.log('bluebikeStationsGeojson', bluebikeStationsGeojson)
-          console.log('bluebikeStationsGeojson loaded')
-          layerBlueBikes(mapRef, bluebikeLayerName, bluebikeStationsGeojson, setActiveFeature, setActiveFeatureType)
-        });
-    } else {
-      console.log("Turning on " + bluebikeLayerName)
-      mapRef.current.setLayoutProperty(bluebikeLayerName, 'visibility', 'visible');
-    }
-  } else {
-    console.log("Turning off " + bluebikeLayerName)
-    mapRef.current.setLayoutProperty(bluebikeLayerName, 'visibility', 'none');
-  }}
 
   return (
     <>
@@ -323,7 +251,8 @@ function Map() {
               type="checkbox" 
               name="ltsCheckbox"
               defaultChecked={displayLTS} 
-              onChange={e => handleLTS(e.target.checked)}
+              onChange={e => handleLayerCheckbox(
+                e.target.checked, setLTS, displayLTS, ltsLayerName)}
             />
             Stress Map
           </label></div>
@@ -332,7 +261,8 @@ function Map() {
               type="checkbox" 
               name="bikeParkingCheckbox"
               defaultChecked={displayIntersections} 
-              onChange={e => handleIntersections(e.target.checked)}
+              onChange={e => handleLayerCheckbox(
+                e.target.checked, setIntersections, displayIntersections, intersectionsLayerName)}
             />
             Intersection Audits
           </label></div>
@@ -341,7 +271,8 @@ function Map() {
               type="checkbox" 
               name="bikeParkingCheckbox"
               defaultChecked={displayBikeParking} 
-              onChange={e => handleBikeParking(e.target.checked)}
+              onChange={e => handleLayerCheckbox(
+                e.target.checked, setBikeParking, displayBikeParking, bikeParkingLayerName)}
             />
             Bike Parking
           </label></div>
@@ -349,8 +280,9 @@ function Map() {
             <input 
               type="checkbox" 
               name="bluebikeStationCheckbox"
-              defaultChecked={bluebikeStations} 
-              onChange={e => handleBluebikeStations(e.target.checked)}
+              defaultChecked={displayBluebikeStations} 
+              onChange={e => handleLayerCheckbox(
+                e.target.checked, setBluebikeStations, displayBluebikeStations, bluebikeLayerName)}
             />
             BlueBike Stations
           </label></div>
