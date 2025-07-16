@@ -157,37 +157,7 @@ export function layerIntersections (mapRef,
 
       hoverMousePointer(mapRef, intersectionsLayerName)
       featureClick(mapRef, intersectionsLayerName, 'intersections', setActiveFeature, setActiveFeatureType)
-      
-      mapRef.current.on('zoom', (e) => {
-        let zoomThreshold = 16
-        let styleStandard = 'mapbox://styles/mapbox/standard'
-        let styleSatellite = 'mapbox://styles/mapbox/standard-satellite'
-
-        if (mapRef.current.isStyleLoaded()) {
-
-          let currentStyle = mapRef.current.getStyle().imports[0].data.name
-          // console.log('currentStyle: ', currentStyle)
-          let currentZoom = mapRef.current.getZoom()
-          // console.log('zoom: ', currentZoom)
-        
-          if ( displayIntersections && currentZoom > zoomThreshold && currentStyle=='Mapbox Standard' ) {
-            mapRef.current.setStyle(styleSatellite);
-          } else if ( (currentZoom < zoomThreshold || !displayIntersections ) && currentStyle=='Mapbox Standard Satellite') {
-            mapRef.current.setStyle(styleStandard, {
-              config: {
-                basemap: {
-                  lightPreset: 'day',
-                  showPlaceLabels: false,
-                  showPointOfInterestLabels: false,
-                  theme: 'monochrome',
-                  show3dObjects: false,
-                  showTransitLabels: true,
-                  showRoadLabels: true
-                }}
-            });
-          }
-        }
-      })}
+    }
 })}
 
 export function layerBikeParking (mapRef, 

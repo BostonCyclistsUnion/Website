@@ -32,7 +32,6 @@ const LINE_WIDTH = 4
 const COLOR_SCALE = ['#007191', '#62c8d3', '#f47a00', '#d31f11', 'grey'] // https://www.simplifiedsciencepublishing.com/resources/best-color-palettes-for-scientific-figures-and-data-visualizations
 // rgb(0, 113, 145), rgb(98, 200, 211), rgb(244, 122, 0), rgb(211, 31, 17)
 
-
 function Map() {
   // stores the feature that the user is currently viewing (triggers the modal)
   const [activeFeature, setActiveFeature] = useState()
@@ -41,39 +40,68 @@ function Map() {
   const [advancedMode, setAdvancedMode] = useState(false);
   // console.log('advancedMode:', advancedMode);
   
-  const [displayLTS, setLTS] = useState(true);
-  const [displayLTS1, setLTS1] = useState(true);
-  const [displayLTS2, setLTS2] = useState(true);
-  const [displayLTS3, setLTS3] = useState(true);
-  const [displayLTS4, setLTS4] = useState(true);
-  // console.log('displayLTS:', displayLTS);
-  const [displayIntersections, setIntersections] = useState(false);
-  // console.log('displayIntersections:' + displayIntersections)
-  const [displayBikeParking, setBikeParking] = useState(false);
-  // handleBikeParking(displayBikeParking)
-  // console.log('displayBikeParking:' + displayBikeParking)
-  const [displayBluebikeStations, setBluebikeStations] = useState(false);
-  // handleBluebikeStations(displayBluebikeStations)
-  // console.log('displayBluebikeStations is created and set to ' + displayBluebikeStations))
+  const [displayLTSState, setLTS] = useState(true);
+  const [displayIntersectionsState, setIntersections] = useState(false);
+  const [displayBikeParkingState, setBikeParking] = useState(false);
+  const [displayBluebikeStationsState, setBluebikeStations] = useState(false);
+  
+  const displayLTSRef = useRef()
+  const displayIntersectionsRef = useRef()
+  const displayBikeParkingRef = useRef()
+  const displayBluebikeStationsRef = useRef()
+
+  displayLTSRef.current = displayLTSState
+  displayIntersectionsRef.current = displayIntersectionsState
+  displayBikeParkingRef.current = displayBikeParkingState
+  displayBluebikeStationsRef.current = displayBluebikeStationsState
+  console.log('Map() |',
+    'displayLTSRef.current', displayLTSRef.current,
+    'displayIntersectionsRef.current', displayIntersectionsRef.current,
+    'displayBikeParkingRef.current', displayBikeParkingRef.current,
+    'displayBluebikeStationsRef.current', displayBluebikeStationsRef.current,
+  )
+
+  const [displayLTS1State, setLTS1] = useState(true);
+  const [displayLTS2State, setLTS2] = useState(true);
+  const [displayLTS3State, setLTS3] = useState(true);
+  const [displayLTS4State, setLTS4] = useState(true);
+
+  const displayLTS1Ref = useRef()
+  const displayLTS2Ref = useRef()
+  const displayLTS3Ref = useRef()
+  const displayLTS4Ref = useRef()
+
+  displayLTS1Ref.current = displayLTS1State
+  displayLTS2Ref.current = displayLTS2State
+  displayLTS3Ref.current = displayLTS3State
+  displayLTS4Ref.current = displayLTS4State
 
   var ltsLayerName = 'lts-layer'
   var intersectionsLayerName = 'intersections-layer'
   var bikeParkingLayerName = 'bike_parking-layer'
   var bluebikeLayerName = 'bluebike-layer'
 
-  const loadLayers = (ltsLayerName, bikeParkingLayerName, bluebikeLayerName, intersectionsLayerName) => {
-    console.log('loadLayers', displayLTS, displayBikeParking, displayBluebikeStations, displayIntersections)
-    if (displayLTS) {
+  const loadLayers = (ltsLayerName, bikeParkingLayerName, bluebikeLayerName, intersectionsLayerName,
+                      ) => {
+    console.log('loadLayers State', 
+      displayLTSState, displayIntersectionsState, displayBikeParkingState, displayBluebikeStationsState,)
+    console.log('loadLayers Ref',
+      displayLTSRef.current, displayIntersectionsRef.current, displayBikeParkingRef.current, displayBluebikeStationsRef.current)
+    if (displayLTSRef.current) {
       layerLTS(mapRef, ltsLayerName, COLOR_SCALE, LINE_WIDTH, setActiveFeature, setActiveFeatureType)
+      if (!displayLTS1Ref.current) { setLTSfilter(1) }
+      if (!displayLTS2Ref.current) { setLTSfilter(2) }
+      if (!displayLTS3Ref.current) { setLTSfilter(3) }
+      if (!displayLTS4Ref.current) { setLTSfilter(4) }
     }
-    if (displayBikeParking) {
+    if (displayBikeParkingRef.current) {
       layerBikeParking(mapRef, bikeParkingLayerName, COLOR_SCALE, setActiveFeature, setActiveFeatureType)
     }
-    if (displayBluebikeStations) {
+    if (displayBluebikeStationsRef.current) {
       layerBlueBikes(mapRef, bluebikeLayerName, COLOR_SCALE, setActiveFeature, setActiveFeatureType)
     }
-    if (displayIntersections) {
-      layerIntersections(mapRef, intersectionsLayerName, displayIntersections, COLOR_SCALE, setActiveFeature, setActiveFeatureType)
+    if (displayIntersectionsRef.current) {
+      layerIntersections(mapRef, intersectionsLayerName, displayIntersectionsRef, COLOR_SCALE, setActiveFeature, setActiveFeatureType)
     }
   };
 
@@ -89,22 +117,22 @@ function Map() {
   }
   
   const handleLTS1 = () => {
-    console.log('displayLTS1 switched from', displayLTS1);
+    console.log('displayLTS1 switched from', displayLTS1Ref.current);
     setLTS1(displayLTS1 => !displayLTS1);
     setLTSfilter(1)
   }
   const handleLTS2 = () => {
-    console.log('displayLTS2 switched from', displayLTS2);
+    console.log('displayLTS2 switched from', displayLTS2Ref.current);
     setLTS2(displayLTS2 => !displayLTS2);
     setLTSfilter(2)
   }
   const handleLTS3 = () => {
-    console.log('displayLTS3 switched from', displayLTS3);
+    console.log('displayLTS3 switched from', displayLTS3Ref.current);
     setLTS3(displayLTS3 => !displayLTS3);
     setLTSfilter(3)
   }
   const handleLTS4 = () => {
-    console.log('displayLTS4 switched from', displayLTS4);
+    console.log('displayLTS4 switched from', displayLTS4Ref.current);
     setLTS4(displayLTS4 => !displayLTS4);
     setLTSfilter(4)
   }
@@ -152,7 +180,7 @@ function Map() {
     let q = 1
 
     mapRef.current.on('load', function () {
-      loadLayers(ltsLayerName, bikeParkingLayerName, bluebikeLayerName, intersectionsLayerName)
+      loadLayers(ltsLayerName, bikeParkingLayerName, bluebikeLayerName, intersectionsLayerName,)
       
       // get the current center coordinates and zoom level from the map
       mapRef.current.on('move', () => {
@@ -168,8 +196,50 @@ function Map() {
       mapRef.current.addControl(new mapboxgl.FullscreenControl());
     })
 
+    mapRef.current.on('zoom', (e) => {
+      let zoomThreshold = 16
+      let styleStandard = 'mapbox://styles/mapbox/standard'
+      let styleStandardConfig = {
+              basemap: {
+                lightPreset: 'day',
+                showPlaceLabels: false,
+                showPointOfInterestLabels: false,
+                theme: 'monochrome',
+                show3dObjects: false,
+                showTransitLabels: true,
+                showRoadLabels: true
+              }}
+      let styleSatellite = 'mapbox://styles/mapbox/standard-satellite'
+
+      console.log('zoom:', mapRef.current.getZoom(),
+      '| displayLTS:', displayLTSRef.current,
+        'displayIntersections:', displayIntersectionsRef.current, 
+        'displayBikeParking:', displayBikeParkingRef.current, 
+        'displayBluebikeStations:', displayBluebikeStationsRef.current)
+
+      if (mapRef.current.isStyleLoaded()) {
+
+        let currentStyle = mapRef.current.getStyle().imports[0].data.name
+        // console.log('currentStyle: ', currentStyle)
+        let currentZoom = mapRef.current.getZoom()
+        // console.log('zoom: ', currentZoom)
+      
+        if ( displayIntersectionsRef.current ) {          
+          if ( (currentZoom > zoomThreshold) && (currentStyle=='Mapbox Standard') ) {
+            mapRef.current.setStyle(styleSatellite);
+          } else if ( (currentZoom < zoomThreshold ) && (currentStyle=='Mapbox Standard Satellite')) {
+            mapRef.current.setStyle(styleStandard, {config: styleStandardConfig});
+          }
+        } else {
+          if ( currentStyle!='Mapbox Standard' ) {
+            mapRef.current.setStyle(styleStandard, {config: styleStandardConfig});
+          }
+        }
+      }
+    })
+
     mapRef.current.on('style.load', () => {
-        loadLayers(ltsLayerName, bikeParkingLayerName, bluebikeLayerName, intersectionsLayerName)
+        loadLayers(ltsLayerName, bikeParkingLayerName, bluebikeLayerName, intersectionsLayerName,)
     });
 
     return () => {
@@ -190,13 +260,13 @@ function Map() {
   }
 
   const handleLayerCheckbox = (checkboxState, setState, displayState, layerID) => {
+    console.log(layerID + ' checkbox changed to ' + checkboxState);
     setState(checkboxState => !checkboxState)
-    console.log(layerID + ' checkbox changed to ' + !displayState);
 
     if(checkboxState) {
       if(typeof mapRef.current.getLayer(layerID) == 'undefined') {
         if (layerID == intersectionsLayerName) {
-          layerIntersections(mapRef, intersectionsLayerName, displayIntersections, COLOR_SCALE, setActiveFeature, setActiveFeatureType)
+          layerIntersections(mapRef, intersectionsLayerName, displayIntersectionsRef, COLOR_SCALE, setActiveFeature, setActiveFeatureType)
         } else if (layerID == bikeParkingLayerName) {
           layerBikeParking(mapRef, bikeParkingLayerName, COLOR_SCALE, setActiveFeature, setActiveFeatureType)
         } else if (layerID == bluebikeLayerName) {
@@ -226,11 +296,11 @@ function Map() {
 
         <Legend 
           colorScale={COLOR_SCALE}
-          lts_display={displayLTS}
-          lts1_display={displayLTS1}
-          lts2_display={displayLTS2}
-          lts3_display={displayLTS3}
-          lts4_display={displayLTS4}
+          lts_display={displayLTSState}
+          lts1_display={displayLTS1Ref.current}
+          lts2_display={displayLTS2Ref.current}
+          lts3_display={displayLTS3Ref.current}
+          lts4_display={displayLTS4Ref.current}
           handleLTS1={handleLTS1}
           handleLTS2={handleLTS2}
           handleLTS3={handleLTS3}
@@ -250,9 +320,9 @@ function Map() {
             <input 
               type="checkbox" 
               name="ltsCheckbox"
-              defaultChecked={displayLTS} 
+              checked={displayLTSRef.current} 
               onChange={e => handleLayerCheckbox(
-                e.target.checked, setLTS, displayLTS, ltsLayerName)}
+                e.target.checked, setLTS, displayLTSRef, ltsLayerName)}
             />
             Stress Map
           </label></div>
@@ -260,9 +330,9 @@ function Map() {
             <input 
               type="checkbox" 
               name="bikeParkingCheckbox"
-              defaultChecked={displayIntersections} 
+              checked={displayIntersectionsRef.current} 
               onChange={e => handleLayerCheckbox(
-                e.target.checked, setIntersections, displayIntersections, intersectionsLayerName)}
+                e.target.checked, setIntersections, displayIntersectionsRef, intersectionsLayerName)}
             />
             Intersection Audits
           </label></div>
@@ -270,9 +340,9 @@ function Map() {
             <input 
               type="checkbox" 
               name="bikeParkingCheckbox"
-              defaultChecked={displayBikeParking} 
+              checked={displayBikeParkingRef.current} 
               onChange={e => handleLayerCheckbox(
-                e.target.checked, setBikeParking, displayBikeParking, bikeParkingLayerName)}
+                e.target.checked, setBikeParking, displayBikeParkingRef, bikeParkingLayerName)}
             />
             Bike Parking
           </label></div>
@@ -280,9 +350,9 @@ function Map() {
             <input 
               type="checkbox" 
               name="bluebikeStationCheckbox"
-              defaultChecked={displayBluebikeStations} 
+              checked={displayBluebikeStationsRef.current} 
               onChange={e => handleLayerCheckbox(
-                e.target.checked, setBluebikeStations, displayBluebikeStations, bluebikeLayerName)}
+                e.target.checked, setBluebikeStations, displayBluebikeStationsRef, bluebikeLayerName)}
             />
             BlueBike Stations
           </label></div>
