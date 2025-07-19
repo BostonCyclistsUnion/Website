@@ -1,0 +1,23 @@
+.mdxSection{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+.mdxImageInline {
+    width: 400px;
+    max-width: 40%;
+    max-height: 400px;
+    padding: 20px;
+    /* margin: 0 auto; */
+}
+.mdxTextBlock {
+    max-width: 500px;
+    min-width: 200px;
+    padding: 20px;
+    margin: 20px 0px;
+    /* margin: 0 auto; */
+}
+.mdxParagraph {    
+    margin-bottom: 1em;
+}
