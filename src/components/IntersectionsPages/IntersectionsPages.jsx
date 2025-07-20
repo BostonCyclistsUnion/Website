@@ -1,7 +1,7 @@
 import ForgottenIntersections from "./ForgottenIntersectionsPage.mdx";
 import ProtectedIntersections from "./ProtectedIntersectionsPage.mdx";
 import IntersectionAudits from "./IntersectionAudit.mdx";
-import './mdx.css'
+import '../mdx.css'
 
 const Paragraph = ({ children }) => <p className="mdxParagraph">{children}</p> 
 

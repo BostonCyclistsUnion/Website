@@ -1,0 +1,108 @@
+import LabsHeader from '../ImageLinks/LabsHeader.jsx';
+import LabsFooter from '../Footer/Footer.jsx';
+
+import {
+    LABS_PAGE_ROUTE,
+    MAP_PAGE_ROUTE,
+    LTS_PAGE_ROUTE,
+    OSM_PAGE_ROUTE,
+    INX_PAGE_ROUTE,
+    PINX_PAGE_ROUTE,
+    INXAUDIT_PAGE_ROUTE,
+    } from '../routes/routes.jsx';
+import { Link } from 'react-router-dom';
+
+import Slider from "react-slick";
+import {single_settings} from '../ImageSlider/imageSlider.jsx'
+import '../ImageSlider/ImageSlider.css';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+<LabsHeader />
+# How to map bike parking in OpenStreetMap
+There are many apps that allow you to map features in OSM. Below are a few of the easiest apps to get started and how to specifically use them to add bike parking to OSM.
+
+For all of the options below, you will need an account on OSM. You can sign up https://www.openstreetmap.org/user/new 
+
+## StreetComplete - Android only
+StreetComplete is a smartphone app for editing OpenStreetMap and is currently only available for Android.
+https://streetcomplete.app/
+
+Upon opening the app the map will show your location with nearby objects with questions to be answered highlighted. You can change the default settings to remove "quests" that you aren't interested in answering.
+
+Instructions for how to add new bicycle parking using StreetComplete
+<div className="image-slider-container">
+<Slider {...single_settings}>
+    <div>
+        <img src='./OSM_instructions/1.png' alt="StreetComplete Step 1" className='mdxImageInline'/>
+        Start on the main map screen
+    </div>
+    <div>
+        <img src='./OSM_instructions/2.png' alt="StreetComplete Step 2" className='mdxImageInline'/>
+        Choose the layers option in the upper right and switch to **Things** overlay
+    </div>
+    <div>
+        <img src='./OSM_instructions/3.png' alt="StreetComplete Step 3" className='mdxImageInline'/>
+        Once **Things** mode is selected the layers menu will be replaced with a green marker symbol and a crosshairs in the center of the screen. Zoom and rotate the map to place the crosshairs at the location to add the new marker and select the red crosshairs button in the lower right to place the new object.
+    </div>
+    <div>
+        <img src='./OSM_instructions/4.png' alt="StreetComplete Step 4" className='mdxImageInline'/>
+        This will prompt you to select the type of object to be placed there
+    </div>
+    <div>
+        <img src='./OSM_instructions/5.png' alt="StreetComplete Step 5" className='mdxImageInline'/>
+        bicycle parking is one of the default options to select from
+    </div>
+    <div>
+        <img src='./OSM_instructions/5.png' alt="StreetComplete Step 5" className='mdxImageInline'/>
+        Select the orange checkmark in the lower right to finalize the addition to the map.
+    </div>
+    <div>
+        Congrats! You just edited OpenStreetMap. Your changes will automatically upload to OpenStreetMap. If you added bike parking, you can refresh [link to stressmap] in a few minutes and see it added to our map.
+    </div>
+</Slider>
+</div>
+
+## EveryDoor - Apple/Android
+Smartphone app for adding features such as bicycle parking to OpenStreet Maps available for both Apple and Android.
+https://every-door.app/
+
+Step-by-step instructions for adding unmapped bike parking
+<div className="image-slider-container">
+<Slider {...single_settings}>
+    <div>
+        <img src='./intersections/albany_and_mainst_camb.jpg' alt="Albany and Main St., Cambridge" className='mdxImageInline'/>
+        Albany and Main St., Cambridge
+    </div>
+</Slider>
+</div>
+
+## Map Complete - Web
+https://mapcomplete.org/
+MapComplete simplifies the interface for adding types of features (themes) to OSM.They have a theme just for bike parking (https://mapcomplete.org/bicycle_parkings.html?z=12.9&lat=42.351653695129585&lon=-71.06010161014677) and another that includes bike parking and other useful features and amenities for cyclists (https://mapcomplete.org/cyclofix.html?z=12.6&lat=42.34600576339486&lon=-71.08348986228737). The steps are the same for each, but we will focus on just the bike parking theme here.
+
+Step-by-step instructions for adding unmapped bike parking
+<div className="image-slider-container">
+<Slider {...single_settings}>
+    <div>
+        <img src='./intersections/albany_and_mainst_camb.jpg' alt="Albany and Main St., Cambridge" className='mdxImageInline'/>
+        Albany and Main St., Cambridge
+    </div>
+</Slider>
+</div>
+
+## OpenStreetMap iD - Web
+https://www.openstreetmap.org/
+This is the default editor on the OSM website.
+
+Step-by-step instructions for adding unmapped bike parking
+<div className="image-slider-container">
+<Slider {...single_settings}>
+    <div>
+        <img src='./intersections/albany_and_mainst_camb.jpg' alt="Albany and Main St., Cambridge" className='mdxImageInline'/>
+        Albany and Main St., Cambridge
+    </div>
+</Slider>
+</div>
+
+<LabsFooter />
