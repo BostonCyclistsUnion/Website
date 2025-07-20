@@ -1,9 +1,0 @@
-import Intersections from "./IntersectionsPage.mdx";
-import './mdx.css'
-const Paragraph = ({ children }) => <p className="mdxParagraph">{children}</p> 
-
-export default function IntersectionsPage() {
-    return(<Intersections components={{
-        p: Paragraph
-    }}/>)
-}

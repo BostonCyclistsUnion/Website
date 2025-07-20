@@ -1,6 +1,23 @@
 import Map from '../../Map.jsx'
-import LabsHeader from '../ImageLinks/LabsHeader';
-import LabsFooter from '../Footer/Footer';
+import LabsHeader from '../ImageLinks/LabsHeader.jsx';
+import LabsFooter from '../Footer/Footer.jsx';
+
+import {
+    LABS_PAGE_ROUTE,
+    MAP_PAGE_ROUTE,
+    LTS_PAGE_ROUTE,
+    OSM_PAGE_ROUTE,
+    INX_PAGE_ROUTE,
+    PINX_PAGE_ROUTE,
+    INXAUDIT_PAGE_ROUTE,
+    } from '../routes/routes.jsx';
+import { Link } from 'react-router-dom';
+
+import Slider from "react-slick";
+import {single_settings} from './imageSlider.jsx'
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import './ImageSlider.css';
 
 <LabsHeader />
 # Boston Area Forgotten Intersections
@@ -22,7 +39,7 @@ This map shows intersections on routes where the city or state **built mobility 
 <div className='mdxSection'>
 <div className='mdxTextBlock'>
 ## The solution?
-Cities need to go back and build protected intersections. Those work by shifting the curb line to the outside of the bike lane—just like a protected bike lane on the rest of the street. The intersection stays the same size, and drivers still turn around the same corner radius, but the curb stops them taking it so tight they hit someone in the bike lane or crosswalk before they have a chance to react.
+Cities need to go back and build <Link to={PINX_PAGE_ROUTE} >protected intersections</Link>. Those work by shifting the curb line to the outside of the bike lane—just like a protected bike lane on the rest of the street. The intersection stays the same size, and drivers still turn around the same corner radius, but the curb stops them taking it so tight they hit someone in the bike lane or crosswalk before they have a chance to react.
 
 Protected intersections can be built out of asphalt or concrete, or they can be built faster with “quick build” materials like flex posts and then upgraded later.
 </ div>
@@ -44,7 +61,26 @@ Protected intersections address both those issues.  They separate where drivers 
 ## Example forgotten intersections
 
 Here are some lovely bike lanes that vanish as they approach intersections:
+<div className="image-slider-container">
+<Slider {...single_settings}>
+    <div>
+        <img src='./intersections/albany_and_mainst_camb.jpg' alt="Albany and Main St., Cambridge" className='mdxImageInline'/>
+        Albany and Main St., Cambridge
+    </div>
+    <div>
+        <img src='./intersections/braodway_third_camb.jpg' alt="Albany and Main St., Cambridge" className='mdxImageInline'/>
+    </div>
+    <div>
+        <img src='./intersections/mainst_vassar_camb.jpg' alt="Albany and Main St., Cambridge" className='mdxImageInline'/>
+    </div>
+    <div>
+        <img src='./intersections/intx1.jpg' alt="Albany and Main St., Cambridge" className='mdxImageInline'/>
+    </div>
+    <div>
+        <img src='./intersections/intx2.jpg' alt="Albany and Main St., Cambridge" className='mdxImageInline'/>
+    </div>
+</Slider>
+</div>
 
-
-ⓘ Note this map is specifically about streets with safety improvement projects that fell short.  We also talk about streets that haven't received any micromobility safety improvements—check out our [Landway](https://landway.bostoncyclistsunion.org/) and Stress Map projects!
+ⓘ Note this map is specifically about streets with safety improvement projects that fell short.  We also talk about streets that haven't received any micromobility safety improvements—check out our [Landway](https://landway.bostoncyclistsunion.org/) and <Link to={MAP_PAGE_ROUTE} >Stess Map</Link> projects!
 <LabsFooter />

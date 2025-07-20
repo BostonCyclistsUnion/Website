@@ -4,8 +4,10 @@ import LabsPage from './components/LabsPage/LabsPage'
 import MapPage from './components/MapPage/MapPage'
 import LTSPage from './components/LTSPage/LTSPage'
 import OSMPage from './components/OSMPage/OSMPage'
-import InxPage from './components/IntersectionsPages/IntersectionsPage'
-import PInxPage from './components/IntersectionsPages/ProtectedIntersectionsPage'
+import {ForgottenIntersectionsPage, 
+        ProtectedIntersectionsPage,
+        IntersectionAuditPage,
+       } from './components/IntersectionsPages/IntersectionsPages'
 import { 
   LABS_PAGE_ROUTE,
   MAP_PAGE_ROUTE,
@@ -13,6 +15,7 @@ import {
   OSM_PAGE_ROUTE,
   INX_PAGE_ROUTE,
   PINX_PAGE_ROUTE,
+  INXAUDIT_PAGE_ROUTE,
 } from './components/routes/routes';
 
 import { HashRouter, Route, Routes } from 'react-router-dom';
@@ -27,8 +30,9 @@ function App() {
               <Route path={MAP_PAGE_ROUTE} element={<MapPage />} key='route-MapPage'/>
               <Route path={LTS_PAGE_ROUTE} element={<LTSPage />} key='route-LTSPage'/>
               <Route path={OSM_PAGE_ROUTE} element={<OSMPage />} key='route-OSMPage'/>
-              <Route path={INX_PAGE_ROUTE} element={<InxPage />} key='route-InxPage'/>
-              <Route path={PINX_PAGE_ROUTE} element={<PInxPage />} key='route-PInxPage'/>
+              <Route path={INX_PAGE_ROUTE} element={<ForgottenIntersectionsPage />} key='route-InxPage'/>
+              <Route path={PINX_PAGE_ROUTE} element={<ProtectedIntersectionsPage />} key='route-PInxPage'/>
+              <Route path={INXAUDIT_PAGE_ROUTE} element={<IntersectionAuditPage />} key='route-InxAPage'/>
             </Routes>
           </HashRouter>
         </div>

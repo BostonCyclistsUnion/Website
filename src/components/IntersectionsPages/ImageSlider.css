@@ -1,0 +1,10 @@
+.image-slider-container {
+  margin: 0 auto;
+  padding-bottom: 50px;
+  width: 400px;
+}
+
+.image-slider-container .slick-prev:before,
+.image-slider-container .slick-next:before {
+  color: black;
+}

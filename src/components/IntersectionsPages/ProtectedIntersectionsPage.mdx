@@ -1,6 +1,20 @@
 import LabsHeader from '../ImageLinks/LabsHeader';
 import LabsFooter from '../Footer/Footer';
 
+import {
+    LABS_PAGE_ROUTE,
+    MAP_PAGE_ROUTE,
+    LTS_PAGE_ROUTE,
+    OSM_PAGE_ROUTE,
+    INX_PAGE_ROUTE,
+    PINX_PAGE_ROUTE,
+    INXAUDIT_PAGE_ROUTE,
+    } from '../routes/routes.jsx';
+import { Link } from 'react-router-dom';
+
+import Slider from "react-slick";
+import {dual_settings} from './imageSlider.jsx'
+
 <LabsHeader />
 # What Are Protected Intersections?
 ## Just like protected bike lanes...
@@ -13,16 +27,89 @@ import LabsFooter from '../Footer/Footer';
     1. Keep the same corner curve (since we already know that curve works for vehicles making that turn), but move it to the outside of the bike lane.
     2. Shift the crosswalks and crossbikes back so they are outside the middle of the intersection.
     3. Add a barrier between where the bike lane wraps around the corner and the rest of the intersection.
-The details can vary street to street depending on angles and street parking, but it can be that easy!
+The details can vary street to street depending on angles and street parking, but it can be that easy! You can see where we have <Link to={INX_PAGE_ROUTE} >audited intersections here</Link> and how we <Link to={INXAUDIT_PAGE_ROUTE} >performed those audits here</Link>.
 </ div>
 <img src='./protected_intersection_conversion.gif' alt="Protected Intersection Animation" className='mdxImageInline'/>
 </ div>
 
 These videos explain more about how protected intersections make our streets safer for pedestrians, bicyclists, and other vulnerable road users:
 
+<div className='mdxSection'>
+    {/* <div className='mdxVideo'> */}
+        <iframe className='mdxVideo' src="https://player.vimeo.com/video/86721046?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerPolicy="strict-origin-when-cross-origin" title="Protected Intersections For Bicyclists">
+        </iframe>
+    {/* </div> */}
+    <script src="https://player.vimeo.com/api/player.js"></script>
+
+    {/* <div className='mdxVideo'> */}
+        <iframe className='mdxVideo' src="https://www.youtube.com/embed/FlApbxLz6pA?si=7xM13_rpT3Td_qyt" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen>
+        {/* <iframe width="560" height="315" src="https://www.youtube.com/embed/FlApbxLz6pA?si=7xM13_rpT3Td_qyt" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowfullscreen> */}
+        </iframe>
+    {/* </div> */}
+</ div>
+
 ## Full construction or “quick build”
 
 Like other infrastructure, protected intersection elements can be built with “quick build” materials like flex posts or premade curb segments to provide an immediate safety improvement for vulnerable road users, and then later upgraded to more durable (and aesthetically nicer) materials like asphalt, concrete, brick, or stone.
 
 Here are how some different separated corners around the area guide mixed traffic around the corner while directing bike lane and sidewalk users within it.
+
+<Slider {...dual_settings}>
+    <div>
+        <img src='./intersections/Broadway_Galileo_Driver.jpg' alt="FIXME" className='mdxImageInline'/>
+        Full construction separated corner at Broadway & Galileo (Kendall Square)
+    </div>
+    <div>
+        <img src='./intersections/Broadway_Galileo_Cyclist.jpg' alt="FIXME" className='mdxImageInline'/>
+        Full construction separated corner at Broadway & Galileo (Kendall Square)
+    </div>
+    <div>
+        <img src='./intersections/MassAve_Boylston_Driver.jpg' alt="FIXME" className='mdxImageInline'/>
+        Full construction separated corner at Mass Ave. & Boylston (Back Bay)
+    </div>
+    <div>
+        <img src='./intersections/MassAve_Boylston_Cyclist.jpg' alt="FIXME" className='mdxImageInline'/>
+        Full construction separated corner at Mass Ave. & Boylston (Back Bay)
+    </div>
+    <div>
+        <img src='./intersections/GrandUnion_Foley_Driver.jpg' alt="FIXME" className='mdxImageInline'/>
+        Quick build separated corner at Grand Union & Foley (Assembly Square)
+    </div>
+    <div>
+        <img src='./intersections/GrandUnion_Foley_Cyclist.jpg' alt="FIXME" className='mdxImageInline'/>
+        Quick build separated corner at Grand Union & Foley (Assembly Square)
+    </div>
+    <div>
+        <img src='./intersections/Hampshire_Portland_Driver.jpg' alt="FIXME" className='mdxImageInline'/>
+        Quick build separated corner at Hampshire & Portland (Kendall Square, built in response to Minh-Thi Nguyen being killed with a truck)
+    </div>
+    <div>
+        <img src='./intersections/Hampshire_Portland_Cyclist.jpg' alt="FIXME" className='mdxImageInline'/>
+        Quick build separated corner at Hampshire & Portland (Kendall Square, built in response to Minh-Thi Nguyen being killed with a truck)
+    </div>
+    <div>
+        <img src='./intersections/Boylston_Ipswitch_Driver.jpg' alt="FIXME" className='mdxImageInline'/>
+        Quick build separated corner at Boylston & Ipswich (under construction, Fenway)
+    </div>
+    <div>
+        <img src='./intersections/Boylston_Ipswitch_Cyclist.jpg' alt="FIXME" className='mdxImageInline'/>
+        Quick build separated corner at Boylston & Ipswich (under construction, Fenway)
+    </div>
+    <div>
+        <img src='./intersections/Columbus_Ruggles_Driver.jpg' alt="FIXME" className='mdxImageInline'/>
+        Full construction separated corner at Columbus Ave. & Ruggles Busway
+    </div>
+    <div>
+        <img src='./intersections/Columbus_Ruggles_Cyclist.jpg' alt="FIXME" className='mdxImageInline'/>
+        Full construction separated corner at Columbus Ave. & Ruggles Busway
+    </div>
+    <div>
+        <img src='./intersections/NWashington_Chealsea_Driver.jpg' alt="FIXME" className='mdxImageInline'/>
+        Full construction separated corner at N. Washington St. & Chelsea St. (under construction)
+    </div>
+    <div>
+        <img src='./intersections/NWashington_Chealsea_Cyclist.jpg' alt="FIXME" className='mdxImageInline'/>
+        Full construction separated corner at N. Washington St. & Chelsea St. (under construction)
+    </div>
+</Slider>
 <LabsFooter />
