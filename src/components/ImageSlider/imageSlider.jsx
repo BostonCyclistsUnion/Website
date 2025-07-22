@@ -11,5 +11,6 @@ export var dual_settings = {
     infinite: true,
     speed: 500,
     slidesToShow: 2,
-    slidesToScroll: 2
+    slidesToScroll: 2,
+    // dotsClass: 'slides_dots',
 };

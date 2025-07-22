@@ -1,10 +1,43 @@
 .image-slider-container {
   margin: 0 auto;
   padding-bottom: 50px;
-  width: 400px;
+  padding-left: 50px;
+  padding-right: 50px;
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  /* position: relative; */
+  /* width: 90vw; */
 }
 
 .image-slider-container .slick-prev:before,
 .image-slider-container .slick-next:before {
   color: black;
+}
+
+.slide_div {
+  margin: 0 auto;
+  text-align: center;
+  /* position: relative; */
+}
+.slide_img {
+  max-width: 90%;
+  max-height: 60vh;
+  padding: 20px;
+  margin: 0 auto;
+
+}
+.slides_dots {
+  text-align: center;
+  color: brown;
+  bottom: -25px;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  text-align: center;
+  /* color: #524F41; */
+  font-family: rubik, sans-serif;
+  font-size: 1.0em;
+  max-width: 640px;
 }

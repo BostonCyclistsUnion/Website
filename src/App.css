@@ -71,7 +71,7 @@ h4, .head4 {
   margin-bottom: 15px;
 }
 
-p, ul {
+p, ul, ol {
   color:#524F41;
   font-family: rubik, sans-serif;
   font-size: 1.0em;

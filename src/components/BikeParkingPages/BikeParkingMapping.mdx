@@ -1,15 +1,8 @@
 import LabsHeader from '../ImageLinks/LabsHeader.jsx';
 import LabsFooter from '../Footer/Footer.jsx';
 
-import {
-    LABS_PAGE_ROUTE,
-    MAP_PAGE_ROUTE,
-    LTS_PAGE_ROUTE,
-    OSM_PAGE_ROUTE,
-    INX_PAGE_ROUTE,
-    PINX_PAGE_ROUTE,
-    INXAUDIT_PAGE_ROUTE,
-    } from '../routes/routes.jsx';
+
+import * as ROUTES from '../routes/routes.jsx';
 import { Link } from 'react-router-dom';
 
 import Slider from "react-slick";
@@ -22,43 +15,46 @@ import "slick-carousel/slick/slick-theme.css";
 # How to map bike parking in OpenStreetMap
 There are many apps that allow you to map features in OSM. Below are a few of the easiest apps to get started and how to specifically use them to add bike parking to OSM.
 
-For all of the options below, you will need an account on OSM. You can sign up https://www.openstreetmap.org/user/new 
+You can read more about *why* bike parking is <Link to={ROUTES.BIKEPARKING_PAGE_ROUTE} >crtical to map here</Link>.
+
+For all of the options below, you will need an account on OSM. You can sign up [OpenStreetMap](https://www.openstreetmap.org/user/new) now or each of these apps will link you there when you open them. 
 
 ## StreetComplete - Android only
-StreetComplete is a smartphone app for editing OpenStreetMap and is currently only available for Android.
-https://streetcomplete.app/
+[StreetComplete](https://streetcomplete.app/) is a smartphone app for editing OpenStreetMap and is currently only available for Android.
+
 
 Upon opening the app the map will show your location with nearby objects with questions to be answered highlighted. You can change the default settings to remove "quests" that you aren't interested in answering.
 
 Instructions for how to add new bicycle parking using StreetComplete
 <div className="image-slider-container">
 <Slider {...single_settings}>
-    <div>
-        <img src='./OSM_instructions/1.png' alt="StreetComplete Step 1" className='mdxImageInline'/>
+    <div className='slide_div'>
+        <img src='./OSM_instructions/streetcomplete/1.png' alt="StreetComplete Step 1" className='slide_img'/>
         Start on the main map screen
     </div>
-    <div>
-        <img src='./OSM_instructions/2.png' alt="StreetComplete Step 2" className='mdxImageInline'/>
+    <div className='slide_div'>
+        <img src='./OSM_instructions/streetcomplete/2.png' alt="StreetComplete Step 2" className='slide_img'/>
         Choose the layers option in the upper right and switch to **Things** overlay
     </div>
-    <div>
-        <img src='./OSM_instructions/3.png' alt="StreetComplete Step 3" className='mdxImageInline'/>
+    <div className='slide_div'>
+        <img src='./OSM_instructions/streetcomplete/3.png' alt="StreetComplete Step 3" className='slide_img'/>
         Once **Things** mode is selected the layers menu will be replaced with a green marker symbol and a crosshairs in the center of the screen. Zoom and rotate the map to place the crosshairs at the location to add the new marker and select the red crosshairs button in the lower right to place the new object.
     </div>
-    <div>
-        <img src='./OSM_instructions/4.png' alt="StreetComplete Step 4" className='mdxImageInline'/>
+    <div className='slide_div'>
+        <img src='./OSM_instructions/streetcomplete/4.png' alt="StreetComplete Step 4" className='slide_img'/>
         This will prompt you to select the type of object to be placed there
     </div>
-    <div>
-        <img src='./OSM_instructions/5.png' alt="StreetComplete Step 5" className='mdxImageInline'/>
+    <div className='slide_div'>
+        <img src='./OSM_instructions/streetcomplete/5.png' alt="StreetComplete Step 5" className='slide_img'/>
         bicycle parking is one of the default options to select from
     </div>
-    <div>
-        <img src='./OSM_instructions/5.png' alt="StreetComplete Step 5" className='mdxImageInline'/>
+    <div className='slide_div'>
+        <img src='./OSM_instructions/streetcomplete/5.png' alt="StreetComplete Step 5" className='slide_img'/>
         Select the orange checkmark in the lower right to finalize the addition to the map.
     </div>
-    <div>
-        Congrats! You just edited OpenStreetMap. Your changes will automatically upload to OpenStreetMap. If you added bike parking, you can refresh [link to stressmap] in a few minutes and see it added to our map.
+    <div className='slide_div'>
+        ### Congrats! 
+        You just edited OpenStreetMap. Your changes will automatically upload to OpenStreetMap. If you added bike parking, you can refresh [link to stressmap] in a few minutes and see it added to our map.
     </div>
 </Slider>
 </div>
@@ -71,7 +67,7 @@ Step-by-step instructions for adding unmapped bike parking
 <div className="image-slider-container">
 <Slider {...single_settings}>
     <div>
-        <img src='./intersections/albany_and_mainst_camb.jpg' alt="Albany and Main St., Cambridge" className='mdxImageInline'/>
+        <img src='./intersections/albany_and_mainst_camb.jpg' alt="Albany and Main St., Cambridge" className='slide_img'/>
         Albany and Main St., Cambridge
     </div>
 </Slider>
@@ -85,7 +81,7 @@ Step-by-step instructions for adding unmapped bike parking
 <div className="image-slider-container">
 <Slider {...single_settings}>
     <div>
-        <img src='./intersections/albany_and_mainst_camb.jpg' alt="Albany and Main St., Cambridge" className='mdxImageInline'/>
+        <img src='./intersections/albany_and_mainst_camb.jpg' alt="Albany and Main St., Cambridge" className='slide_img'/>
         Albany and Main St., Cambridge
     </div>
 </Slider>
@@ -99,7 +95,7 @@ Step-by-step instructions for adding unmapped bike parking
 <div className="image-slider-container">
 <Slider {...single_settings}>
     <div>
-        <img src='./intersections/albany_and_mainst_camb.jpg' alt="Albany and Main St., Cambridge" className='mdxImageInline'/>
+        <img src='./intersections/albany_and_mainst_camb.jpg' alt="Albany and Main St., Cambridge" className='slide_img'/>
         Albany and Main St., Cambridge
     </div>
 </Slider>
